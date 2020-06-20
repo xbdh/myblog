@@ -28,6 +28,8 @@ image:
 projects: []
 ---
 
+
+
 ## 1、introduction
 
 > 深度遍历，树的一种遍历方式，在遍历过程中用递归或栈记录所有父节点
@@ -79,7 +81,7 @@ code:
 ```c++
 
 void findPathRecursive(TreeNode *currentNode, int sum,
-                       vector<int> &currentPath, vector<vector<int>> &allPaths) {
+           vector<int> &currentPath, vector<vector<int>> &allPaths) {
 
     if (currentNode == NULL) {
         return;
@@ -263,3 +265,81 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
+## 6、tree diameter
+
+> 给定二叉树，求其diameter(直径)：两叶子结点之间的最长路径。最长直径可能不经过根节点。
+
+![](./6-1.png)
+
+code:
+
+```c++
+int calculateHeight(TreeNode *currentNode, int &treeDiameter) {
+    if (currentNode == NULL) {
+        return 0;
+    }
+
+    int leftTreeHeight = calculateHeight(currentNode->left, treeDiameter);
+    int rightTreeHeight = calculateHeight(currentNode->right, treeDiameter);
+    //currentNode的直径是左子树的高度+右子树的高度+1
+    int diameter = leftTreeHeight + rightTreeHeight + 1;
+
+    //更新整个树的最大直径
+    treeDiameter = max(treeDiameter, diameter);
+
+    return max(leftTreeHeight, rightTreeHeight) + 1;
+}
+
+int findDiameter(TreeNode *root) {
+    int treeDiameter = 0;
+    calculateHeight(root, treeDiameter);
+    return treeDiameter;
+}
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
+
+## 7、path with max sum
+
+> 给定二叉树， 求任意两节点之间路径的最大和，不必经过根节点
+
+![](./7-2.png)
+
+code:
+
+```c++
+int findMaximumPathSumRecursive(TreeNode *currentNode, int &globalMaximumSum) {
+    if (currentNode == NULL) {
+        return 0;
+    }
+
+    int maxPathSumFromLeft = findMaximumPathSumRecursive(currentNode->left, globalMaximumSum);
+    int maxPathSumFromRight = findMaximumPathSumRecursive(currentNode->right, globalMaximumSum);
+
+    //忽略sum=0 的path
+    maxPathSumFromLeft = max(maxPathSumFromLeft, 0);
+    maxPathSumFromRight = max(maxPathSumFromRight, 0);
+
+    //当前节点的maximumPathSum
+    int localMaximumSum = maxPathSumFromLeft + maxPathSumFromRight + currentNode->val;
+
+    //更新全局maximum Sum
+    globalMaximumSum = max(globalMaximumSum, localMaximumSum);
+
+    //经过当前节点所有路径中最大的Sum
+    return max(maxPathSumFromLeft, maxPathSumFromRight) + currentNode->val;
+
+}
+
+int findMaximumPathSum(TreeNode *root) {
+    int globalMaximum = INT_MIN;
+    findMaximumPathSumRecursive(root, globalMaximum);
+    return globalMaximum;
+}
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
