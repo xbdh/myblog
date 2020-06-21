@@ -27,3 +27,19 @@ image:
 #   Otherwise, set `projects = []`.
 projects: []
 ---
+
+## 1、introduction
+
+给定一组可以划分成两个部分的元素，要求我们求一部分的最小元素，另一部分的最大元素，用two heaps ：Min Heap和Max Heap，可以解决这类的问题，。
+
+## 2、find the median of a number stream
+
+> 设计一个类，能够计算数据流中的中位数，类必须包含两个函数：
+>
+> insertNum(int num) :存储数据
+>
+> findMedian() : 返回所有存储进类的数据流的中位数
+
+> 如果数据为奇数个，则中位数为中间两个数之和
+
+![](./2-1.png)
