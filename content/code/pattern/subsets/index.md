@@ -262,3 +262,78 @@ input: N=3
 output:	((())) ,()()(), (())(), ()(()), ((),())
 ```
 
+code:
+
+```c++
+struct Parenthesese {
+    string str;
+    int openCount;
+    int closeCount;
+
+    Parenthesese(const string &str, int openCount, int closeCount) : str(str), openCount(openCount),
+                                                                     closeCount(closeCount) {};
+};
+
+vector<string> generateValidParentheses(int num) {
+    vector<string> result;
+    queue<Parenthesese> queue;
+    queue.push({"", 0, 0});
+
+    while (!queue.empty()) {
+        Parenthesese ps = queue.front();
+        queue.pop();
+
+        if (ps.openCount == num && ps.closeCount == num) {
+            result.push_back(ps.str);
+        } else {
+            if (ps.openCount < num) {
+                queue.push({ps.str + "(", ps.openCount + 1, ps.closeCount});
+            }
+            if (ps.openCount > ps.closeCount) {
+                queue.push({ps.str + ")", ps.openCount, ps.closeCount + 1});
+            }
+        }
+    }
+    return result;
+}
+```
+
+Time Complexity : ![](./6-1.png)
+
+Space Complexity : *O*(*N* * 2^ *N* )
+
+递归方法
+
+```c++
+void generateValidParenthesesRecursive(int num, int openCount, int closeCount, int stringIndex,
+                                       vector<char> &parenthesesString, vector<string> &result) {
+    if (openCount == num && closeCount == num) {
+        result.push_back(string(parenthesesString.begin(), parenthesesString.end()));
+
+    } else {
+        if (openCount < num) {
+            parenthesesString[stringIndex] = '(';
+            generateValidParenthesesRecursive(num, openCount+1, closeCount , stringIndex + 1, parenthesesString,
+                                              result);
+        }
+        if (openCount > closeCount) {
+            parenthesesString[stringIndex] = ')';
+            generateValidParenthesesRecursive(num, openCount, closeCount + 1, stringIndex + 1, parenthesesString,
+                                              result);
+        }
+    }
+}
+
+vector<string> generateValidParentheses2(int num) {
+    vector<string> result;
+    vector<char> parenthesesString(2 * num);
+    generateValidParenthesesRecursive(num, 0, 0, 0, parenthesesString, result);
+    return result;
+
+}
+```
+
+## 7、unique generalized abbreviations
+
+> 没看懂题目
+
