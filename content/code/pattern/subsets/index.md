@@ -537,6 +537,6 @@ int countTrees2(int n) {
 }
 ```
 
-Time Complexity : O*(* *N*^2) 
+Time Complexity : O*(* *N* ^ 2) 
 
-Space Complexity : *O*( *N* )
+Space Complexity : *O*(*N*)
