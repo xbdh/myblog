@@ -298,7 +298,7 @@ vector<string> generateValidParentheses(int num) {
 }
 ```
 
-Time Complexity : ![](./6-1.png)
+Time Complexity :![](./6-1.png)
 
 Space Complexity : *O*(*N* * 2^ *N* )
 
@@ -337,3 +337,206 @@ vector<string> generateValidParentheses2(int num) {
 
 > 没看懂题目
 
+## 8、evaluate expression
+
+> 给定只包含0-9和+ - *的表达式，计算表达式加上括号后所有合理的运算结果
+
+```c++
+input:	"1+2*3"
+   
+output:	7,9
+  
+explanations: 1+(2*3)=7, (1+2)*3=9
+```
+
+```c++
+input:	"2*3-4-5"
+   
+output:	8, -12, 7 ,-7 ,-3
+  
+explanations: 2*(3-(4-5)=8, 2*(3-4-5)=-12, 2*3-(4-5)=7, 2*(3-4)-5=-7, (2*3)-4-5=-3
+```
+
+code:
+
+```c++
+vector<int> diffWaysToEvaluateExpression(const string &input) {
+    vector<int> result;
+    //有两个字符串a、b, 判断a字符串是否包含b字符串，用到string库中的find函数与npos参数。
+    //string::npos参数：npos 是一个常数，用来表示不存在的位置
+    if (input.find('+', 0) == string::npos &&
+        input.find("-") == string::npos && input.find("*") == string::npos) {
+
+    }
+    if (input.find("+") == string::npos &&
+        input.find("-") == string::npos && input.find("*") == string::npos) {
+
+        result.push_back(stoi(input));
+    } else {
+
+        for (int i = 0; i < input.length(); i++) {
+            char chr = input[i];
+            if (!isdigit(chr)) {
+                vector<int> leftParts = diffWaysToEvaluateExpression(input.substr(0, i));
+                vector<int> rightParts = diffWaysToEvaluateExpression(input.substr(i + 1));
+                for (auto part1:leftParts) {
+                    for (auto part2:rightParts) {
+                        if (chr == '+') {
+                            result.push_back(part1 + part2);
+                        } else if (chr == '-') {
+                            result.push_back(part1 - part2);
+                        } else if (chr == '*') {
+                            result.push_back(part1 * part2);
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    return result;
+}
+```
+
+Time Complexity : 实际：![](./6-1.png)  估计：*O*(*N* * 2^ *N* )
+
+Space Complexity : 实际：![](./6-1.png)估计：O*( 2^ *N* )
+
+节省空间的方法：
+
+有大量重复计算的值，用哈希表存储中间值
+
+```c++
+unordered_map<string, vector<int>> map = unordered_map<string, vector<int>>();
+
+vector<int> diffWaysToEvaluateExpression2(const string &input) {
+    if (map.find(input) != map.end()) {
+        return map[input];
+    }
+    vector<int> result;
+    if (input.find("+") == string::npos &&
+        input.find("-") == string::npos && input.find("*") == string::npos) {
+
+        result.push_back(stoi(input));
+    } else {
+
+        for (int i = 0; i < input.length(); i++) {
+            char chr = input[i];
+            if (!isdigit(chr)) {
+                vector<int> leftParts = diffWaysToEvaluateExpression(input.substr(0, i));
+                vector<int> rightParts = diffWaysToEvaluateExpression(input.substr(i + 1));
+                for (auto part1:leftParts) {
+                    for (auto part2:rightParts) {
+                        if (chr == '+') {
+                            result.push_back(part1 + part2);
+                        } else if (chr == '-') {
+                            result.push_back(part1 - part2);
+                        } else if (chr == '*') {
+                            result.push_back(part1 * part2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    map[input] = result;
+    return result;
+}
+```
+
+## 9、structurally unique binary search trees
+
+> 给定N，求节点值为1-n的二叉查找树
+
+![](./9-1.png)
+
+![](./9-2.png)
+
+code:
+
+```c++
+vector<TreeNode *> findUniqueTreeRecursive(int start, int end) {
+    vector<TreeNode *> result;
+
+    if (start > end) {
+        result.push_back(NULL);
+        return result;
+    }
+    for (int i = start; i <= end; i++) {
+        vector<TreeNode *> leftSubsets = findUniqueTreeRecursive(start, i - 1);
+        vector<TreeNode *> rightSubsets = findUniqueTreeRecursive(i + 1, end);
+        for (auto leftTree:leftSubsets) {
+            for (auto rightTree :rightSubsets) {
+                TreeNode *root = new TreeNode(i);
+                root->left = leftTree;
+                root->right = rightTree;
+                result.push_back(root);
+            }
+        }
+    }
+    return result;
+}
+
+vector<TreeNode *> findUniqueTrees(int n) {
+    if (n <= 0) {
+        return vector<TreeNode *>();
+
+    } else {
+        return findUniqueTreeRecursive(1, n);
+    }
+}
+```
+
+Time Complexity : 实际：![](./6-1.png)  估计：*O*(*N* * 2^ *N* )
+
+Space Complexity : 实际：![](./6-1.png)估计：O*( 2^ *N* )
+
+## 10、count of structurally unique binary search tree
+
+> 给定N，求节点值为1-n的二叉查找树的个数
+
+![](./10-1.png)
+
+```c++
+int countTrees(int n) {
+    if (n <= 1) return 1;
+    int count = 0;
+    for (int i = 1; i <= n; i++) {
+        int countOfLeftSubtrees = countTrees(i - 1);
+        int countOfRightSubtrees = countTrees(n - i);
+        count += countOfLeftSubtrees * countOfRightSubtrees;
+    }
+    return count;
+}
+```
+
+Time Complexity : 实际：![](./6-1.png)  估计：*O*(*N* * 2^ *N* )
+
+Space Complexity : 实际：![](./6-1.png)估计：O*( 2^ *N* )
+
+节省空间的方法：
+
+code：
+
+```c++
+unordered_map<int, int> map = unordered_map<int, int>();
+
+int countTrees2(int n) {
+    if (map.find(n) != map.end()) {
+        return map[n];
+    }
+    if (n <= 1) return 1;
+    int count = 0;
+    for (int i = 1; i <= n; i++) {
+        int countOfLeftSubtrees = countTrees(i - 1);
+        int countOfRightSubtrees = countTrees(n - i);
+        count += countOfLeftSubtrees * countOfRightSubtrees;
+    }
+    map[n] = n;
+    return count;
+}
+```
+
+Time Complexity : O*(* *N*^2) 
+
+Space Complexity : *O*( *N* )
