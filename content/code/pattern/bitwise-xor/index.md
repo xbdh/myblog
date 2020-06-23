@@ -27,3 +27,31 @@ image:
 #   Otherwise, set `projects = []`.
 projects: []
 ---
+
+## 1、introduction
+
+异或操作
+
+## 2、missing number and single number
+
+>
+
+code:
+
+```c++
+int findMissingNumber(const vector<int> &arr) {
+    int n = arr.size() + 1;
+    int s1 = 1;
+    for (int i = 2; i <= n; i++) {
+        s1 ^= i;
+    }
+
+    int s2 = arr[0];
+    for (int j = 1; j < n - 1; j++) {
+        s2 ^= arr[j];
+    }
+
+    return s1 ^ s2;
+}
+```
+
