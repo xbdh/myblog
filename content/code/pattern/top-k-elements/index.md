@@ -169,6 +169,126 @@ output:	[[1, 3],[2, -1]]
 code:
 
 ```c++
+struct Point {
+    int x, y;
 
+    Point(int _x, int _y) : x(_x), y(_y) {};
+};
+
+int distance(Point p) {
+    return p.x * p.x + p.y + p.y;
+}
+
+bool operator<(Point a, Point b) {
+    //return a.x*a.x +a.y*a.y > b.x*b.x+b.y+b.y;
+    return distance(a) < distance(b);
+}
+
+
+vector<Point> findKthClosestPoints(const vector<Point> &Points, int k) {
+    priority_queue<Point> maxHeap;
+
+    vector<Point> result;
+    for (int i = 0; i < k; i++) {
+        maxHeap.push(Points[i]);
+    }
+
+    for (int i = k; i < Points.size(); i++) {
+        if (distance(Points[i]) < distance(maxHeap.top())) {
+            maxHeap.pop();
+            maxHeap.push(Points[i]);
+        }
+    }
+    for (int i = 0; i < k; i++) {
+        result.push_back(maxHeap.top());
+        maxHeap.pop();
+    }
+    return result;
+}
+
+```
+
+Time Complexity : *O*(*N*  * log *K*)
+
+Space Complexity : *O*(*K*)
+
+## 5、connect ropes
+
+> 把N段不同绳子连接成一段长绳子，使得cost最小
+
+> 连接两段绳子的cost= 两段绳子的长度和
+
+```c++
+input: [1, 3, 11, 5]
+
+output: 33
+    
+explanations: cost1: 1 + 3 = 4; cost2: 4 + 5 = 9 ; cost3 :9 + 11 =20 ;totalcost: 4 + 9 + 20 = 33
+```
+
+```c++
+input: [3, 4, 5, 6]
+
+output: 36
+    
+explanations: cost1: 3 + 4 = 7; cost2: 5 + 6 = 11 ; cost3 :7 + 11 =18 ;totalcost: 7 + 11 + 18 = 36
+```
+
+```c++
+input: [1, 3, 11, 5, 2]
+
+output: 42
+    
+explanations: cost1: 1 + 2 = 3; cost2: 3 + 3 = 6 ; cost3 :6 + 5 =11 ;cost4 :11 + 11 =22 ; totalcost: 3 +6  + 11 + 12 = 42
+```
+
+code:
+
+```c++
+int minimumCostConnectRopes(const vector<int> &nums) {
+
+    int result = 0;
+    int temp = 0;
+
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+
+    for (int i = 0; i < nums.size(); i++) {
+        minHeap.push(nums[i]);
+    }
+
+    while (minHeap.size() > 1) {
+        temp = minHeap.top();
+        minHeap.pop();
+        temp += minHeap.top();
+        minHeap.pop();
+        result += temp;
+        minHeap.push(temp);
+    }
+    return result;
+}
+```
+
+Time Complexity : *O*(*N*  * log *N*)
+
+Space Complexity : *O*(*N*)
+
+## 6、top k frequent numbers
+
+> 给定未排序数组和K值，求出现次数前K的数
+
+```c++
+input: [1, 3, 5, 12, 11, 12, 11], k=2
+    
+output:	[12, 11]
+
+explanations: 12(2), 11(2) , 其他1次
+```
+
+```c++
+input: [5, 12, 11, 3, 11], k=2
+    
+output:	[11, 5] 或[11, 12] 或[11, 3]
+
+explanations: 11(2), 其他1次
 ```
 
