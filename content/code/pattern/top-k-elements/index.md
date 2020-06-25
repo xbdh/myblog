@@ -292,3 +292,119 @@ output:	[11, 5] 或[11, 12] 或[11, 3]
 explanations: 11(2), 其他1次
 ```
 
+```c++
+struct cmp_greater {
+    bool operator()(const pair<int, int> &x, const pair<int, int> &y) {
+        return x.second > y.second;
+    }
+};
+
+vector<int> findTopKFrequencyNumbers(const vector<int> &nums, int k) {
+    unordered_map<int, int> numFrequencyMap;
+    for (auto n:nums) {
+        numFrequencyMap[n]++;
+    }
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, cmp_greater> minHeap;
+
+    for (auto entry: numFrequencyMap) {
+        minHeap.push(entry);
+        if (minHeap.size() > k) {
+            minHeap.pop();
+        }
+    }
+
+    vector<int> topNumbers;
+    while (!minHeap.empty()) {
+        topNumbers.push_back(minHeap.top().first);
+        minHeap.pop();
+    }
+
+    return topNumbers;
+}
+```
+
+Time Complexity : *O*(*N* + *N*  * log *K*)
+
+Space Complexity : *O*(*N*)
+
+## 7、frequency sort
+
+> 给定字符串，按照字符出现的次数降序排列
+
+```c++
+input:	"Programming"
+    
+output:	"rrggmmPiano"
+```
+
+```c++
+input:	"abcbab"
+    
+output:	"bbbaac"
+```
+
+code:
+
+```c++
+struct cmp_smaller {
+    bool operator()(const pair<char, int> &x, const pair<char, int> &y) {
+        return x.second < y.second;
+    }
+};
+
+string sortCharacterByFrequency(const string &str) {
+    unordered_map<char, int> characterFrequencyMap;
+    for (char chr:str) {
+        characterFrequencyMap[chr]++;
+    }
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, cmp_smaller> maxHeap;
+    for (auto entry :characterFrequencyMap) {
+        maxHeap.push(entry);
+    }
+
+    string sortedString = "";
+    while (!maxHeap.empty()) {
+        auto entry = maxHeap.top();
+        maxHeap.pop();
+        for (int i = 0; i < entry.second; i++) {
+            sortedString += entry.first;
+        }
+    }
+
+    return sortedString;
+}
+
+```
+
+Time Complexity : *O*(*N*  * log *N*)
+
+Space Complexity : *O*(*N*)
+
+## 8、kth largest number in a stream
+
+> 设计一个类，求数据流中的最大值
+
+## 9、k closest numbers
+
+> 给定排序的数组，及整数K和X。求数组中K个接近X的数，将返回的数排序，X不一定在原数组中。
+
+```c++
+input:	[5, 6, 7, 8, 9] , k=3 ,x=7
+    
+output:	[6, 7 , 8]
+```
+
+```c++
+input:	[2 ,4 ,5 ,6 ,9] ,k=3 ,x=6
+    
+output:	[4, 5, 6]
+```
+
+```c++
+input:	[2, 4, 5, 6, 9] ,k=3 ,x=10
+    
+output:	[5, 6, 9]
+```
+
