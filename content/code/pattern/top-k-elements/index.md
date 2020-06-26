@@ -408,3 +408,69 @@ input:	[2, 4, 5, 6, 9] ,k=3 ,x=10
 output:	[5, 6, 9]
 ```
 
+code:
+
+```c++
+struct cmp_greater {
+    bool operator()(const pair<int, int> &x, const pair<int, int> &y) {
+        return x.first > y.first;
+    }
+};
+
+int binarySearch(const vector<int> &arr, int target) {
+
+    int low = 0;
+    int high = arr.size() - 1;
+
+    while (low <= high) {
+
+        int mid = low + (high - low) / 2;
+        if (target = arr[mid]) {
+            return mid;
+        } else if (target > arr[mid]) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    if (low > 0) {
+        return low - 1;
+    }
+    return low;
+}
+
+vector<int> findClosestElements(const vector<int> &arr, int k, int x) {
+    int index = binarySearch(arr, x);
+    int low = index - k;
+    int high = index + k;
+    low = max(low, 0);
+    high = min((int) arr.size() - 1, high);
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, cmp_greater> minHeap;
+
+    for (int i = low; i <= high; i++) {
+        minHeap.push(make_pair(abs(arr[i] - x), i));
+    }
+
+    vector<int> result;
+    for (int i = 0; i < k; i++) {
+        result.push_back(arr[minHeap.top().second]);
+        minHeap.pop();
+    }
+
+    sort(result.begin(), result.end());
+    return result;
+}
+```
+
+Time Complexity : *O*( log *N* + *K*  * log *K*)
+
+Space Complexity : *O*(*K*)
+
+双指针法：
+
+```c++
+
+```
+
