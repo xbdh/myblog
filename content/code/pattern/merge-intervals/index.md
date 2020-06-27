@@ -31,3 +31,130 @@ projects: []
 ## 1、introduction
 
 常用来解决重叠区间问题，如求重叠的区间或合并有重叠的区间
+
+区间 a , b 的6种重叠方式
+
+![](./1-1.png)
+
+## 2、merge interval
+
+> 给定一组区间，合并重叠的区间
+
+![](./2-1.png)
+
+![](./2-2.png)
+
+code:
+
+```c++
+vector<vector<int>> merge(const vector<vector<int>> &intervals) {
+    if (intervals.size() < 1) {
+        return intervals;
+    }
+
+    vector<vector<int>> mergedResult;
+    mergedResult.push_back(intervals[0]);
+
+    for (int i = 1; i < intervals.size(); i++) {
+        if (intervals[i][0] <= mergedResult.back()[1]) {
+
+            mergedResult.back()[1] = max(mergedResult.back()[1], intervals[i][1]);
+        } else {
+            mergedResult.push_back(intervals[i]);
+        }
+    }
+    return mergedResult;
+}
+```
+
+Time Complexity : *O*(*N* *  log *N* )
+
+Space Complexity : *O*(*N*)
+
+相似问题：
+
+> 判断一组区间是否重合
+
+```c++
+input:	[[1, 4], [2, 5], [7, 9]]
+
+output:	true
+```
+
+code：
+
+```c++
+bool isMerge(const vector<vector<int>> &intervals) {
+    if (intervals.size() < 1) {
+        return false;
+    }
+
+    vector<int> temp=intervals[0];
+
+    for (int i = 1; i < intervals.size(); i++) {
+        if (intervals[i][0] <= temp[1]) {
+            return true;
+        } else {
+            temp=intervals[i];
+        }
+    }
+    return false;
+}
+```
+
+## 3、insert interval
+
+> 给定一组不重叠区间（按照起始位置排序）和一个区间，合并，生成新的不重叠的区间
+
+![](./3-1.png)
+
+code:
+
+```c++
+vector<vector<int>> insertInterval(vector<vector<int>> intervals, vector<int> newInterval) {
+    if (intervals.empty()) {
+        return vector<vector<int>>{newInterval};
+    }
+
+    vector<vector<int>> result;
+    int i = 0;
+    while (i < intervals.size() && intervals[i][1] < newInterval[0]) {
+        result.push_back(intervals[i]);
+        i++;
+    }
+
+    while (i < intervals.size() && intervals[i][0] <= newInterval[1]) {
+        newInterval[0] = min(intervals[i][0], newInterval[0]);
+        newInterval[1] = max(intervals[i][1], newInterval[1]);
+        i++;
+    }
+
+    result.push_back(newInterval);
+
+    while (i < intervals.size()) {
+        result.push_back(intervals[i]);
+        i++;
+    }
+
+    return result;
+}
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
+
+## 4、intervals intersection
+
+> 给定两组区间（每组不重叠，按起始位置排序），求其相交区间
+
+![](./4-1.png)
+
+code:
+
+```c++
+
+```
+
+
+
