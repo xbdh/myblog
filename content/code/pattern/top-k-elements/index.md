@@ -471,6 +471,390 @@ Space Complexity : *O*(*K*)
 双指针法：
 
 ```c++
+int binarySearch(const vector<int> &arr, int target) {
+    int low = 0;
+    int high = arr.size() - 1;
 
+    while (low <= high) {
+
+        int mid = low + (high - low) / 2;
+        if (target = arr[mid]) {
+            return mid;
+        } else if (target > arr[mid]) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    if (low > 0) {
+        return low - 1;
+    }
+    return low;
+}
+
+
+vector<int> findClosestElements2(const vector<int> &arr, int k, int x) {
+    deque<int> result;
+    int index = binarySearch(arr, x);
+    int leftPointer = index;
+    int rightPointer = index + 1;
+    for (int i = 0; i < k; i++) {
+        if (leftPointer >= 0 && rightPointer < (int) arr.size()) {
+            int diff1 = abs(x - arr[leftPointer]);
+            int diff2 = abs(x - arr[rightPointer]);
+            if (diff1 <= diff2) {
+                result.push_back(arr[leftPointer]);
+                leftPointer--;
+            } else {
+                result.push_back(arr[rightPointer++]);
+            }
+        } else if (leftPointer >= 0) {
+            result.push_back(arr[leftPointer--]);
+        } else if (rightPointer < (int) arr.size()) {
+            result.push_back(arr[rightPointer++]);
+        }
+    }
+    
+    vector<int> resultvec;
+    move(begin(result), end(result), back_inserter(resultvec));
+    sort(resultvec.begin(), resultvec.end());
+    return resultvec;
+}
 ```
 
+Time Complexity : *O*(*K*  + log *N*)
+
+Space Complexity : *O*(*1*)
+
+## 10、maximum distinct elements
+
+> 给定数组和K值，删除K个数后，求剩余的不重复的数的最大个数
+
+![](./10-1.png)
+
+code:
+
+```c++
+struct cmp_greater {
+    bool operator()(const pair<int, int> &x, const pair<int, int> &y) {
+        return x.second > y.second;
+    }
+};
+
+int maximumDistinctElements(const vector<int> &nums, int k) {
+    int distinctElementsCount = 0;
+    if (nums.size() <= k) {
+        return distinctElementsCount;
+    }
+
+    unordered_map<int, int> numFrequencyMap;
+    for (auto num:nums) {
+        numFrequencyMap[num]++;
+    }
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, cmp_greater> minHeap;
+    for (auto entry:numFrequencyMap) {
+        if (entry.second == 1) {
+            distinctElementsCount++;
+        } else {
+            minHeap.push(entry);
+        }
+    }
+
+    while (k > 0 && !minHeap.empty()) {
+        auto entry = minHeap.top();
+        minHeap.pop();
+        k -= entry.second - 1;
+        if (k >= 0) {
+            distinctElementsCount++;
+        }
+    }
+
+    if (k > 0) {
+        distinctElementsCount -= k;
+    }
+
+    return distinctElementsCount;
+}
+```
+
+Time Complexity : *O*( *N* * log *N* + *K*  * log *K*)
+
+Space Complexity : *O*(*N*)
+
+## 11、sum of elements
+
+> 给定数组和K1、K2值，求第k1小和第k2小之间元素和
+
+```c++
+input:	[1 ,3 ,12 ,5 ,15 ,11] , k1= 3, k2 = 6
+    
+output:	23
+    
+explanations:3th->5,6th->15   ,11(4th) + 12(5th) = 23
+```
+
+```c++
+input:	[3, 5, 8, 7] , k1=1, k2 = 4
+    
+output:	12
+    
+explanations:1th->3,4th->8   ,5(2th) + 7(3th) = 12
+```
+
+code:
+
+```c++
+int sumOfElements(const vector<int> &nums, int k1, int k2) {
+    int sum = 0;
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+    for (auto num:nums) {
+        minHeap.push(num);
+    }
+
+    for (int i = 0; i < k1; i++) {
+        minHeap.pop();
+    }
+
+    for (int i = 0; i < k2 - k1 - 1; i++) {
+        sum += minHeap.top();
+        minHeap.pop();
+    }
+
+    return sum;
+}
+```
+
+Time Complexity : *O*(*N*  * log *N*)
+
+Space Complexity : *O*(*N*)
+
+大顶堆方法：
+
+```c++
+int sumOfElements2(const vector<int> &nums, int k1, int k2) {
+    int sum = 0;
+    priority_queue<int> maxHeap;
+    for (int i = 0; i < nums.size(); i++) {
+        if (i < k2 - 1) {
+            maxHeap.push(nums[i]);
+        } else if (nums[i] < maxHeap.top()) {
+            maxHeap.pop();
+            maxHeap.push(nums[i]);
+        }
+    }
+    
+    for (int i = 0; i < k2 - k1 - 1; i++) {
+        sum += maxHeap.top();
+        maxHeap.pop();
+    }
+
+    return sum;
+}
+```
+
+Time Complexity : *O*(*N*  * log *K2*)
+
+Space Complexity : *O*(*K2*)
+
+## 12、rearrange string
+
+> 给定字符串，重新排列，使得相同字符不在一起
+
+```c++
+input:	"aappp"
+    
+output:	"papap"
+```
+
+```c++
+input:	"Programming"
+    
+output:	"rgmrgmPiano",或"gmringmrPoa",等等
+```
+
+```c++
+input:	"aapa"
+    
+output:	""
+```
+
+code:
+
+```c++
+struct cmp_smaller {
+    bool operator()(const pair<char, int> &x, const pair<char, int> &y) {
+        return x.second < y.second;
+    }
+};
+
+string rearrangeString(const string &str) {
+    unordered_map<char, int> charFrequencyMap;
+    priority_queue<pair<char, int>, vector<pair<char, int>>, cmp_smaller> maxHeap;
+    string resultString = "";
+    pair<char, int> previousEntry(-1, -1);
+
+    for (auto chr:str) {
+        charFrequencyMap[chr]++;
+    }
+
+    for (auto entry:charFrequencyMap) {
+        maxHeap.push(entry);
+    }
+
+    while (!maxHeap.empty()) {
+        pair<char, int> currentEntry = maxHeap.top();
+        maxHeap.pop();
+        if (previousEntry.second > 0) {
+            maxHeap.push(previousEntry);
+        }
+
+        resultString += currentEntry.first;
+        currentEntry.second--;
+        previousEntry = currentEntry;
+    }
+
+    return resultString.length() == str.length() ? resultString : "";
+}
+```
+
+Time Complexity : *O*(*N*  * log *N*)
+
+Space Complexity : *O*(*N*)
+
+## 13、rearrange string k distance apart
+
+> 给定字符串和K值，重新排列字符串，使得相同字符至少相隔k个字符
+
+```c++
+input:	"mmpp", k=2
+    
+output:	"mpmp" 或 "pmpm"
+```
+
+```c++
+input:	"aappa", k=3
+    
+output:	""
+```
+
+```c++
+input:	"Programming", k=3
+    
+output:	"rgmPrgmiano" 或 "gmrPagimnor" 等等
+```
+
+code：
+
+```c++
+struct cmp_smaller {
+    bool operator()(const pair<char, int> &x, const pair<char, int> &y) {
+        return x.second < y.second;
+    }
+};
+
+string reorganizeString(const string &str, int k) {
+    unordered_map<char, int> charFrequencyMap;
+    priority_queue<pair<char, int>, vector<pair<char, int>>, cmp_smaller> maxHeap;
+    string resultString = "";
+
+    queue<pair<char, int>> queue;
+
+    if (k <= 1) {
+        return str;
+    }
+
+    for (auto chr:str) {
+        charFrequencyMap[chr]++;
+    }
+
+    for (auto entry:charFrequencyMap) {
+        maxHeap.push(entry);
+    }
+
+    while (!maxHeap.empty()) {
+        pair<char, int> currentEntry = maxHeap.top();
+        maxHeap.pop();
+
+        resultString += currentEntry.first;
+        currentEntry.second--;
+        queue.push(currentEntry);
+        if (queue.size() == k) {
+            auto entry = queue.front();
+            queue.pop();
+            if (entry.second > 0) {
+                maxHeap.push(entry);
+            }
+        }
+    }
+    return resultString.length() == str.length() ? resultString : "";
+}
+```
+
+Time Complexity : *O*(*N*  * log *N*)
+
+Space Complexity : *O*(*N*)
+
+## 14、scheduling tasks
+
+> 任务调度，给定一组任务和K值，一个任务执行后必须间隔K 段时间，求完成调度最小总时间，当任务不能调度时用idle
+
+![](./14-1.png)
+
+code:
+
+```c++
+struct cmp_smaller {
+    bool operator()(const pair<char, int> &x, const pair<char, int> &y) {
+        return x.second < y.second;
+    }
+};
+
+int scheduleTask(const vector<char> &task, int k) {
+    int intervalCount = 0;
+    unordered_map<char, int> charFrequencyMap;
+    priority_queue<pair<char, int>, vector<pair<char, int>>, cmp_smaller> maxHeap;
+
+
+    for (auto chr:task) {
+        charFrequencyMap[chr]++;
+    }
+
+    for (auto entry:charFrequencyMap) {
+        maxHeap.push(entry);
+    }
+
+    while (!maxHeap.empty()) {
+        vector<pair<char, int>> waitList;
+        int n = k + 1;
+        for (; n > 0 && !maxHeap.empty(); n--) {
+            intervalCount++;
+            auto currentEntry = maxHeap.top();
+            maxHeap.pop();
+
+            if (currentEntry.second > 1) {
+                currentEntry.second--;
+                waitList.push_back(currentEntry);
+            }
+        }
+
+        for (auto w:waitList) {
+            maxHeap.push(w);
+        }
+
+        if (!maxHeap.empty()) {
+            intervalCount += n;
+        }
+    }
+    return intervalCount;
+}
+```
+
+Time Complexity : *O*(*N*  * log *N*)
+
+Space Complexity : *O*(*N*)
+
+## 15、frequency stack
+
+> 设计类
