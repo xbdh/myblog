@@ -153,8 +153,79 @@ Space Complexity : *O*(*N*)
 code:
 
 ```c++
+vector<vector<int>> merge(const vector<vector<int>> &arr1, const vector<vector<int>> &arr2) {
+    vector<vector<int>> result;
 
+    int i = 0, j = 0;
+
+    while (i < arr1.size() && j < arr2.size()) {
+
+        if ((arr1[i][0] >= arr2[j][0] && arr1[i][0] <= arr2[j][1]) ||
+            (arr2[j][0] >= arr1[i][0] && arr2[j][0] <= arr1[i][1])) {
+
+            result.push_back({max(arr1[i][0], arr2[j][0]), min(arr1[i][1], arr2[j][1])});
+        }
+
+        if (arr1[i][1] < arr2[j][1]) {
+            i++;
+        } else {
+            j++;
+        }
+    }
+    return result;
+}
 ```
 
+Time Complexity : *O*(*N* + *M*)
 
+Space Complexity : *O*(*1*)
+
+## 5、conflicting appointments
+
+> 给定一组区间代表一组会议持续时间，判断某人是否能够参加所有的会议
+
+```c++
+input:	[[1, 4], [2, 5], [7, 9]]
+
+output:	false
+```
+
+```c++
+input:	[[6, 7], [2, 4], [8, 12]]
+
+output:	true
+```
+
+```c++
+input:	[[4, 5], [2, 3], [3, 6]]
+
+output:	false
+```
+
+code:
+
+```c++
+bool canAttendAllAppointments(vector<vector<int>> &nums) {
+    sort(nums.begin(), nums.end());
+
+    for (int i = 1; i < nums.size(); i++) {
+        if (nums[i][0] < nums[i - 1][1]) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
+Time Complexity : *O*(*N* *  log *N* )
+
+Space Complexity : *O*(*N*)
+
+相似问题
+
+> 给定一组区间代表一组会议持续时间，求所有冲突的会议
+
+```c++
+待写
+```
 
