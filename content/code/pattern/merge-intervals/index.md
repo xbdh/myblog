@@ -229,3 +229,54 @@ Space Complexity : *O*(*N*)
 待写
 ```
 
+## 6、minimum meeting rooms
+
+>给定一组区间代表一些会议，求能举办这些会议的最小会议室
+
+![](./6-1.png)
+
+![](./6-2.png)
+
+![](./6-3.png)
+
+code:
+
+```c++
+struct cmp_greater {
+    bool operator()(const vector<int> &x, const vector<int> &y) {
+        return x[1] > y[1];
+    }
+};
+
+
+int minimumMeetingRooms(vector<vector<int>> &meetings) {
+    if (meetings.empty()) {
+        return 0;
+    }
+    sort(meetings.begin(), meetings.end());
+    int minRooms = 0;
+    priority_queue<vector<int>, vector<vector<int>>, cmp_greater> minHeap;
+
+    for (auto m: meetings) {
+        while (!minHeap.empty() && m[0] >= minHeap.top()[1]) {
+            minHeap.pop();
+        }
+        minHeap.push(m);
+        minRooms = max(minRooms, (int) minHeap.size());
+    }
+
+    return minRooms;
+}
+```
+
+Time Complexity : *O*(*N* *  log *N* )
+
+Space Complexity : *O*(*N*)
+
+## 7、maximum cpu load
+
+> 没看懂
+
+## 8、employee free time
+
+> 待看
