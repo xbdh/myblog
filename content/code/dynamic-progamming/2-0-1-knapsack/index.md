@@ -70,3 +70,39 @@ int knapsack(const vector<int> &weight, const vector<int> &profits, int capacity
 Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
+
+### 自顶向下
+
+```c++
+int knapsackRecursive(const vector<int> &weight, const vector<int> &profits, int capacity, vector<vector<int>> &dp,
+                       int currentIndex) {
+    if (capacity == 0 || currentIndex >= weight.size()) {
+        return 0;
+    }
+
+    if (dp[currentIndex][capacity] != -1) {
+        return dp[currentIndex][capacity];
+    }
+
+    int profit1 = 0;
+
+    if (weight[currentIndex] <= capacity) {
+        profit1 = profits[currentIndex] +
+                  knapsackRecursive(weight, profits, capacity - weight[currentIndex], dp, currentIndex + 1);
+    }
+
+    int profit2 = knapsackRecursive(weight, profits, capacity, dp, currentIndex + 1);
+    dp[currentIndex][capacity] = max(profit1, profit2);
+
+    return dp[currentIndex][capacity];
+}
+
+int knapsack(const vector<int> &weight, const vector<int> &profits, int capacity) {
+    vector<vector<int>> dp(weight.size(), vector<int>(capacity + 1, -1));
+    return knapsackRecursive(weight, profits, capacity, dp, 0);
+}
+```
+
+Time Complexity : *O*(*N \* C*)
+
+Space Complexity : *O*(*N \* C*)
