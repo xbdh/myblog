@@ -46,7 +46,7 @@ explanations:	1+4=5,3+7=10
 
 ```c++
 int knapsackRecursive(const vector<int> &weight, const vector<int> &profits, int capacity, int currentIndex) {
-    if (capacity == 0 || currentIndex >= weight.size() || weight.size() != profits.size()) {
+    if (capacity <= 0 || currentIndex >= weight.size() || weight.size() != profits.size()) {
         return 0;
     }
 
@@ -76,7 +76,7 @@ Space Complexity : *O*(*N*)
 ```c++
 int knapsackRecursive(const vector<int> &weight, const vector<int> &profits, int capacity, vector<vector<int>> &dp,
                        int currentIndex) {
-    if (capacity == 0 || currentIndex >= weight.size()) {
+    if (capacity <= 0 || currentIndex >= weight.size()) {
         return 0;
     }
 
@@ -106,3 +106,53 @@ int knapsack(const vector<int> &weight, const vector<int> &profits, int capacity
 Time Complexity : *O*(*N \* C*)
 
 Space Complexity : *O*(*N \* C*)
+
+### 自底向上
+
+```c++
+int knapsack3(const vector<int> &weight, const vector<int> &profits, int capacity) {
+    if (capacity <= 0 || profits.empty() || profits.size() != weight.size()) {
+        return 0;
+    }
+
+    int n = profits.size();
+    vector<vector<int>> dp(n, vector<int>(capacity + 1));
+
+    for (int i = 0; i < n; i++) {
+        dp[i][0] = 0;
+    }
+
+    //如果第一个物品小于物品重量，放置
+    for (int j = 0; j <= capacity; j++) {
+        if (weight[0] <= j) {
+            dp[0][j] = profits[0];
+        }
+    }
+
+    //之后的物品
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j <= capacity; j++) {
+            int profit1 = 0, profit2 = 0;
+
+            if (weight[i] <= j) {
+                profit1 = profits[i] + dp[i - 1][j - weight[i]];
+            }
+            profit2 = dp[i - 1][j];
+            dp[i][j] = max(profit1, profit2);
+        }
+    }
+
+    return dp[n - 1][capacity];
+}
+```
+
+Time Complexity : *O*(*N \* C*)
+
+Space Complexity : *O*(*N \* C*)
+
+改进：
+
+```c++
+
+```
+
