@@ -451,6 +451,110 @@ Space Complexity : *O*(*N \* S*)
 
 拓展：
 
-> 输出分组
+> 输出和相等的两个分组
 
-> 
+```c++
+vector<vector<int>> printPartition(const vector<int> &nums, const vector<vector<bool>> &dp) {
+    int row = nums.size();
+    int halfSum = dp[0].size() - 1;
+    //能否分成和相等的两部分
+    bool canPartition = dp[row - 1][halfSum];
+
+    vector<vector<int>> result;
+    vector<int> part1;
+    vector<int> part2;
+
+
+    for (int i = row - 1; i > 0; i--) {
+        //选中，上一行和此行比较
+        if (dp[i - 1][halfSum] != canPartition) {
+            part1.push_back(nums[i]);
+
+            //跳到选中之前的一步
+            halfSum -= nums[i];
+            //既然两行的值不一样，下一步比较时，canPartition取反
+            canPartition = dp[i - 1][halfSum];
+        } else {
+            part2.push_back(nums[i]);
+            //canPartition = dp[i][halfSum];
+        }
+
+    }
+
+    //处理第一行，halfSum==0时，未选中。
+    if (halfSum != 0) {
+        part1.push_back(nums[0]);
+    } else {
+        part2.push_back(nums[0]);
+    }
+    result.push_back(part1);
+    result.push_back(part2);
+    return result;
+}
+```
+
+## 3、subset sum
+
+> 给定正整数数组和S值，判断是否存在子数组，使得其和等于S
+
+```c++
+input: [1, 2, 3, 7], s=6
+    
+output:	true
+    
+explanation:sum(1, 2, 3)=6
+```
+
+```c++
+input: [1, 2, 7, 1, 5], s=10
+    
+output:	true
+    
+explanation:sum(1, 2, 7)=10
+```
+
+```c++
+input: [1, 3, 4, 8], s=6
+    
+output:	false
+```
+
+### 暴力法
+
+```c++
+bool subsetSumRecursive(const vector<int> &nums, int sum, int currentIndex) {
+    if (sum == 0) {
+        return true;
+    }
+    if (currentIndex >= nums.size()) {
+        return false;
+    }
+    
+    if (nums[currentIndex] <= sum) {
+        //一定要加if判断，此分支(及分支的分支···）为假，不代表下一分支假
+        //为假时跳到下一步
+        if (subsetSumRecursive(nums, sum - nums[currentIndex], currentIndex + 1)) {
+            return true;
+        }
+    }
+    //上一分支为假
+    return subsetSumRecursive(nums, sum, currentIndex + 1);
+}
+
+bool subsetSum(const vector<int> &nums, int sum) {
+    if (sum == 0) {
+        return true;
+    }
+    if (nums.empty()) {
+        return false;
+    }
+    return subsetSumRecursive(nums, sum, 0);
+}
+```
+
+### 自顶向下
+
+```c++
+
+```
+
