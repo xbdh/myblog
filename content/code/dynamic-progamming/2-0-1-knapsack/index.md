@@ -199,7 +199,7 @@ void printSelectElements(const vector<int> &weight, const vector<int> &profits, 
     cout << "--------";
     //不能等于0，会越界
     for (int i = n - 1; i > 0; i--) {
-        //最值与正上方比较
+        //最值与正上方比较,选中
         if (totalProfit != dp[i - 1][capacity]) {
 
             cout << weight[i] << " ";
@@ -297,4 +297,160 @@ Time Complexity : *O*(*N \* C*)
 
 Space Complexity : *O*(*C*)
 
-## 
+## 2、equal subsets sum partition
+
+> 给定正整数数组，是否存在一种分法将数组分为不相交的两部分，使得他们的和相等
+
+> 即求是否存在子数组使得其和为数组和的一半
+
+### 暴力法
+
+```c++
+bool partitionRecursive(const vector<int> &nums, int sum, int currentIndex) {
+    if (sum == 0) {
+        return true;
+    }
+
+    if (currentIndex >= nums.size()) {
+        return false;
+    }
+    if (nums[currentIndex] <= sum) {
+        if (partitionRecursive(nums, sum - nums[currentIndex], currentIndex + 1)) {
+            return true;
+        }
+    }
+    return partitionRecursive(nums, sum, currentIndex + 1);
+}
+
+bool equalSubset(const vector<int> &nums) {
+    if (nums.empty()) {
+        return false;
+    }
+    
+    int sum = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        sum += nums[i];
+    }
+
+    if (sum % 2 != 0) {
+        return false;
+    }
+
+    return partitionRecursive(nums, sum / 2, 0);
+}
+```
+
+Time Complexity : *O*(2^*N*)
+
+Space Complexity : *O*(*N*)
+
+### 自顶向下
+
+```c++
+bool partitionRecursive2(const vector<int> &nums, int sum, int currentIndex, vector<vector<int>> &dp) {
+    if (sum == 0) {
+        return true;
+    }
+
+    if (currentIndex >= nums.size()) {
+        return false;
+    }
+
+    if (dp[currentIndex][sum] == -1) {
+        if (nums[currentIndex] <= sum) {
+            if (partitionRecursive(nums, sum - nums[currentIndex], currentIndex + 1)) {
+                dp[currentIndex][sum] = 1;
+                return true;
+            }
+        }
+        dp[currentIndex][sum] = partitionRecursive(nums, sum, currentIndex + 1) ? 1 : 0;
+    }
+
+    return dp[currentIndex][sum] == 1 ? true : false;
+}
+
+bool equalSubset2(const vector<int> &nums) {
+    if (nums.empty()) {
+        return false;
+    }
+
+    int sum = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        sum += nums[i];
+    }
+
+    if (sum % 2 != 0) {
+        return false;
+    }
+
+    vector<vector<int>> dp(nums.size(), vector<int>(sum / 2 + 1, -1));
+    return partitionRecursive2(nums, sum / 2, 0, dp);
+}
+```
+
+Time Complexity : *O*(*N \* S*) ，S为数组和
+
+Space Complexity : *O*(*N \* S*)
+
+### 自底向上
+
+```c++
+bool equalSubset3(const vector<int> &nums) {
+    if (nums.empty()) {
+        return false;
+    }
+
+    int sum = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        sum += nums[i];
+    }
+
+    if (sum % 2 != 0) {
+        return false;
+    }
+    int halfSum = sum / 2;
+
+    vector<vector<bool>> dp(nums.size(), vector<bool>(halfSum + 1));
+
+    //第一列
+    for (int i = 0; i < nums.size(); i++) {
+        dp[i][0] = true;
+    }
+
+    //第一行：第二个到最后一个
+    //此行非常重要，值不一定相同，视情况而定
+    //当处理nums[0]时，如果其值等于s,表明数组其余的元素和也是s
+    for (int s = 1; s <= halfSum; s++) {
+        //dp[0][s]= (nums[0]==s? true: false);
+        if (nums[0] == s) {
+            dp[0][s] = true;
+        } else {
+            dp[0][s] = false;
+        }
+
+    }
+
+    for (int i = 1; i < nums.size(); i++) {
+        for (int s = 1; s <= halfSum; s++) {
+            //选中nums[i]
+            if (nums[i] <= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
+            } else {
+                //跳过nums[i]
+                dp[i][s] = dp[i - 1][s];
+            }
+        }
+    }
+    return dp[nums.size() - 1][halfSum];
+}
+```
+
+Time Complexity : *O*(*N \* S*) ，S为数组和
+
+Space Complexity : *O*(*N \* S*)
+
+拓展：
+
+> 输出分组
+
+> 
