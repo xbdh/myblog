@@ -433,11 +433,12 @@ bool equalSubset3(const vector<int> &nums) {
     for (int i = 1; i < nums.size(); i++) {
         for (int s = 1; s <= halfSum; s++) {
             //选中nums[i]
-            if (nums[i] <= s) {
-                dp[i][s] = dp[i - 1][s - nums[i]];
-            } else {
+            if(dp[i-1][s]) {
                 //跳过nums[i]
                 dp[i][s] = dp[i - 1][s];
+            
+            }else if (nums[i] <= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
             }
         }
     }
@@ -636,11 +637,13 @@ bool subsetSum3(const vector<int> &nums, int sum) {
 
     for (int i = 1; i < n; i++) {
         for (int s = 1; s <= sum; s++) {
-          	//待看
-            if (nums[i] <= s) {
-                dp[i][s] = dp[i - 1][s - nums[i]];
-            } else {
+          	//选中nums[i]
+            if(dp[i-1][s]) {
+                //跳过nums[i]
                 dp[i][s] = dp[i - 1][s];
+                
+            }else if (nums[i] <= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
             }
         }
     }
@@ -773,10 +776,12 @@ int minSubsetSumDifferent3(const vector<int> &nums) {
     }
     for (int i = 1; i < n; i++) {
         for (int s = 1; s <= halfSum; s++) {
-            if (nums[i] <= s) {
-                dp[i][s] = dp[i - 1][s - nums[i]];
-            } else {
+            if(dp[i-1][s]) {
+                //跳过nums[i]
                 dp[i][s] = dp[i - 1][s];
+
+            }else if (nums[i] <= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
             }
         }
     }
