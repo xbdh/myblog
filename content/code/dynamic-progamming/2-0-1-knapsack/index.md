@@ -552,9 +552,101 @@ bool subsetSum(const vector<int> &nums, int sum) {
 }
 ```
 
+Time Complexity : *O*(2^*N*)
+
+Space Complexity : *O*(*N*)
+
 ### 自顶向下
 
 ```c++
+bool subsetSumRecursive2(const vector<int> &nums, int sum, int currentIndex, vector<vector<int>> &dp) {
+    if (sum == 0) {
+        return true;
+    }
 
+    if (currentIndex >= nums.size()) {
+        return false;
+    }
+
+    if (dp[currentIndex][sum] == -1) {
+
+        if (nums[currentIndex] <= sum) {
+            if (subsetSumRecursive2(nums, sum - nums[currentIndex], currentIndex + 1, dp)) {
+                dp[currentIndex][sum] = 1;
+                return true;
+            }
+        }
+        dp[currentIndex][sum] = subsetSumRecursive2(nums, sum, currentIndex + 1, dp) ? 1 : 0;
+
+    }
+
+    return dp[currentIndex][sum] == 1 ? true : false;
+}
+
+bool subsetSum2(const vector<int> &nums, int sum) {
+    if (sum == 0) {
+        return true;
+    }
+    if (nums.empty()) {
+        return false;
+    }
+    int n = nums.size();
+    vector<vector<int>> dp(n, vector<int>(sum + 1, -1));
+    return subsetSumRecursive2(nums, sum, 0, dp);
+}
 ```
 
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
+
+### 自底向上
+
+![](./1-17.png)
+
+![](./1-18.png)
+
+![](./1-19.png)
+
+![](./1-20.png)
+
+![](./1-21.png)
+
+```c++
+bool subsetSum3(const vector<int> &nums, int sum) {
+    if (sum == 0) {
+        return true;
+    }
+    if (nums.empty()) {
+        return false;
+    }
+    int n = nums.size();
+    vector<vector<bool>> dp(n, vector<bool>(sum + 1));
+
+    for (int i = 0; i < n; i++) {
+        dp[i][0] = true;
+    }
+    for (int s = 1; s <= sum; s++) {
+        if (nums[0] == s) {
+            dp[0][s] = true;
+        } else {
+            dp[0][s] = false;
+        }
+    }
+
+    for (int i = 1; i < n; i++) {
+        for (int s = 1; s <= sum; s++) {
+            if (nums[i] <= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
+            } else {
+                dp[i][s] = dp[i - 1][s];
+            }
+        }
+    }
+    return dp[n - 1][sum];
+}
+```
+
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
