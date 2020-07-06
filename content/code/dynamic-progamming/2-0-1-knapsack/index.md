@@ -636,6 +636,7 @@ bool subsetSum3(const vector<int> &nums, int sum) {
 
     for (int i = 1; i < n; i++) {
         for (int s = 1; s <= sum; s++) {
+          	//待看
             if (nums[i] <= s) {
                 dp[i][s] = dp[i - 1][s - nums[i]];
             } else {
@@ -650,3 +651,296 @@ bool subsetSum3(const vector<int> &nums, int sum) {
 Time Complexity : *O*(*N \* S*) 
 
 Space Complexity : *O*(*N \* S*)
+
+## 4、minimum subset sum different
+
+> 给定正整数组成的数组，将其分为不重合的两个子数组，使得子数组的和 的差的绝对值最小，输出最小的差
+
+```c++
+input:	[1, 2, 3, 9]
+
+output:	3
+    
+explanation：|sum(1,2,3) - sum(9)| = 3
+```
+
+```c++
+input:	[1, 2, 7, 1, 5]
+
+output:	0
+    
+explanation：|sum(1,2,5) - sum(7,1)| = 0
+```
+
+```c++
+input:	[1,  3, 100, 4]
+
+output:	92
+    
+explanation：|sum(1,3,4) - sum(100)| = 92
+```
+
+### 暴力法
+
+```c++
+int minSubsetSumDifferentRecursive(const vector<int> &nums, int sum1, int sum2, int currentIndex) {
+    if (currentIndex == nums.size()) {
+        return abs(sum1 - sum2);
+    }
+    
+    int diff1 = minSubsetSumDifferentRecursive(nums, sum1 + nums[currentIndex], sum2, currentIndex + 1);
+    int diff2 = minSubsetSumDifferentRecursive(nums, sum1, sum2 + nums[currentIndex], currentIndex + 1);
+
+    return min(diff1, diff2);
+}
+
+
+int minSubsetSumDifferent(const vector<int> &nums) {
+    return minSubsetSumDifferentRecursive(nums, 0, 0, 0);
+}
+```
+
+Time Complexity : *O*(*2^N* )
+
+Space Complexity : *O*(*N*)
+
+### 自顶向下
+
+```c++
+int minSubsetSumDifferentRecursive2(const vector<int> &nums, int sum1, int sum2,
+        int currentIndex,vector<vector<int>> &dp) {
+    if (currentIndex == nums.size()) {
+        return abs(sum1-sum2);
+    }
+    if(dp[currentIndex][sum1]==-1){
+        int diff1 = minSubsetSumDifferentRecursive(nums, sum1 + nums[currentIndex], sum2, currentIndex + 1);
+        int diff2 = minSubsetSumDifferentRecursive(nums, sum1, sum2 + nums[currentIndex], currentIndex + 1);
+
+        dp[currentIndex][sum1] = min(diff1,diff2);
+    }
+    
+    return dp[currentIndex][sum1];
+}
+
+int minSubsetSumDifferent2(const vector<int> &nums) {
+    int sum=0;
+    for(int i=0;i<nums.size();i++){
+        sum+=nums[i];
+    }
+    
+    vector<vector<int>> dp(nums.size(),vector<int>(sum+1,-1));
+    return minSubsetSumDifferentRecursive2(nums, 0, 0, 0,dp);
+}
+```
+
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
+
+### 自底向上
+
+> 子数组和等于Sum/2时，有最小值，如果不等于，求最接近sum/2的子数组。
+
+![](./1-22.png)
+
+![](./1-23.png)
+
+![](./1-24.png)
+
+![](./1-25.png)
+
+![](./1-26.png)
+
+![](./1-27.png)
+
+```c++
+int minSubsetSumDifferent3(const vector<int> &nums) {
+    int sum = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        sum += nums[i];
+    }
+    int n = nums.size();
+    int halfSum = sum / 2;
+
+    vector<vector<bool>> dp(n, vector<bool>(halfSum + 1));
+
+    for (int i = 0; i < n; i++) {
+        dp[i][0] = true;
+    }
+
+    for (int s = 1; s <= halfSum; s++) {
+        dp[0][s] = (nums[0] == s ? true : false);
+    }
+    for (int i = 1; i < n; i++) {
+        for (int s = 1; s <= halfSum; s++) {
+            if (nums[i] <= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
+            } else {
+                dp[i][s] = dp[i - 1][s];
+            }
+        }
+    }
+
+    int sum1 = 0;
+
+    //最后一行索引最大的值
+    for (int i = halfSum; i >= 0; i--) {
+        if (dp[n - 1][i] == true) {
+            sum1 = i;
+            break;
+        }
+    }
+    int sum2 = sum - sum1;
+    return abs(sum2 - sum1);
+}
+```
+
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
+
+## 5、count of subset sum
+
+> 给定正整数数组和S值，求满足子数组和等于S的子数组所有个数
+
+```c++
+input:	[1, 1, 2, 3], S=4
+    
+output:	3
+    
+explanation:[1,1,2], [1,3], [1,3]
+```
+
+```c++
+input:	[1, 2, 7, 1 , 5], S=9
+    
+output:	3
+    
+explanation:[2,7], [1,7,1], [1,2,1,5]
+```
+
+### 暴力法
+
+```c++
+int countSubsetRecursive(const vector<int> &nums, int sum, int currentIndex) {
+    if (sum == 0) {
+        return 1;
+    }
+    if (currentIndex >= nums.size()) {
+        return 0;
+    }
+    int sum1 = 0;
+    if (nums[currentIndex] <= sum) {
+        sum1 = countSubsetRecursive(nums, sum - nums[currentIndex], currentIndex + 1);
+
+    }
+    int sum2 = countSubsetRecursive(nums, sum, currentIndex + 1);
+
+    return sum1 + sum2;
+}
+
+int countSubset(const vector<int> &nums, int sum) {
+    if (nums.empty()) {
+        return 0;
+    }
+
+    return countSubsetRecursive(nums, sum, 0);
+}
+```
+
+Time Complexity : *O*(*2^N* )
+
+Space Complexity : *O*(*N*)
+
+### 自顶向下
+
+```c++
+
+int countSubsetRecursive2(const vector<int> &nums, int sum, int currentIndex, vector<vector<int>> &dp) {
+    if (sum == 0) {
+        return 1;
+    }
+    if (currentIndex >= nums.size()) {
+        return 0;
+    }
+
+    if (dp[currentIndex][sum] == -1) {
+        int sum1 = 0;
+        if (nums[currentIndex] <= sum) {
+            sum1 = countSubsetRecursive(nums, sum - nums[currentIndex], currentIndex + 1);
+
+        }
+        int sum2 = countSubsetRecursive(nums, sum, currentIndex + 1);
+        dp[currentIndex][sum] = sum1 + sum2;
+    }
+
+    return dp[currentIndex][sum];
+}
+
+int countSubset2(const vector<int> &nums, int sum) {
+    if (nums.empty()) {
+        return 0;
+    }
+
+    int n = nums.size();
+    vector<vector<int>> dp(n, vector<int>(sum + 1, -1));
+
+    return countSubsetRecursive2(nums, sum, 0, dp);
+}
+```
+
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
+
+### 自底向上
+
+![](./1-5-1.png)
+
+```c++
+int countSubset3(const vector<int> &nums, int sum) {
+    if (nums.empty()) {
+        return 0;
+    }
+
+    int n = nums.size();
+    vector<vector<int>> dp(n, vector<int>(sum + 1, 0));
+
+
+    for (int i = 0; i < n; i++) {
+        dp[i][0] = 1;
+    }
+
+    for (int s = 1; s <= sum; s++) {
+        dp[0][s] = (nums[0] == s ? 1 : 0);
+    }
+    for (int i = 1; i < n; i++) {
+        for (int s = 1; s <= sum; s++) {
+            //未加入，顺序不能错
+            dp[i][s] = dp[i - 1][s];
+
+            //加入
+            if (nums[i] <= s) {
+                dp[i][s] = dp[i][s] + dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+    return dp[n - 1][sum];
+}
+```
+
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
+
+![](./1-5-2.png)
+
+![](./1-5-3.png)
+
+![](./1-5-4.png)
+
+![](./1-5-5.png)
+
+![](./1-5-6.png)
+
+![](./1-5-7.png)
