@@ -1,4 +1,8 @@
 ---
+
+
+
+
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Dynamic Programming-2 0-1 Knapsack"
@@ -949,3 +953,77 @@ Space Complexity : *O*(*N \* S*)
 ![](./1-5-6.png)
 
 ![](./1-5-7.png)
+
+## 6、target sum
+
+> 给定正整数数组和值S，数组每个数前缀"+"或"-"，使得所有数的和为S，求多少种方式
+
+> 即求子数组a1，子数组a2，使得sum(a1) - sum(a2)=S
+>
+> 且sum(a1) + sum(a2)= S-total
+>
+> 则：sum(a1)=(S + S-total)/2
+>
+> 即求子数组，使得其和为(S + S-total)/2
+
+```c++
+input:	[1, 2, 2, 3] ,s=1
+    
+output:	3
+   
+explanation:+1-1-2+3=1, -1+1-2+3=1, +1+1+2-3=1
+```
+
+````c++
+input:	[1 ,2 ,7, 1] ,s=9
+   
+output:	2
+    
+explanation:+1+2+7-1=9 , -1+2+7+1=2
+````
+
+### 自底向上
+
+```c++
+int countSubsets(const vector<int> &nums, int sum) {
+    int n = nums.size();
+    vector<vector<int>> dp(n, vector<int>(sum + 1));
+    for (int i = 0; i < n; i++) {
+        dp[i][0] = 1;
+    }
+
+    for (int s = 1; s <= sum; s++) {
+        dp[0][s] = (nums[0] == s ? 1 : 0);
+    }
+
+    for (int i = 1; i < n; i++) {
+        for (int s = 1; s <= sum; s++) {
+            dp[i][s] = dp[i - 1][s];
+            if (nums[i] <= s) {
+                dp[i][s] = dp[i][s] + dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+
+    return dp[n - 1][sum];
+}
+
+int targetSum(const vector<int> &nums, int target) {
+    int totalSum = 0;
+    for (auto n:nums) {
+        totalSum += n;
+    }
+
+    if (totalSum < target || (target + totalSum) % 2 == 1) {
+        return 0;
+    }
+
+    return countSubsets(nums, (target + totalSum) / 2);
+    
+}
+```
+
+Time Complexity : *O*(*N \* S*) 
+
+Space Complexity : *O*(*N \* S*)
+
