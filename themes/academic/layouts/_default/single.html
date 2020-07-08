@@ -1,6 +1,11 @@
 {{- define "main" -}}
-
-<article class="article">
+<!-- <aside>
+  {{ .TableOfContents }}
+</aside> -->
+<!-- <aside style="float: right;">
+  {{ .Page.TableOfContents }}
+</aside> -->
+<!-- <article class="article">
 
   {{ partial "page_header" . }}
 
@@ -13,6 +18,35 @@
     {{ partial "page_footer" . }}
 
   </div>
-</article>
-
+  
+</article> -->
+{{ if .Params.toc }}
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+      <!-- 删除了d-none-->
+      <div class="d-xl-block col-md-3 col-xl-4 docs-toc">
+        <ul class="nav toc-top">
+          <li><a href="#" id="back_to_top" class="docs-toc-title">{{ i18n "on_this_page" }}</a></li>
+        </ul>
+        {{ .TableOfContents }}
+        {{ partial "docs_toc_foot" . }}
+      </div>
+      <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+{{ end }}
+        <article class="article">
+            {{ partial "page_header" . }}
+            <div class="article-container">
+              <div class="article-style">
+                {{ .Content }}
+              </div>
+              {{ partial "page_footer" . }}
+            </div>
+        </article>
+  {{ if .Params.toc }}
+      </main>
+    </div>
+  </div>
+  {{ end }}
 {{- end -}}
+
+

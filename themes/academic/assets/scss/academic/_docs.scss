@@ -19,7 +19,7 @@
 /* Docs content. */
 
 .docs-content {
-  order: 1;
+  order: 2;
   position: relative;
 }
 
@@ -149,10 +149,11 @@
 /* Docs TOC. */
 
 .docs-toc {
-  order: 2;
-  padding-top: 1.5rem;
+  order: 1;
+  padding-top: 2.5rem;
   padding-bottom: 1.5rem;
-  font-size: .875rem
+  font-size:1rem;
+  font-weight:900;
 }
 
 @supports ((position:-webkit-sticky) or (position:sticky)) {
@@ -216,10 +217,13 @@
 #TableOfContents ul,
 ul.toc-top {
   padding-left: 0;
+  
 }
 
 #TableOfContents ul ul {
-  display: none;
+  display: block;
+  padding-left: 20px;
+  font-size: 0.5rem;
 }
 
 #TableOfContents li {
@@ -229,9 +233,9 @@ ul.toc-top {
 #TableOfContents li a,
 .toc-top li a {
   display: block;
-  padding: .125rem 1.5rem;
-  color: #99979c;
-  font-size: 0.7rem;
+  padding: .125rem 1rem;
+  color: #000000;
+  font-size: 1rem;
 }
 
 #TableOfContents li a:hover,
@@ -257,4 +261,13 @@ ul.toc-top {
 .anchorjs-link:hover {
   color: $sta-primary;
   text-decoration: none;
+}
+
+//自定义
+#TableOfContents  ul  li a {
+  font-size: 1rem;
+}
+#TableOfContents  ul  li ul  a {
+    font-size: 0.7rem;
+    color:#6e5353;
 }

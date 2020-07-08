@@ -15,6 +15,7 @@ date: 2020-07-01T16:33:38+08:00
 lastmod: 2020-07-01T16:33:38+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -31,6 +32,8 @@ image:
 #   Otherwise, set `projects = []`.
 projects: []
 ---
+
+
 
 ## 1、0-1 Knapsack
 
