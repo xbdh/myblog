@@ -8881,6 +8881,9 @@ ul.toc-top {
   font-size: 0.7rem;
   color: #a9a9a9; }
 
+article {
+  border-left: 2px solid #eee; }
+
 /*************************************************
  *  Dark themed components
  **************************************************/
