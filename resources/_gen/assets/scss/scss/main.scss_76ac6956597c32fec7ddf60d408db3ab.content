@@ -8681,7 +8681,7 @@ ul.ul-edu li .description p.institution {
 
 /* Docs content. */
 .docs-content {
-  order: 2;
+  order: 1;
   position: relative; }
 
 .docs-content > h2[id],
@@ -8780,7 +8780,7 @@ ul.ul-edu li .description p.institution {
 
 /* Docs TOC. */
 .docs-toc {
-  order: 1;
+  order: 2;
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
   font-size: 1rem;
@@ -8829,7 +8829,7 @@ ul.ul-edu li .description p.institution {
 
 #TableOfContents {
   padding-left: 0;
-  border-left: 1px solid #eee; }
+  border-left: 3px solid #eee; }
 
 #TableOfContents ul,
 ul.toc-top {
@@ -8881,8 +8881,8 @@ ul.toc-top {
   font-size: 0.7rem;
   color: #a9a9a9; }
 
-article {
-  border-left: 2px solid #eee; }
+article > div:nth-child(2) {
+  border: 1px solid #eee; }
 
 /*************************************************
  *  Dark themed components

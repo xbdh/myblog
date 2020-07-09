@@ -18,8 +18,9 @@
 
 /* Docs content. */
 
+//order代表顺序
 .docs-content {
-  order: 2;
+  order: 1;
   position: relative;
 }
 
@@ -149,7 +150,7 @@
 /* Docs TOC. */
 
 .docs-toc {
-  order: 1;
+  order: 2;
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
   font-size:1rem;
@@ -211,7 +212,7 @@
 
 #TableOfContents {
   padding-left: 0;
-  border-left: 1px solid #eee;
+  border-left: 3px solid #eee;
 }
 
 #TableOfContents ul,
@@ -283,7 +284,11 @@ ul.toc-top {
 //   padding-left: 30px;
 // }
 
-//分隔线
-article{
-  border-left: 2px solid #eee;
+// //分隔线
+article > div:nth-child(2){
+  border: 1px solid #eee;
 }
+
+// // #top > div.container-fluid.docs > div > main > article > div:nth-child(2)
+// //*[@id="top"]/div[1]/div/main/article/div[2]
+// /html/body/div[1]/div/main/article/div[2]
