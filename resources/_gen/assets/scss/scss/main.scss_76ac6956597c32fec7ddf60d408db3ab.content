@@ -7885,7 +7885,7 @@ article {
   animation-delay: 0.15s; }
 
 .article-container {
-  max-width: 900px;
+  max-width: 1000px;
   padding: 0 20px 0 20px;
   margin: 0 auto 0 auto; }
 
@@ -8837,7 +8837,7 @@ ul.toc-top {
 
 #TableOfContents ul ul {
   display: block;
-  padding-left: 20px;
+  padding-left: 10px;
   font-size: 0.5rem; }
 
 #TableOfContents li {
@@ -8871,11 +8871,15 @@ ul.toc-top {
   text-decoration: none; }
 
 #TableOfContents ul li a {
-  font-size: 1rem; }
+  font-size: 0.8rem; }
 
 #TableOfContents ul li ul a {
   font-size: 0.7rem;
-  color: #6e5353; }
+  color: #696969; }
+
+#TableOfContents ul li ul ul a {
+  font-size: 0.7rem;
+  color: #a9a9a9; }
 
 /*************************************************
  *  Dark themed components
@@ -8996,4 +9000,4 @@ div.mermaid {
   margin-bottom: 1rem; }
 
 html {
-  scroll-behavior: smooth; }
+  scroll-behavior: auto; }
