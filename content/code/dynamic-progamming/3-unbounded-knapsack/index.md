@@ -454,7 +454,7 @@ Space Complexity : *O*(*N \* T*)
 
 ## 4. minimum coin change
 
-> 无限量不同面值的硬币和要换的总钱N，求硬币总数最小的的值
+> 无限量不同面值的硬币和要换的总钱N，求硬币总数最小值
 
 ```c++
 input: [1, 2, 3] , amount=5
@@ -480,7 +480,7 @@ int countCoinChangeRecursive(const vector<int> &nums, int total, int currentInde
         return 0;
     }
     if (currentIndex >= nums.size()) {
-        return INT_MAX;
+        return -1;
     }
 
     int count1 = INT_MAX;
@@ -535,7 +535,7 @@ int countCoinChangeRecursive2(const vector<int> &nums, int total, int currentInd
 
 int countCoinChange2(const vector<int> &nums, int total) {
     if (nums.empty()) {
-        return INT_MAX;
+        return -1;
     }
 
     vector<vector<int>> dp(nums.size(), vector<int>(total + 1, INT_MAX));
@@ -606,3 +606,110 @@ Space Complexity : *O*(*N \* T*)
 
 ![](./4-8.png)
 
+## 5. maximum ribbon cut
+
+> 相当于：无限量不同面值的硬币和要换的总钱N，求硬币总数最大值
+
+```c++
+input:	[2,3,5] ,total=5
+    
+output:	2
+    
+explanation: {2,3}
+```
+
+```c++
+input:	[2,3] ,total=7
+    
+output:	3
+    
+explanation: {2,2,3}
+```
+
+```c++
+input:	[3, 5,7] ,total=13
+    
+output:	3
+    
+explanation: {3,3,7}
+```
+
+### Brute-force
+
+```c++
+int countCoinChangeRecursive(const vector<int> &nums, int total, int currentIndex) {
+    if (total == 0) {
+        return 0;
+    }
+    if (currentIndex >= nums.size()) {
+        return INT_MIN;
+    }
+
+    int count1 = INT_MIN;
+    if (nums[currentIndex] <= total) {
+        if (INT_MIN != countCoinChangeRecursive(nums, total - nums[currentIndex], currentIndex)) {
+            count1 = 1 + countCoinChangeRecursive(nums, total - nums[currentIndex], currentIndex);
+        }
+    }
+    int count2 = countCoinChangeRecursive(nums, total, currentIndex + 1);
+
+    return max(count1, count2);
+}
+
+int countCoinChange(const vector<int> &nums, int total) {
+    if (nums.empty()) {
+        return -1;
+    }
+
+    int result = countCoinChangeRecursive(nums, total, 0);
+    return result == INT_MIN ? -1 : result;
+}
+```
+
+Time Complexity : *O*(*2^(N+T)* )
+
+Space Complexity : *O*(*N + T*)
+
+### Bottom-up
+
+![](./5-1.png)
+
+```c++
+int countCoinChange3(const vector<int> &nums, int total) {
+    if (nums.empty()) {
+        return -1;
+    }
+    if (total == 0) {
+        return 0;
+    }
+    int n = nums.size();
+    vector<vector<int>> dp(n, vector<int>(total + 1));
+
+    for (int i = 0; i < n; i++) {
+        dp[i][0] = 0;
+    }
+    //只有nums[0]时，最小个数为t/nums[0];
+    for (int t = 1; t <= total; t++) {
+        dp[0][t] = (t % nums[0] == 0 ? t / nums[0] : INT_MIN);
+    }
+
+    for (int i = 1; i < n; i++) {
+        for (int t = 1; t <= total; t++) {
+            dp[i][t] = dp[i - 1][t];
+            //选中
+            if (nums[i] <= t) {
+                if (dp[i][t - nums[i]] != INT_MIN) {
+                    dp[i][t] = max(dp[i - 1][t], 1 + dp[i][t - nums[i]]);
+                }
+            }
+
+        }
+    }
+
+    return (dp[n - 1][total] == INT_MIN) ? -1 : dp[n - 1][total];
+}
+```
+
+Time Complexity : *O*(*N \* T*)
+
+Space Complexity : *O*(*N \* T*)
