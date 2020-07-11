@@ -11,7 +11,7 @@ date: 2020-07-01T16:33:16+08:00
 lastmod: 2020-07-01T16:33:16+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
@@ -73,7 +73,7 @@ int fib(int n) {
 int fib(int n) {
     if (n == 0) return 0;
     vector<int> dp(n + 1);
-    dp[0] = 1;
+    dp[0] = 0;
     dp[1] = 1;
     for (int i = 2; i <= n; i++) {
         dp[i] = dp[i - 1] + dp[i - 2];
