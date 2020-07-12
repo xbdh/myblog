@@ -416,3 +416,189 @@ int countJumps3(const vector<int> &jumps) {
 Time Complexity : *O*(*N^2*)
 
 Space Complexity : *O*(*N*)
+
+## 5. minimum jumps with fee
+
+> 给定N，代表n步台阶，N个元素的数组代表上某一台阶的花费，你每次可以走1,2,3步，求最小花费到达终点
+
+```C++
+input:	n=6, fee:[1,2,5,2,1,2]
+
+output:	3
+    
+explanation:0-index(1)->3-index(2)->top ,1+2=3
+```
+
+```c++
+input:	n=4, fee:[2,3,4,5]
+
+output:	5
+    
+explanation:0-index(2)->1-index(3)->top ,2+3=5
+```
+
+### Brute-force
+
+```c++
+int minFeeRecursive(const vector<int> &fees, int currentIndex) {
+    if (currentIndex >= fees.size()) {
+        return 0;
+    }
+
+    int partFee1 = minFeeRecursive(fees, currentIndex + 1);
+    int partFee2 = minFeeRecursive(fees, currentIndex + 2);
+    int partFee3 = minFeeRecursive(fees, currentIndex + 3);
+
+    return min(partFee1, min(partFee2, partFee3))+ fees[currentIndex];
+}
+
+int minFee(const vector<int> &fees) {
+    return minFeeRecursive(fees, 0);
+}
+```
+
+Time Complexity : *O*(*3^N* )
+
+Space Complexity : *O*(*N*)
+
+### Top-down
+
+```c++
+int minFeeRecursive2(const vector<int> &fees, int currentIndex, vector<int> dp) {
+    if (currentIndex >= fees.size()) {
+        return 0;
+    }
+
+    if (dp[currentIndex] == -1) {
+        int partFee1 = minFeeRecursive2(fees, currentIndex + 1, dp);
+        int partFee2 = minFeeRecursive2(fees, currentIndex + 2, dp);
+        int partFee3 = minFeeRecursive2(fees, currentIndex + 3, dp);
+
+        dp[currentIndex] = min(partFee1, min(partFee2, partFee3)) + fees[currentIndex];
+    }
+
+    return dp[currentIndex];
+}
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
+
+### Bottom-up
+
+```c++
+int minFee3(const vector<int> &fees) {
+    //dp[n]代表，n阶台阶时，最小费用
+    vector<int> dp(fees.size() + 1);
+
+    //n=0,时不需要，n=1或2时，只需fees[0]
+    dp[0] = 0;
+    dp[1] = fees[0];
+    dp[2] = fees[0];
+
+    //i,i-1,i-2阶台阶可直接到i+1阶台阶
+    for (int i = 2; i < fees.size(); i++) {
+        dp[i + 1] = min(fees[i] + dp[i], min(fees[i - 1] + dp[i - 1], fees[i - 2] + dp[i - 2]));
+    }
+    return dp[fees.size()];
+}
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
+
+## 6. house thief
+
+> 小偷偷房子，n元数组代表n个房子的财富，小偷不能偷连续2个房子，求能偷到的最大财富
+
+```c++
+input:	[2,5,1,3,6,2,4]
+
+output:	15
+    
+expalanation:5 + 6 + 4 = 15
+```
+
+```c++
+input:	[2, 10, 14, 8, 1]
+
+output:	18
+    
+expalanation:10 + 8 = 18
+```
+
+### Brute-force
+
+```c++
+int maxWealthRecursive(const vector<int> &wealth, int currentIndex) {
+    if (currentIndex >= wealth.size()) {
+        return 0;
+    }
+
+    int part1wealth = maxWealthRecursive(wealth, currentIndex + 2) + wealth[currentIndex];
+    int part2wealth = maxWealthRecursive(wealth, currentIndex + 1);
+
+    return max(part1wealth, part2wealth);
+}
+
+int maxWealth(const vector<int> &wealth) {
+    return maxWealthRecursive(wealth, 0);
+}
+```
+
+Time Complexity : *O*(*2^N* )
+
+Space Complexity : *O*(*N*)
+
+### Top-down
+
+```c++
+int maxWealthRecursive2(const vector<int> &wealth, int currentIndex, vector<int> dp) {
+    if (currentIndex >= wealth.size()) {
+        return 0;
+    }
+
+    if (dp[currentIndex] == -1) {
+        int part1wealth = maxWealthRecursive2(wealth, currentIndex + 2, dp) + wealth[currentIndex];
+        int part2wealth = maxWealthRecursive2(wealth, currentIndex + 1, dp);
+        dp[currentIndex] = max(part1wealth, part2wealth);
+    }
+
+    return dp[currentIndex];
+}
+
+int maxWealth2(const vector<int> &wealth) {
+    vector<int> dp(wealth.size() + 1, -1);
+    return maxWealthRecursive2(wealth, 0, dp);
+}
+
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
+
+### Bottom-up
+
+```c++
+int maxWealth3(const vector<int> &wealth) {
+    //dp[n],当物品为n时最大财富
+    vector<int> dp(wealth.size() + 1);
+    dp[0] = 0;
+    dp[1] = wealth[0];
+//    dp[2]=max(wealth[0],wealth[1]);
+    for (int i = 1; i < wealth.size(); i++) {
+        //dp[i]:不偷；
+        //dp[i-1]+wealth[i]:偷 i-1个物品最大值，加上第i+1个物品的价值
+        dp[i + 1] = max(dp[i], dp[i - 1] + wealth[i]);
+    }
+    return dp[wealth.size()];
+}
+```
+
+Time Complexity : *O*(*N*)
+
+Space Complexity : *O*(*N*)
+
