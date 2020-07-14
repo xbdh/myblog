@@ -5,8 +5,8 @@ title: "Dynamic Programming-4 Fibonacci Numbers"
 subtitle: ""
 summary: "斐波那契数"
 authors: []
-tags: ["Dynamic Programming"]
-categories: []
+tags: ["Fibonacci Numbers"]
+categories: ["Dynamic Programming"]
 date: 2020-07-01T16:35:01+08:00
 lastmod: 2020-07-01T16:35:01+08:00
 featured: false

@@ -5,13 +5,13 @@ title: "Dynamic Programming-6 Longest Common Substring"
 subtitle: ""
 summary: "最长公共子序列"
 authors: []
-tags: ["Dynamic Programming","最长公共子序列"]
-categories: []
+tags: ["最长公共子序列"]
+categories: ["Dynamic Programming"]
 date: 2020-07-01T16:36:22+08:00
 lastmod: 2020-07-01T16:36:22+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

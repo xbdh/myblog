@@ -7,8 +7,8 @@ title: "Dynamic Programming-3 Unbounded Knapsack"
 subtitle: ""
 summary: "无界限背包"
 authors: []
-tags: ["Dynamic Programming"]
-categories: []
+tags: ["Unbounded Knapsack"]
+categories: ["Dynamic Programming"]
 date: 2020-07-01T16:34:12+08:00
 lastmod: 2020-07-01T16:34:12+08:00
 featured: false

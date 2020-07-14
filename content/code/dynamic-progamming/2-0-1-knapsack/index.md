@@ -9,8 +9,8 @@ title: "Dynamic Programming-2 0-1 Knapsack"
 subtitle: ""
 summary: "0-1背包"
 authors: []
-tags: ["Dynamic Programming"]
-categories: []
+tags: ["0-1 Knapsack"]
+categories: ["Dynamic Programming"]
 date: 2020-07-01T16:33:38+08:00
 lastmod: 2020-07-01T16:33:38+08:00
 featured: false

@@ -5,8 +5,8 @@ title: "Dynamic Programming-1 Introduction"
 subtitle: ""
 summary: "简介"
 authors: []
-tags: ["Dynamic Programming"]
-categories: []
+tags: []
+categories: ["Dynamic Programming"]
 date: 2020-07-01T16:33:16+08:00
 lastmod: 2020-07-01T16:33:16+08:00
 featured: false
