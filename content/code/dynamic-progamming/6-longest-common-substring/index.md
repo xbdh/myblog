@@ -276,3 +276,4 @@ Space Complexity : *O*(*N \* M*)
 
 ![](./2-8.png)
 
+##  3. minimum deletions or insertions to transform a string into another
