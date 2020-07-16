@@ -277,3 +277,273 @@ Space Complexity : *O*(*N \* M*)
 ![](./2-8.png)
 
 ##  3. minimum deletions or insertions to transform a string into another
+
+> 给定字符串S1,S2,通过删除插入字符使得S1变成S2，求最小的删除插入数
+
+```c++
+input:	s1="abc",s2="fbc"
+    
+output:	1 deletions ,1 insertions
+   
+explanation: s1:delete(a),insert(f) ->s2
+```
+
+```c++
+input:	s1="abdca",s2="cbda"
+    
+output:	2 deletions ,1 insertions
+   
+explanation: s1:delete(a,c),insert(c) ->s2
+```
+
+### bottom-up
+
+```c++
+int LCS3(string s1, string s2) {
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int maxLength = 0;
+
+    //使用 d[i][j] 表示以 X[0,i-1]长度为i 与Y[0,j-1] 长度为j 最长公共子序列的长度
+    vector<vector<int>> dp(len1 + 1, vector<int>(len2 + 1));
+    for (int i = 0; i <= len1; i++) {
+        //可不要
+        dp[0][i] = 0;
+        dp[i][0] = 0;
+    }
+    for (int i = 1; i <= len1; i++) {
+        for (int j = 1; j <= len2; j++) {
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+            maxLength = max(maxLength, dp[i][j]);
+        }
+    }
+    return maxLength;
+}
+
+pair<int, int> minDeleteInsert(string s1, string s2) {
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int c = LCS3(s1, s2);
+    return make_pair(len1 - c, len2 - c);
+}
+```
+
+Time Complexity : *O*(*M \* N*)
+
+Space Complexity : *O*(*N \* M*)
+
+## 4. longest increasing subsequence
+
+> 求最长递增子序列的长度
+
+```c++
+input:	[4, 2, 3, 6, 10, 1, 12]
+
+output:	5
+    
+explanation:[2, 3, 6, 10, 12]
+```
+
+```c++
+input:	[-4, 10, 3, 7, 15]
+
+output:	4
+    
+explanation:[-4, 3, 7, 15]
+```
+
+### brute-force
+
+```c++
+int LISLengthRecursive(vector<int> &nums, int currentIndex, int previousIndex) {
+    if (currentIndex >= nums.size()) {
+        return 0;
+    }
+    int c1 = 0;
+
+    //大于先前元素，包含在内
+    if (previousIndex == -1 || nums[currentIndex] > nums[previousIndex]) {
+        c1 = 1 + LISLengthRecursive(nums, currentIndex + 1, currentIndex);
+    }
+
+    //不包含
+    int c2 = LISLengthRecursive(nums, currentIndex + 1, previousIndex);
+
+    return max(c1, c2);
+}
+
+int LIS(vector<int> nums) {
+    return LISLengthRecursive(nums, 0, -1);
+}
+```
+
+Time Complexity : *O*(*2^N* )
+
+Space Complexity : *O*(*N*)
+
+### top-down
+
+```c++
+int LISLengthRecursive2(vector<int> &nums, int currentIndex, int previousIndex, vector<vector<int>> dp) {
+    if (currentIndex >= nums.size()) {
+        return 0;
+    }
+    //previousIndex的取值范围为[-1,n-1]转变为[0,n]
+    if (dp[currentIndex][previousIndex + 1] == -1) {
+        int c1 = 0;
+
+        //大于先前元素，包含在内
+        if (previousIndex == -1 || nums[currentIndex] > nums[previousIndex]) {
+            c1 = 1 + LISLengthRecursive2(nums, currentIndex + 1, currentIndex, dp);
+        }
+        //不包含
+        int c2 = LISLengthRecursive2(nums, currentIndex + 1, previousIndex, dp);
+
+        dp[currentIndex][previousIndex + 1] = max(c1, c2);
+    }
+    return dp[currentIndex][previousIndex + 1];
+}
+
+int LIS2(vector<int> nums) {
+    vector<vector<int>> dp(nums.size(), vector<int>(nums.size() + 1, -1));
+    return LISLengthRecursive2(nums, 0, -1, dp);
+}
+```
+
+Time Complexity : *O*(*N^2* )
+
+Space Complexity : *O*(*N^2*)
+
+### bottom-up
+
+![](./4-1.png)
+
+```c++
+int LIS3(vector<int> nums) {
+    vector<int> dp(nums.size());
+    dp[0] = 1;
+    int maxLength = 1;
+    for (int i = 0; i < nums.size(); i++) {
+        dp[i] = 1;
+        for (int j = 0; j < i; j++) {
+            if (nums[i] > nums[j] && dp[i] <= dp[j]) {
+                dp[i] = dp[j] + 1;
+                maxLength = max(maxLength, dp[i]);
+            }
+        }
+    }
+    return maxLength;
+}
+```
+
+Time Complexity : *O*(*N^2* )
+
+Space Complexity : *O*(*N*)
+
+![](./4-2.png)
+
+![](./4-3.png)
+
+![](./4-4.png)
+
+![](./4-5.png)
+
+![](./4-6.png)
+
+![](./4-7.png)
+
+## 5. max sum increasing subsequence
+
+> 求 和最大的递增子序列
+>
+> 不同于题4
+
+```c++
+input:	[4, 1, 2, 6, 10, 1, 12]
+
+output:	32
+    
+explanation:sum[4, 6, 10, 12]=32
+    LIS：sum[1,2,6,10,12]=31,两者和不同
+```
+
+```c++
+input:	[-4, 10, 3, 7, 15]
+
+output:	25
+    
+explanation:sum[10, 15]=sum[3,7,5]=25
+```
+
+### brute-force
+
+```c++
+int maxSumISRecursive(const vector<int> &nums, int currentIndex, int previousIndex, int sum) {
+    if (currentIndex >= nums.size()) {
+        return sum;
+    }
+    int s1 = sum;
+
+    if (previousIndex == -1 || nums[currentIndex] > nums[previousIndex]) {
+        s1 = maxSumISRecursive(nums, currentIndex + 1, currentIndex, sum + nums[currentIndex]);
+    }
+
+    int s2 = maxSumISRecursive(nums, currentIndex + 1, previousIndex, sum);
+
+    return max(s1, s2);
+}
+
+int maxSumIS(const vector<int> &nums) {
+    return maxSumISRecursive(nums, 0, -1, 0);
+}
+
+```
+
+Time Complexity : *O*(*2^N* )
+
+Space Complexity : *O*(*N*)
+
+### top-down
+
+> 三维表或哈希表
+
+### bottom-up
+
+![](./5-1.png)
+
+```c++
+
+int maxSumIS2(const vector<int> &nums) {
+    vector<int> dp(nums.size());
+    dp[0] = nums[0];
+
+    int maxSum = nums[0];
+    for (int i = 0; i < nums.size(); i++) {
+        dp[i] = nums[i];
+        for (int j = 0; j < i; j++) {
+            if (nums[i] > nums[j] && dp[i] < nums[j] + dp[j]) {
+                dp[i] = dp[j] + nums[i];
+                maxSum = max(maxSum, dp[i]);
+            }
+        }
+    }
+    return maxSum;
+}
+```
+
+Time Complexity : *O*(*N^2* )
+
+Space Complexity : *O*(*N*)
+
+![](./5-2.png)
+
+![](./5-3.png)
+
+![](./5-4.png)
+
+![](./5-5.png)
+
