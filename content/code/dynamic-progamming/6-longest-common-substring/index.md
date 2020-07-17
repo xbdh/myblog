@@ -1095,7 +1095,7 @@ explanation: [1, 3, 2, 4]
 
 ### 待看
 
-# 12. edit distance
+## 12. edit distance
 
 > 给定字符串S1,S2,通过删除,插入,替换字符使得S1变成S2，求最小的操作数
 
