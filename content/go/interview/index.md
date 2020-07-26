@@ -469,3 +469,122 @@ const (
 
 
 
+***
+
+问3：下面赋值正确的是()
+
+- A. var x = nil
+- B. var x interface{} = nil
+- C. var x string = nil
+- D. var x error = nil
+
+参考答案及解析：BD。知识点：nil 值。nil 只能赋值给指针、chan、func、interface、map 或 slice 类型的变量。强调下 D 选项的 error 类型，它是一种内置接口类型，看下方贴出的源码就知道，所以 D 是对的。
+
+```go
+type error interface {
+    Error() string
+}
+```
+
+## Day 8. init 函数, 类型选择 interface.(type)
+
+问1：关于init函数，下面说法正确的是()
+
+- A. 一个包中，可以包含多个 init 函数；
+
+- B. 程序编译时，先执行依赖包的 init 函数，再执行 main 包内的 init 函数；
+
+- C. main 包中，不能有 init 函数；
+
+- D. init 函数可以被其他函数调用；
+
+	
+
+答：参考答案及解析：AB。关于 init() 函数有几个需要注意的地方：
+
+1. init() 函数是用于程序执行前做包的初始化的函数，比如初始化包里的变量等;
+2. 一个包可以出线多个 init() 函数,一个源文件也可以包含多个 init() 函数；
+3. 同一个包中多个 init() 函数的执行顺序没有明确定义，**但是不同包的init函数是根据包导入的依赖关系决定的**（看下图）;
+4. init() 函数在代码中不能被显示调用、不能被引用（赋值给函数变量），否则出现编译错误;
+5. 一个包被引用多次，如 A import B,C import B,A import C，B 被引用多次，但 B 包只会初始化一次；
+6. 引入包，不可出现死循坏。即 A import B,B import A，这种情况编译失败；
+
+![](./8-1.png)
+
+***
+
+问2：代码输出什么
+
+```go
+package main
+
+import "fmt"
+
+func hello() []string {
+	return nil
+}
+func main() {
+	h := hello
+	if h == nil {
+		fmt.Println(nil)
+	} else {
+		fmt.Println("not nil")
+	}
+}
+```
+
+- A. nil
+- B. not nil
+- C. compilation error 
+
+答案及解析：B。这道题目里面，是将 hello() 赋值给变量 h，而不是函数的返回值，所以输出 not nil。
+
+***
+
+问3：能否编译通过
+
+```go
+package main
+
+import "fmt"
+
+func getValue() int {
+	return 1
+}
+
+func main() {
+	i := getValue()
+	switch i.(type) {
+	case int:
+		fmt.Println("int")
+	case string:
+		fmt.Println("string")
+	case interface{}:
+		fmt.Println("interface")
+	default:
+		print("default")
+
+	}
+}
+```
+
+```go
+.\day-8.go:23:2: cannot type switch on non-interface value i (type int)
+```
+
+类型选择的语法形如：i.(type)，其中 i 是接口，type 是固定关键字，需要注意的是，只有接口类型才可以使用类型选择。看下关于[接口](http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&mid=2648466668&idx=1&sn=adcc1d23efff1047bbe7f6450065081a&chksm=f2474283c530cb9554aa9ee92b4332f3cc374c32bb0b51f0e031880c74641e190b50338fd9bc&scene=21#wechat_redirect)的文章。
+
+## Day 9. 
+
+问1：关于channel，下面语法正确的是()
+
+- A. var ch chan int
+- B. ch := make(chan int)
+- C. <- ch
+- D. ch <-
+
+参考答案及解析：ABC。A、B都是声明 channel；C 读取 channel；写 channel 是必须带上值，所以 D 错误。
+
+***
+
+问2：
