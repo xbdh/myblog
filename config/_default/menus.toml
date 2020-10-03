@@ -13,10 +13,10 @@
   url = "go"
   weight = 20
 
-[[main]]
-  name = "Python"
-  url = "python"
-  weight = 30
+# [[main]]
+#   name = "Python"
+#   url = "python"
+#   weight = 30
 
 # [[main]]
 #   name = "C++"
@@ -38,6 +38,10 @@
   url = "/mix"
   weight = 70
 
+[[main]]
+  name = "面试"
+  url = "/interview"
+  weight = 70
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 # [[main]]

@@ -1,0 +1,20 @@
+# Theme metadata
+name = "mytheme"
+
+# Is theme light or dark?
+light = true
+
+# Primary
+# 博客的标题，邮箱，微信，cv的颜色，目录颜色
+primary = "#000000"
+
+# Menu
+menu_primary = "#29afec" # 500
+menu_text = "#fff"
+menu_text_active = "#e1251b" # A100
+menu_title = "#fff"
+
+# Home sections
+# project acomplishment topic 的背景色
+home_section_odd = "rgb(255, 255, 255)"
+home_section_even = "rgb(247, 247, 247)"
