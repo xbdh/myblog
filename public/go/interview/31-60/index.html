@@ -1,0 +1,2767 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.2">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="季程雨">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Go语言面试题">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/go/interview/31-60/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#000000">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.font.im/css?family=Source+Code+Pro:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/go/interview/31-60/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="细胞的核">
+  <meta property="og:url" content="/go/interview/31-60/">
+  <meta property="og:title" content="Go语言中文网面试题 31-60 | 细胞的核">
+  <meta property="og:description" content="Go语言面试题"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-07-27T22:07:56&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-07-27T22:07:56&#43;08:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Go语言中文网面试题 31-60 | 细胞的核</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    
+    
+      <a class="navbar-brand" href="/">细胞的核</a>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/go"><span>GO</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/code"><span>刷题</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/mix"><span>MIX</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/project"><span>Project</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/interview"><span>面试</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+
+
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+      
+      <div class="d-none d-sm-none d-xl-block d-lg-block d-md-block col-sm-2 col-md-3 col-xl-3 col-xs-0 docs-toc">
+        <ul class="nav toc-top">
+          <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+        </ul>
+        <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#day-31-可变函数-append">Day 31. 可变函数、append()</a></li>
+<li><a href="#day-32-for-range-map">Day 32. for range ,map</a></li>
+<li><a href="#day-33-协程-循环语句-多重赋值">Day 33. 协程，循环语句，多重赋值</a></li>
+<li><a href="#day-34-强制类型转化-类型断言-方法集">Day 34. 强制类型转化,类型断言、方法集</a></li>
+<li><a href="#day-35-bool-自增和自减-接口">Day 35. bool, 自增和自减, 接口</a></li>
+<li><a href="#day-36-select-函数声明-切片初始化">Day 36. select, 函数声明，切片初始化</a></li>
+<li><a href="#day-37-函数返回值类型-channel-常量">Day 37. 函数返回值类型, channel, 常量</a></li>
+<li><a href="#day-38-异常">Day 38. 异常</a></li>
+<li><a href="#day-39-channel-go-interface">Day 39. channel, go, interface</a></li>
+<li><a href="#day-40-select-channel">Day 40. select, channel</a></li>
+<li><a href="#day-41-切片初始化-指针">Day 41. 切片初始化，指针</a></li>
+<li><a href="#day-42-未使用变量-for-range-string">Day 42. 未使用变量, for range ,string</a></li>
+<li><a href="#day-43-map-赋值-未使用包-类型断言">Day 43. map 赋值, 未使用包, 类型断言</a></li>
+<li><a href="#day-44-map-nil">Day 44. map, nil, :=</a></li>
+<li><a href="#day-45-类型别名">Day 45. :=, 类型别名</a></li>
+<li><a href="#day-46-常量">Day 46. 常量</a></li>
+<li><a href="#day-47-自增-自减">Day 47. 自增、自减</a></li>
+<li><a href="#day-48">Day 48. ~ , ^,  &amp;</a></li>
+<li><a href="#day-49-结构体访问控制-channel">Day 49. 结构体访问控制,channel</a></li>
+<li><a href="#day-50-switch">Day 50. switch</a></li>
+<li><a href="#day-51-比较-struct">Day 51. 比较，struct</a></li>
+<li><a href="#day-52-struct寻址-map">Day 52. struct寻址, map</a></li>
+<li><a href="#day-53-channel-struct-寻址">Day 53. channel, struct 寻址，</a></li>
+<li><a href="#day-54-指针-方法表达式">Day 54. 指针，方法表达式</a></li>
+<li><a href="#day-55-channel-struct">Day 55. channel, struct</a></li>
+<li><a href="#day-56-切片-方法值">Day 56. 切片，方法值</a></li>
+<li><a href="#day-57-panic-select">Day 57. panic,select</a></li>
+<li><a href="#day-58-运算符优先级-panic">Day 58. 运算符优先级, panic</a></li>
+<li><a href="#day-59-panic-方法值">Day 59. panic, 方法值</a></li>
+<li><a href="#day-60-panic-mutex">Day 60. panic,mutex</a></li>
+</ul></li>
+</ul>
+</nav>
+        
+      </div>
+      
+      <main class="col-12 col-md-9 col-xl-9 col-sm-10 py-md-2 pl-md-3 docs-content" role="main">
+
+        <article class="article">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Go语言中文网面试题 31-60</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 27, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/interview/">interview</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+            <div class="article-container">
+              <div class="article-style">
+                
+
+<h2 id="day-31-可变函数-append">Day 31. 可变函数、append()</h2>
+
+<p>1.下面这段代码输出什么？</p>
+
+<pre><code class="language-go">func change(s ...int) {
+    s = append(s,3)
+}
+
+func main() {
+    slice := make([]int,5,5)
+    slice[0] = 1
+    slice[1] = 2
+    change(slice...)
+    fmt.Println(slice)
+    change(slice[0:2]...)
+    fmt.Println(slice)
+}
+</code></pre>
+
+<p>参考答案及解析：</p>
+
+<pre><code class="language-go">[1 2 0 0 0]
+[1 2 3 0 0]
+</code></pre>
+
+<p>知识点：可变函数、append()操作。</p>
+
+<p>Go 提供的语法糖<code>...</code>，可以将 slice 传进可变函数，不会创建新的切片。</p>
+
+<p>第一次调用 change() 时，append() 操作使切片底层数组发生了扩容，原 slice 的底层数组不会改变；</p>
+
+<p>第二次调用change() 函数时，使用了操作符<code>[i,j]</code>获得一个新的切片，假定为 slice1，它的底层数组和原切片底层数组是重合的，不过 slice1 的长度、容量分别是 2、5，所以在 change() 函数中对 slice1 底层数组的修改会影响到原切片。</p>
+
+<p><img src="./31-1.png" alt="" /></p>
+
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466706&amp;idx=3&amp;sn=003c213739e51088ad4947e473429775&amp;chksm=f247437dc530ca6bafebe0a5a4090343cbf1eb992e36b6199cf213be6156273179465ed41348&amp;scene=21#wechat_redirect" target="_blank">可变函数</a></p>
+
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466739&amp;idx=3&amp;sn=9a1c9599172a532297ef41238450f9af&amp;chksm=f247435cc530ca4ac6d92bd22011b52ae34d25d6e0eddf5b2ba85a15d3846b6674aa8bcf1d07&amp;scene=21#wechat_redirect" target="_blank">非懂不可的Slice（一）</a></p>
+
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466739&amp;idx=4&amp;sn=9de0eba9bdb36aa3b67d8a3903c53584&amp;chksm=f247435cc530ca4a98abd9c1b2d58a63c7716e64236076c1296ed2964cd4fb68f7c8a6d44f85&amp;scene=21#wechat_redirect" target="_blank">非懂不可的Slice（二）</a></p>
+
+<p><br/></p>
+
+<p>2.下面这段代码输出什么？</p>
+
+<pre><code class="language-go">func main() {
+    var a = []int{1, 2, 3, 4, 5}
+    var r [5]int
+
+    for i, v := range a {
+        if i == 0 {
+            a[1] = 12
+            a[2] = 13
+        }
+        r[i] = v
+    }
+    fmt.Println(&quot;r = &quot;, r)
+    fmt.Println(&quot;a = &quot;, a)
+}
+</code></pre>
+
+<p>参考答案及解析：</p>
+
+<pre><code class="language-go">r =  [1 12 13 4 5]
+a =  [1 12 13 4 5]
+</code></pre>
+
+<p>这道题是 <a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648467013&amp;idx=1&amp;sn=e9856544b4ef7e02deb62e5839550786&amp;chksm=f247402ac530c93c879f433e88cdd4ab55fcc6b336d342f3a8c1ece6cecb6b131f5acc486264&amp;scene=21#wechat_redirect" target="_blank">第30天</a> 的第二题的一个解决办法，这的 a 是一个切片，那切片是怎么实现的呢？切片在 go 的内部结构有一个指向底层数组的指针，当 range 表达式发生复制时，副本的指针依旧指向原底层数组，所以对切片的修改都会反应到底层数组上，所以通过 v 可以获得修改后的数组元素。</p>
+
+<p>引自：<a href="https://tonybai.com/2015/09/17/7-things-you-may-not-pay-attation-to-in-go/" target="_blank">https://tonybai.com/2015/09/17/7-things-you-may-not-pay-attation-to-in-go/</a></p>
+
+<p><br/></p>
+
+<h2 id="day-32-for-range-map">Day 32. for range ,map</h2>
+
+<p>1.下面这段代码输出结果正确吗？</p>
+
+<pre><code class="language-go">type Foo struct {
+    bar string
+}
+func main() {
+    s1 := []Foo{
+        {&quot;A&quot;},
+        {&quot;B&quot;},
+        {&quot;C&quot;},
+    }
+    s2 := make([]*Foo, len(s1))
+    for i, value := range s1 {
+        s2[i] = &amp;value
+    }
+    fmt.Println(s1[0], s1[1], s1[2])
+    fmt.Println(s2[0], s2[1], s2[2])
+}
+输出：
+{A} {B} {C}
+&amp;{A} &amp;{B} &amp;{C}
+</code></pre>
+
+<p>参考答案及解析：s2 的输出结果错误。s2 的输出是 <code>&amp;{C} &amp;{C} &amp;{C}</code>，在 <a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648467013&amp;idx=1&amp;sn=e9856544b4ef7e02deb62e5839550786&amp;chksm=f247402ac530c93c879f433e88cdd4ab55fcc6b336d342f3a8c1ece6cecb6b131f5acc486264&amp;scene=21#wechat_redirect" target="_blank">第 30 天</a> 的答案解析第二题，我们提到过，for range 使用短变量声明(:=)的形式迭代变量时，变量 i、value 在每次循环体中都会被重用，而不是重新声明。所以 s2 每次填充的都是临时变量 value 的地址，而在最后一次循环中，value 被赋值为{c}。因此，s2 输出的时候显示出了三个 &amp;{c}。</p>
+
+<p>可行的解决办法如下：</p>
+
+<pre><code class="language-go">for i := range s1 {
+    s2[i] = &amp;s1[i]
+}
+</code></pre>
+
+<p>2.下面代码里的 counter 的输出值？</p>
+
+<pre><code class="language-go">func main() {
+
+    var m = map[string]int{
+        &quot;A&quot;: 21,
+        &quot;B&quot;: 22,
+        &quot;C&quot;: 23,
+    }
+    counter := 0
+    for k, v := range m {
+        if counter == 0 {
+            delete(m, &quot;A&quot;)
+        }
+        counter++
+        fmt.Println(k, v)
+    }
+    fmt.Println(&quot;counter is &quot;, counter)
+}
+</code></pre>
+
+<ul>
+<li>A. 2</li>
+<li>B. 3</li>
+<li>C. 2 或 3</li>
+</ul>
+
+<p>参考答案及解析：C。for range map 是无序的，如果第一次循环到 A，则输出 3；否则输出 2。</p>
+
+<p><br/></p>
+
+<h2 id="day-33-协程-循环语句-多重赋值">Day 33. 协程，循环语句，多重赋值</h2>
+
+<p>1.关于协程，下面说法正确是（）</p>
+
+<ul>
+<li>A. 协程和线程都可以实现程序的并发执行；</li>
+<li>B. 线程比协程更轻量级；</li>
+<li>C. 协程不存在死锁问题；</li>
+<li>D. 通过 channel 来进行协程间的通信；</li>
+</ul>
+
+<p>参考答案及解析：AD。</p>
+
+<p><br/></p>
+
+<p>2.关于循环语句，下面说法正确的有（）</p>
+
+<ul>
+<li>A. 循环语句既支持 for 关键字，也支持 while 和 do-while；</li>
+<li>B. 关键字 for 的基本使用方法与 C/C++ 中没有任何差异；</li>
+<li>C. for 循环支持 continue 和 break 来控制循环，但是它提供了一个更高级的 break，可以选择中断哪一个循环；</li>
+<li>D. for 循环不支持以逗号为间隔的多个赋值语句，必须使用平行赋值的方式来初始化多个变量；</li>
+</ul>
+
+<p>参考答案及解析：CD。</p>
+
+<p><br/></p>
+
+<p>3.下面代码输出正确的是？</p>
+
+<pre><code class="language-go">func main() {
+    i := 1
+    s := []string{&quot;A&quot;, &quot;B&quot;, &quot;C&quot;}
+    i, s[i-1] = 2, &quot;Z&quot;
+    fmt.Printf(&quot;s: %v \n&quot;, s)
+}
+</code></pre>
+
+<ul>
+<li>A. s: [Z,B,C]</li>
+<li>B. s: [A,Z,C]</li>
+</ul>
+
+<p>参考答案及解析：A。知识点：多重赋值。</p>
+
+<p>多重赋值分为两个步骤，有先后顺序：</p>
+
+<ul>
+<li>计算等号左边的索引表达式和取址表达式，接着计算等号右边的表达式；</li>
+<li>赋值；</li>
+</ul>
+
+<p>所以本例，会先计算 s[i-1]，等号右边是两个表达式是常量，所以赋值运算等同于 <code>i, s[0] = 2, &quot;Z&quot;</code>。</p>
+
+<p><br/></p>
+
+<h2 id="day-34-强制类型转化-类型断言-方法集">Day 34. 强制类型转化,类型断言、方法集</h2>
+
+<p>1.关于类型转化，下面选项正确的是？</p>
+
+<pre><code class="language-go">A.
+type MyInt int
+var i int = 1
+var j MyInt = i
+
+B.
+type MyInt int
+var i int = 1
+var j MyInt = (MyInt)i
+
+C.
+type MyInt int
+var i int = 1
+var j MyInt = MyInt(i)
+
+D.
+type MyInt int
+var i int = 1
+var j MyInt = i.(MyInt)
+</code></pre>
+
+<p>参考答案及解析：C。知识点：强制类型转化。</p>
+
+<p><br/></p>
+
+<p>2.关于switch语句，下面说法正确的有?</p>
+
+<ul>
+<li>A. 条件表达式必须为常量或者整数；</li>
+<li>B. 单个case中，可以出现多个结果选项；</li>
+<li>C. 需要用break来明确退出一个case；</li>
+<li>D. 只有在case中明确添加fallthrough关键字，才会继续执行紧跟的下一个case；</li>
+</ul>
+
+<p>参考答案及解析：BD。参考文章 <a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648467036&amp;idx=2&amp;sn=79bb23c3d1d2eef7e989ecc2643b5f5a&amp;chksm=f2474033c530c925d5accf3633888d783dd3e3137b71a3b963a397d198e2619cd8e32f0ddd4f&amp;scene=21#wechat_redirect" target="_blank">条件语句和循环语句</a></p>
+
+<p><br/></p>
+
+<p>3.如果 Add() 函数的调用代码为：</p>
+
+<pre><code class="language-go">func main() {
+    var a Integer = 1
+    var b Integer = 2
+    var i interface{} = &amp;a
+    sum := i.(*Integer).Add(b)
+    fmt.Println(sum)
+}
+</code></pre>
+
+<p>则Add函数定义正确的是()</p>
+
+<pre><code class="language-go">A.
+type Integer int
+func (a Integer) Add(b Integer) Integer {
+        return a + b
+}
+
+B.
+type Integer int
+func (a Integer) Add(b *Integer) Integer {
+        return a + *b
+}
+
+C.
+type Integer int
+func (a *Integer) Add(b Integer) Integer {
+        return *a + b
+}
+
+D.
+type Integer int
+func (a *Integer) Add(b *Integer) Integer {
+        return *a + *b
+}
+</code></pre>
+
+<p>参考答案及解析：AC。知识点：类型断言、方法集。</p>
+
+<p><br/></p>
+
+<h2 id="day-35-bool-自增和自减-接口">Day 35. bool, 自增和自减, 接口</h2>
+
+<p>1.关于 bool 变量 b 的赋值，下面错误的用法是？</p>
+
+<ul>
+<li>A. b = true</li>
+<li>B. b = 1</li>
+<li>C. b = bool(1)</li>
+<li>D. b = (1 == 2)</li>
+</ul>
+
+<p>参考答案及解析：BC。</p>
+
+<p><br/></p>
+
+<p>2.关于变量的自增和自减操作，下面语句正确的是？</p>
+
+<pre><code class="language-go">A.
+i := 1
+i++
+
+B.
+i := 1
+j = i++
+
+C.
+i := 1
+++i
+
+D.
+i := 1
+i--
+</code></pre>
+
+<p>参考答案及解析：AD。知识点：自增自减操作。i++ 和 i&ndash; 在 Go 语言中是语句，不是表达式，因此不能赋值给另外的变量。此外没有 ++i 和 &ndash;i。</p>
+
+<p>3.关于GetPodAction定义，下面赋值正确的是</p>
+
+<pre><code class="language-go">type Fragment interface {
+        Exec(transInfo *TransInfo) error
+}
+type GetPodAction struct {
+}
+func (g GetPodAction) Exec(transInfo *TransInfo) error {
+        ...
+        return nil
+}
+</code></pre>
+
+<ul>
+<li>A. var fragment Fragment = new(GetPodAction)</li>
+<li>B. var fragment Fragment = GetPodAction</li>
+<li>C. var fragment Fragment = &amp;GetPodAction{}</li>
+<li>D. var fragment Fragment = GetPodAction{}</li>
+</ul>
+
+<p>参考答案及解析：ACD。</p>
+
+<p><br/></p>
+
+<h2 id="day-36-select-函数声明-切片初始化">Day 36. select, 函数声明，切片初始化</h2>
+
+<p>1.关于函数声明，下面语法正确的是？</p>
+
+<ul>
+<li>A. func f(a, b int) (value int, err error)</li>
+<li>B. func f(a int, b int) (value int, err error)</li>
+<li>C. func f(a, b int) (value int, error)</li>
+<li>D. func f(a int, b int) (int, int, error)</li>
+</ul>
+
+<p>参考答案及解析：ABD。参考文章《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466706&amp;idx=4&amp;sn=b296779ff31a98ecc978d2e513328443&amp;chksm=f247437dc530ca6bf646850a498e19e5c7f331e0ef3e38909297da8724223422075d04cd21bf&amp;scene=21#wechat_redirect" target="_blank">函数</a>》</p>
+
+<p><br/></p>
+
+<p>2.关于整型切片的初始化，下面正确的是？</p>
+
+<ul>
+<li>A. s := make([]int)</li>
+<li>B. s := make([]int, 0)</li>
+<li>C. s := make([]int, 5, 10)</li>
+<li>D. s := []int{1, 2, 3, 4, 5}</li>
+</ul>
+
+<p>参考答案及解析：BCD。参考文章《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466739&amp;idx=3&amp;sn=9a1c9599172a532297ef41238450f9af&amp;chksm=f247435cc530ca4ac6d92bd22011b52ae34d25d6e0eddf5b2ba85a15d3846b6674aa8bcf1d07&amp;scene=21#wechat_redirect" target="_blank">非懂不可的Slice（一）</a>》</p>
+
+<p><br/></p>
+
+<p>3.下面代码会触发异常吗？请说明。</p>
+
+<pre><code class="language-go">func main() {
+    runtime.GOMAXPROCS(1)
+    int_chan := make(chan int, 1)
+    string_chan := make(chan string, 1)
+    int_chan &lt;- 1
+    string_chan &lt;- &quot;hello&quot;
+    select {
+    case value := &lt;-int_chan:
+        fmt.Println(value)
+    case value := &lt;-string_chan:
+        panic(value)
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：<code>select</code> 会随机选择一个可用通道做收发操作，所以可能触发异常，也可能不会。具体详看《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466739&amp;idx=1&amp;sn=bfff10a9eed52a13fb2adb63569b0bca&amp;chksm=f247435cc530ca4ac2eaad9c3879331ec5507f6452e901eb046f7ec46e703a678541e1fa1840&amp;scene=21#wechat_redirect" target="_blank">Go 并发 &ndash; Select</a>》</p>
+
+<p><br/></p>
+
+<h2 id="day-37-函数返回值类型-channel-常量">Day 37. 函数返回值类型, channel, 常量</h2>
+
+<p>1.关于channel的特性，下面说法正确的是？</p>
+
+<ul>
+<li>A. 给一个 nil channel 发送数据，造成永远阻塞</li>
+<li>B. 从一个 nil channel 接收数据，造成永远阻塞</li>
+<li>C. 给一个已经关闭的 channel 发送数据，引起 panic</li>
+<li>D. 从一个已经关闭的 channel 接收数据，如果缓冲区中为空，则返回一个零值</li>
+</ul>
+
+<p>参考答案及解析：ABCD。</p>
+
+<p><br/></p>
+
+<p>2.下面代码有什么问题？</p>
+
+<pre><code class="language-go">const i = 100
+var j = 123
+
+func main() {
+    fmt.Println(&amp;j, j)
+    fmt.Println(&amp;i, i)
+}
+</code></pre>
+
+<p>参考答案及解析：编译报错<code>cannot take the address of i</code>。知识点：常量。常量不同于变量的在运行期分配内存，常量通常会被编译器在预处理阶段直接展开，作为指令数据使用，所以常量无法寻址。</p>
+
+<p><br/></p>
+
+<p>3.下面代码能否编译通过？如果通过，输出什么？</p>
+
+<pre><code class="language-go">func GetValue(m map[int]string, id int) (string, bool) {
+
+    if _, exist := m[id]; exist {
+        return &quot;exist&quot;, true
+    }
+    return nil, false
+}
+func main() {
+    intmap := map[int]string{
+        1: &quot;a&quot;,
+        2: &quot;b&quot;,
+        3: &quot;c&quot;,
+    }
+
+    v, err := GetValue(intmap, 3)
+    fmt.Println(v, err)
+}
+</code></pre>
+
+<p>参考答案及解析：不能通过编译。知识点：函数返回值类型。nil 可以用作 interface、function、pointer、map、slice 和 channel 的“空值”。但是如果不特别指定的话，Go 语言不能识别类型，所以会报错:<code>cannot use nil as type string in return argument</code>.</p>
+
+<p><br/></p>
+
+<h2 id="day-38-异常">Day 38. 异常</h2>
+
+<p>1.关于异常的触发，下面说法正确的是？</p>
+
+<ul>
+<li>A. 空指针解析；</li>
+<li>B. 下标越界；</li>
+<li>C. 除数为0；</li>
+<li>D. 调用panic函数；</li>
+</ul>
+
+<p>参考答案及解析：ABCD。</p>
+
+<p><br></p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">func main() {
+    x := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;}
+    for v := range x {
+        fmt.Print(v)
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：012。注意区别下面代码段：</p>
+
+<pre><code class="language-go">func main() {
+    x := []string{&quot;a&quot;, &quot;b&quot;, &quot;c&quot;}
+    for _, v := range x {
+        fmt.Print(v)     //输出 abc
+    }
+}
+</code></pre>
+
+<p><br></p>
+
+<p>3.下面这段代码能否编译通过？如果通过，输出什么？</p>
+
+<pre><code class="language-go"> type User struct{}
+ type User1 User
+ type User2 = User
+ 
+ func (i User1) m1() {
+     fmt.Println(&quot;m1&quot;)
+ }
+ func (i User) m2() {
+     fmt.Println(&quot;m2&quot;)
+}
+
+func main() {
+    var i1 User1
+    var i2 User2
+    i1.m1()
+    i2.m2()
+}
+</code></pre>
+
+<p>参考答案及解析：能，输出<code>m1 m2</code>，第 2 行代码基于类型 User 创建了新类型 User1，第 3 行代码是创建了 User 的类型别名 User2，注意使用 = 定义类型别名。因为 User2 是别名，完全等价于 User，所以 User2 具有 User 所有的方法。但是 i1.m1() 是不能执行的，因为 User1 没有定义该方法。</p>
+
+<p><br></p>
+
+<h2 id="day-39-channel-go-interface">Day 39. channel, go, interface</h2>
+
+<p>1.关于无缓冲和有冲突的channel，下面说法正确的是？</p>
+
+<ul>
+<li>A. 无缓冲的channel是默认的缓冲为1的channel；</li>
+<li>B. 无缓冲的channel和有缓冲的channel都是同步的；</li>
+<li>C. 无缓冲的channel和有缓冲的channel都是非同步的；</li>
+<li>D. 无缓冲的channel是同步的，而有缓冲的channel是非同步的；</li>
+</ul>
+
+<p>参考答案及解析：D。参考文章《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466711&amp;idx=1&amp;sn=32b636a8cf9d23a8ed6f0b7c3fbcfc72&amp;chksm=f2474378c530ca6e03c60d793d58283ba3047c645ae55e47c9791e88d7deaac63e1976f4d710&amp;scene=21#wechat_redirect" target="_blank">Go 并发 &ndash; 信道</a>》</p>
+
+<p><br></p>
+
+<p>2.下面代码是否能编译通过？如果通过，输出什么？</p>
+
+<pre><code class="language-go"> func Foo(x interface{}) {
+     if x == nil {
+         fmt.Println(&quot;empty interface&quot;)
+         return
+    }
+     fmt.Println(&quot;non-empty interface&quot;)
+ }
+func main() {
+    var x *int = nil
+    Foo(x)
+}
+</code></pre>
+
+<p>参考答案及解析：<code>non-empty interface</code> 考点：interface 的内部结构，我们知道接口除了有静态类型，还有动态类型和动态值，当且仅当动态值和动态类型都为 nil 时，接口类型值才为 nil。这里的 x 的动态类型是 <code>*int</code>，所以 x 不为 nil。</p>
+
+<p><br></p>
+
+<p>3.下面代码输出什么？</p>
+
+<pre><code class="language-go">func main() {
+    ch := make(chan int, 100)
+    // A
+    go func() {              
+        for i := 0; i &lt; 10; i++ {
+            ch &lt;- i
+       }
+    }()
+    // B
+    go func() {
+        for {
+            a, ok := &lt;-ch
+            if !ok {
+               fmt.Println(&quot;close&quot;)
+                return
+            }
+            fmt.Println(&quot;a: &quot;, a)
+        }
+    }()
+    close(ch)
+    fmt.Println(&quot;ok&quot;)
+    time.Sleep(time.Second * 10)
+}
+</code></pre>
+
+<p>参考答案及解析：程序抛异常。先定义下，第一个协程为 A 协程，第二个协程为 B 协程；当 A 协程还没起时，主协程已经将 channel 关闭了，当 A 协程往关闭的 channel 发送数据时会 panic，<code>panic: send on closed channel</code>。</p>
+
+<p><br></p>
+
+<h2 id="day-40-select-channel">Day 40. select, channel</h2>
+
+<p>1.关于select机制，下面说法正确的是?</p>
+
+<ul>
+<li>A. select机制用来处理异步IO问题；</li>
+<li>B. select机制最大的一条限制就是每个case语句里必须是一个IO操作；</li>
+<li>C. golang在语言级别支持select关键字；</li>
+<li>D. select关键字的用法与switch语句非常类似，后面要带判断条件；</li>
+</ul>
+
+<p>参考答案及解析：ABC。参考文章《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466739&amp;idx=1&amp;sn=bfff10a9eed52a13fb2adb63569b0bca&amp;chksm=f247435cc530ca4ac2eaad9c3879331ec5507f6452e901eb046f7ec46e703a678541e1fa1840&amp;scene=21#wechat_redirect" target="_blank">Go 并发 &ndash; Select</a>》</p>
+
+<p><br></p>
+
+<p>2.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">func Stop(stop &lt;-chan bool) {
+    close(stop)
+}
+</code></pre>
+
+<p>参考答案及解析：有方向的 channel 不可以被关闭。</p>
+
+<p><br></p>
+
+<p>3.下面这段代码存在什么问题？</p>
+
+<pre><code class="language-go">type Param map[string]interface{}
+
+type Show struct {
+    *Param
+
+}
+func main() {
+    s := new(Show)
+    s.Param[&quot;day&quot;] = 2
+}
+</code></pre>
+
+<p>参考答案及解析：存在两个问题：1.map 需要初始化才能使用；2.指针不支持索引。修复代码如下：</p>
+
+<pre><code class="language-go">func main() {
+    s := new(Show)
+    // 修复代码
+    p := make(Param)
+    p[&quot;day&quot;] = 2
+    s.Param = &amp;p
+    tmp := *s.Param
+    fmt.Println(tmp[&quot;day&quot;])
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-41-切片初始化-指针">Day 41. 切片初始化，指针</h2>
+
+<p>1.下面代码编译能通过吗？</p>
+
+<pre><code class="language-go">func main()  
+{ 
+    fmt.Println(&quot;hello world&quot;)
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误。</p>
+
+<pre><code class="language-go">syntax error: unexpected semicolon or newline before {
+</code></pre>
+
+<p>Go 语言中，大括号不能放在单独的一行。</p>
+
+<p>正确的代码如下：</p>
+
+<pre><code class="language-go">func main() {
+    fmt.Println(&quot;works&quot;)
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/</a></p>
+
+<p>2.下面这段代码输出什么？</p>
+
+<pre><code class="language-go">var x = []int{2: 2, 3, 0: 1}
+
+func main() {
+    fmt.Println(x)
+}
+</code></pre>
+
+<p>参考答案及解析：输出<code>[1 0 2 3]</code>，字面量初始化切片时候，可以指定索引，没有指定索引的元素会在前一个索引基础之上加一，所以输出<code>[1 0 2 3]</code>，而不是<code>[1 3 2]</code>。</p>
+
+<p>3.下面这段代码输出什么？</p>
+
+<pre><code class="language-go">func incr(p *int) int {
+    *p++
+    return *p
+}
+func main() {
+    v := 1
+    incr(&amp;v)
+    fmt.Println(v)
+}
+</code></pre>
+
+<p>参考答案及解析：2。知识点：指针。p 是指针变量，指向变量 v，<code>*p++</code>操作的意思是取出变量 v 的值并执行加一操作，所以 v 的最终值是 2。</p>
+
+<p>关于指针的使用可以参考文章《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648467085&amp;idx=2&amp;sn=c37e20fb2823451498374b79e9630926&amp;chksm=f24740e2c530c9f4afe41620b7b083040f0fb57de51166f32e0554a57077ba0218387a7b0d37&amp;scene=21#wechat_redirect" target="_blank">800 字彻底理解 Go 指针</a>》。</p>
+
+<p><br></p>
+
+<h2 id="day-42-未使用变量-for-range-string">Day 42. 未使用变量, for range ,string</h2>
+
+<p>1.请指出下面代码的错误？</p>
+
+<pre><code class="language-go">package main
+
+var gvar int 
+
+func main() {  
+    var one int   
+    two := 2      
+    var three int 
+    three = 3
+
+    func(unused string) {
+        fmt.Println(&quot;Unused arg. No compile error&quot;)
+    }(&quot;what?&quot;)
+}
+</code></pre>
+
+<p>参考答案及解析：变量 one、two 和 three 声明未使用。知识点：未使用变量。如果有未使用的变量代码将编译失败。但也有例外，函数中声明的变量必须要使用，但可以有未使用的全局变量。函数的参数未使用也是可以的。</p>
+
+<p>如果你给未使用的变量分配了一个新值，代码也还是会编译失败。你需要在某个地方使用这个变量，才能让编译器愉快的编译。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {
+    var one int
+    _ = one
+
+    two := 2
+    fmt.Println(two)
+
+    var three int
+    three = 3
+    one = three
+
+    var four int
+    four = four
+}
+</code></pre>
+
+<p>另一个选择是注释掉或者移除未使用的变量 。</p>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/</a></p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">type ConfigOne struct {
+    Daemon string
+}
+
+func (c *ConfigOne) String() string {
+    return fmt.Sprintf(&quot;print: %v&quot;, c)
+}
+
+ func main() {
+    c := &amp;ConfigOne{}
+    c.String()
+}
+</code></pre>
+
+<p>参考答案及解析：运行时错误。如果类型实现 String() 方法，当格式化输出时会自动使用 String() 方法。上面这段代码是在该类型的 String() 方法内使用格式化输出，导致递归调用，最后抛错。</p>
+
+<pre><code class="language-go">runtime: goroutine stack exceeds 1000000000-byte limit
+fatal error: stack overflow
+</code></pre>
+
+<p>3.下面代码输出什么？</p>
+
+<pre><code class="language-go"> func main() {
+     var a = []int{1, 2, 3, 4, 5}
+     var r = make([]int, 0)
+ 
+     for i, v := range a {
+         if i == 0 {
+             a = append(a, 6, 7)
+         }
+ 
+        r = append(r, v)
+    }
+
+    fmt.Println(r)
+}
+</code></pre>
+
+<p>参考答案及解析：<code>[1 2 3 4 5]</code>。a 在 for range 过程中增加了两个元素
+，len 由 5 增加到 7，但 for range 时会使用 a 的副本 a&rsquo; 参与循环，副本的 len 依旧是 5，因此 for range 只会循环 5 次，也就只获取 a 对应的底层数组的前 5 个元素。</p>
+
+<p><br></p>
+
+<h2 id="day-43-map-赋值-未使用包-类型断言">Day 43. map 赋值, 未使用包, 类型断言</h2>
+
+<p>1.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">import (  
+    &quot;fmt&quot;
+    &quot;log&quot;
+    &quot;time&quot;
+)
+func main() {  
+}
+</code></pre>
+
+<p>参考答案及解析：导入的包没有被使用。如果引入一个包，但是未使用其中如何函数、接口、结构体或变量的话，代码将编译失败。</p>
+
+<p>如果你真的需要引入包，可以使用下划线操作符，<code>_</code>，来作为这个包的名字，从而避免失败。下划线操作符用于引入，但不使用。</p>
+
+<p>我们还可以注释或者移除未使用的包。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">import (  
+    _ &quot;fmt&quot;
+    &quot;log&quot;
+    &quot;time&quot;
+)
+var _ = log.Println
+func main() {  
+    _ = time.Now
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/</a></p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">func main() {
+    x := interface{}(nil)
+    y := (*int)(nil)
+    a := y == x
+    b := y == nil
+    _, c := x.(interface{})
+    println(a, b, c)
+}
+</code></pre>
+
+<ul>
+<li>A. true true true</li>
+<li>B. false true true</li>
+<li>C. true true true</li>
+<li>D. false true false</li>
+</ul>
+
+<p>参考答案及解析：D。知识点：类型断言。类型断言语法：i.(Type)，其中 i 是接口，Type 是类型或接口。编译时会自动检测 i 的动态类型与 Type 是否一致。但是，如果动态类型不存在，则断言总是失败。参考文章《<a href="http://mp.weixin.qq.com/s?__biz=MzI2MDA1MTcxMg==&amp;mid=2648466700&amp;idx=1&amp;sn=25c48d78dcfad6c70330cd36dd749e53&amp;chksm=f2474363c530ca75132454e4e10e40659310a073e2f9d30ad9697d4abf7c2b9e5aa9adee58bf&amp;scene=21#wechat_redirect" target="_blank">Go 语言接口详解（二）</a>》</p>
+
+<p>3.下面代码有几处错误的地方？请说明原因。</p>
+
+<pre><code class="language-go">func main() {
+
+    var s []int
+    s = append(s,1)
+
+    var m map[string]int
+    m[&quot;one&quot;] = 1 
+}
+</code></pre>
+
+<p>参考答案及解析：有 1 出错误，不能对 nil 的 map 直接赋值，需要使用 make() 初始化。但可以使用 append() 函数对为 nil 的 slice 增加元素。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {
+    var m map[string]int
+    m = make(map[string]int)
+    m[&quot;one&quot;] = 1
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-44-map-nil">Day 44. map, nil, :=</h2>
+
+<p>1.下面代码有什么问题？</p>
+
+<pre><code class="language-go">func main() {
+    m := make(map[string]int,2)
+    cap(m) 
+}
+</code></pre>
+
+<p>参考答案及解析：问题：使用 cap() 获取 map 的容量。1.使用 make 创建 map 变量时可以指定第二个参数，不过会被忽略。2.cap() 函数适用于数组、数组指针、slice 和 channel，不适用于 map，可以使用 len() 返回 map 的元素个数。</p>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html</a></p>
+
+<p>2.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">func main() {  
+    var x = nil 
+    _ = x
+}
+</code></pre>
+
+<p>参考答案及解析：nil 用于表示 interface、函数、maps、slices 和 channels 的“零值”。如果不指定变量的类型，编译器猜不出变量的具体类型，导致编译错误。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {
+    var x interface{} = nil
+    _ = x
+}
+</code></pre>
+
+<p>3.下面代码能编译通过吗？</p>
+
+<pre><code class="language-go"> type info struct {
+   result int
+}
+
+func work() (int,error) {
+    return 13,nil
+}
+
+func main() {
+    var data info
+
+    data.result, err := work() 
+    fmt.Printf(&quot;info: %+v\n&quot;,data)
+}
+</code></pre>
+
+<p>参考答案及解析：编译失败。</p>
+
+<pre><code class="language-go">non-name data.result on left side of :=
+</code></pre>
+
+<p>不能使用短变量声明设置结构体字段值，修复代码：</p>
+
+<pre><code class="language-go"> func main() {
+     var data info
+ 
+     var err error
+     data.result, err = work() //ok
+     if err != nil {
+        fmt.Println(err)
+         return
+     }
+
+    fmt.Println(data)   
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html</a></p>
+
+<p><br></p>
+
+<h2 id="day-45-类型别名">Day 45. :=, 类型别名</h2>
+
+<p>1.下面代码有什么错误？</p>
+
+<pre><code class="language-go">func main() {
+    one := 0
+    one := 1 
+}
+</code></pre>
+
+<p>参考答案及解析：变量重复声明。不能在单独的声明中重复声明一个变量，但在多变量声明的时候是可以的，但必须保证至少有一个变量是新声明的。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {  
+    one := 0
+    one, two := 1,2
+    one,two = two,one
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/</a></p>
+
+<p>2.下面代码有什么问题？</p>
+
+<pre><code class="language-go">func main() {
+    x := []int{
+        1,
+        2
+    }
+    _ = x
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误，第四行代码没有逗号。用字面量初始化数组、slice 和 map 时，最好是在每个元素后面加上逗号，即使是声明在一行或者多行都不会出错。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go"> func main() {
+     x := []int{    // 多行
+         1,
+         2,
+     }
+     x = x
+ 
+     y := []int{3,4,} // 一行 no error
+     y = y
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html</a></p>
+
+<p>3.下面代码输出什么？</p>
+
+<pre><code class="language-go"> func test(x byte)  {
+     fmt.Println(x)
+ }
+ 
+ func main() {
+     var a byte = 0x11 
+     var b uint8 = a
+     var c uint8 = a + b
+     test(c)
+}
+</code></pre>
+
+<p>参考答案及解析：34。与 rune 是 int32 的别名一样，byte 是 uint8 的别名，别名类型无序转换，可直接转换。</p>
+
+<p><br></p>
+
+<h2 id="day-46-常量">Day 46. 常量</h2>
+
+<p>1.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">func main() {
+    const x = 123
+    const y = 1.23
+    fmt.Println(x)
+}
+</code></pre>
+
+<p>参考答案及解析：编译可以通过。知识点：常量。常量是一个简单值的标识符，在程序运行时，不会被修改的量。不像变量，常量未使用是能编译通过的。</p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">const (
+     x uint16 = 120
+     y
+     s = &quot;abc&quot;
+     z
+)
+ 
+func main() {
+    fmt.Printf(&quot;%T %v\n&quot;, y, y)
+    fmt.Printf(&quot;%T %v\n&quot;, z, z)
+}
+</code></pre>
+
+<p>参考答案及解析：知识点：常量。</p>
+
+<p>输出：</p>
+
+<pre><code class="language-go">uint16 120
+string abc
+</code></pre>
+
+<p>常量组中如不指定类型和初始化值，则与上一行非空常量右值相同</p>
+
+<p>3.下面代码有什么问题？</p>
+
+<pre><code class="language-go">func main() {  
+    var x string = nil 
+
+    if x == nil { 
+        x = &quot;default&quot;
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：将 nil 分配给 string 类型的变量。这是个大多数新手会犯的错误。修复代码：</p>
+
+<pre><code class="language-go">func main() {  
+    var x string //defaults to &quot;&quot; (zero value)
+
+    if x == &quot;&quot; {
+        x = &quot;default&quot;
+    }
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html</a></p>
+
+<p><br></p>
+
+<h2 id="day-47-自增-自减">Day 47. 自增、自减</h2>
+
+<p>1.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">func main() {
+    data := []int{1,2,3}
+    i := 0
+    ++i
+    fmt.Println(data[i++])
+}
+</code></pre>
+
+<p>参考答案及解析：对于自增、自减，需要注意：</p>
+
+<ul>
+<li>自增、自减不在是运算符，只能作为独立语句，而不是表达式；</li>
+<li>不像其他语言，Go 语言中不支持 ++i 和 &ndash;i 操作；</li>
+</ul>
+
+<p>表达式通常是求值代码，可作为右值或参数使用。而语句表示完成一个任务，比如 if、for 语句等。表达式可作为语句使用，但语句不能当做表达式。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {  
+    data := []int{1,2,3}
+    i := 0
+    i++
+    fmt.Println(data[i])
+}
+</code></pre>
+
+<p>2.下面代码最后一行输出什么？请说明原因。</p>
+
+<pre><code class="language-go">func main() {
+    x := 1
+    fmt.Println(x)
+    {
+        fmt.Println(x)
+        i,x := 2,2
+        fmt.Println(i,x)
+    }
+   fmt.Println(x)  // print ?
+}
+</code></pre>
+
+<p>参考答案及解析：输出<code>1</code>。知识点：变量隐藏。使用变量简短声明符号 := 时，如果符号左边有多个变量，只需要保证至少有一个变量是新声明的，并对已定义的变量尽进行赋值操作。但如果出现作用域之后，就会导致变量隐藏的问题，就像这个例子一样。</p>
+
+<p>这个坑很容易挖，但又很难发现。即使对于经验丰富的 Go 开发者而言，这也是一个非常常见的陷阱。</p>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/</a></p>
+
+<p><br></p>
+
+<h2 id="day-48">Day 48. ~ , ^,  &amp;</h2>
+
+<p>1.下面代码有什么问题？</p>
+
+<pre><code class="language-go">type foo struct {
+    bar int
+}
+
+func main() {
+    var f foo
+    f.bar, tmp := 1, 2
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误：</p>
+
+<pre><code class="language-go">non-name f.bar on left side of :=
+</code></pre>
+
+<p>:= 操作符不能用于结构体字段赋值。</p>
+
+<p>2.下面的代码输出什么？</p>
+
+<pre><code class="language-go">func main() {  
+    fmt.Println(~2) 
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误。</p>
+
+<pre><code class="language-go">invalid character U+007E '~'
+</code></pre>
+
+<p>很多语言都是采用 ~ 作为按位取反运算符，Go 里面采用的是 ^ 。按位取反之后返回一个每个 bit 位都取反的数，对于有符号的整数来说，是按照补码进行取反操作的（快速计算方法：对数 a 取反，结果为 -(a+1) ），对于无符号整数来说就是按位取反。例如：</p>
+
+<pre><code class="language-go">func main() {
+    var a int8 = 3
+    var b uint8 = 3
+    var c int8 = -3
+
+    fmt.Printf(&quot;^%b=%b %d\n&quot;, a, ^a, ^a) // ^11=-100 -4
+    fmt.Printf(&quot;^%b=%b %d\n&quot;, b, ^b, ^b) // ^11=11111100 252
+    fmt.Printf(&quot;^%b=%b %d\n&quot;, c, ^c, ^c) // ^-11=10 2
+}
+</code></pre>
+
+<p>另外需要注意的是，如果作为二元运算符，^ 表示按位异或，即：对应位相同为 0，相异为 1。例如：</p>
+
+<pre><code class="language-go">func main() {
+    var a int8 = 3
+    var c int8 = 5
+
+    fmt.Printf(&quot;a: %08b\n&quot;,a)
+    fmt.Printf(&quot;c: %08b\n&quot;,c)
+    fmt.Printf(&quot;a^c: %08b\n&quot;,a ^ c)
+}
+</code></pre>
+
+<p>给大家重点介绍下这个操作符 &amp;^，按位置零，例如：z = x &amp;^ y，表示如果 y 中的 bit 位为 1，则 z 对应 bit 位为 0，否则 z 对应 bit 位等于 x 中相应的 bit 位的值。</p>
+
+<p>不知道大家发现没有，我们还可以这样理解或操作符 | ，表达式 z = x | y，如果 y 中的 bit 位为 1，则 z 对应 bit 位为 1，否则 z 对应 bit 位等于 x 中相应的 bit 位的值，与 &amp;^ 完全相反。</p>
+
+<pre><code class="language-go">var x uint8 = 214
+var y uint8 = 92
+fmt.Printf(&quot;x: %08b\n&quot;,x)     
+fmt.Printf(&quot;y: %08b\n&quot;,y)       
+fmt.Printf(&quot;x | y: %08b\n&quot;,x | y)     
+fmt.Printf(&quot;x &amp;^ y: %08b\n&quot;,x &amp;^ y)
+</code></pre>
+
+<p>输出：</p>
+
+<pre><code class="language-go">x: 11010110
+y: 01011100
+x | y: 11011110
+x &amp;^ y: 10000010
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-49-结构体访问控制-channel">Day 49. 结构体访问控制,channel</h2>
+
+<p>1.下面代码输出什么？</p>
+
+<pre><code class="language-go">func main() {
+    var ch chan int
+    select {
+    case v, ok := &lt;-ch:
+        println(v, ok)
+    default:
+        println(&quot;default&quot;) 
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：default。ch 为 nil，读写都会阻塞。</p>
+
+<p>2.下面这段代码输出什么？</p>
+
+<pre><code class="language-go">type People struct {
+    name string `json:&quot;name&quot;`
+}
+
+func main() {
+    js := `{
+        &quot;name&quot;:&quot;seekload&quot;
+    }`
+    var p People
+    err := json.Unmarshal([]byte(js), &amp;p)
+    if err != nil {
+        fmt.Println(&quot;err: &quot;, err)
+        return
+    }
+    fmt.Println(p)
+}
+</code></pre>
+
+<p>参考答案及解析：输出 {}。知识点：结构体访问控制，因为 name 首字母是小写，导致其他包不能访问，所以输出为空结构体。修复代码：</p>
+
+<pre><code class="language-go">type People struct {
+    Name string `json:&quot;name&quot;`
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-50-switch">Day 50. switch</h2>
+
+<p>1.下面这段代码输出什么？</p>
+
+<pre><code class="language-go">type T struct {
+    ls []int
+}
+
+func foo(t T) {
+    t.ls[0] = 100
+}
+
+func main() {
+    var t = T{
+        ls: []int{1, 2, 3},
+    }
+
+    foo(t)
+    fmt.Println(t.ls[0])
+}
+</code></pre>
+
+<ul>
+<li>A. 1</li>
+<li>B. 100</li>
+<li>C. compilation error</li>
+</ul>
+
+<p>参考答案及解析：B。调用 foo() 函数时虽然是传值，但 foo() 函数中，字段 ls 依旧可以看成是指向底层数组的指针。</p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">func main() {
+    isMatch := func(i int) bool {
+        switch(i) {
+        case 1:
+        case 2:
+            return true
+        }
+        return false
+    }
+
+    fmt.Println(isMatch(1))
+    fmt.Println(isMatch(2))
+}
+</code></pre>
+
+<p>参考答案及解析：false true。Go 语言的 switch 语句虽然没有&rdquo;break&rdquo;，但如果 case 完成程序会默认 break，可以在 case 语句后面加上关键字 fallthrough，这样就会接着走下一个 case 语句（不用匹配后续条件表达式）。或者，利用 case 可以匹配多个值的特性。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {
+    isMatch := func(i int) bool {
+        switch(i) {
+        case 1:
+            fallthrough
+        case 2:
+            return true
+        }
+        return false
+    }
+
+    fmt.Println(isMatch(1))     // true
+    fmt.Println(isMatch(2))     // true
+
+    match := func(i int) bool {
+        switch(i) {
+        case 1,2:
+            return true
+        }
+        return false
+    }
+
+    fmt.Println(match(1))       // true
+    fmt.Println(match(2))       // true
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-51-比较-struct">Day 51. 比较，struct</h2>
+
+<p>1.下面的代码能否正确输出？</p>
+
+<pre><code class="language-go">func main() {
+    var fn1 = func() {}
+    var fn2 = func() {}
+
+    if fn1 != fn2 {
+        println(&quot;fn1 not equal fn2&quot;)
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误</p>
+
+<pre><code class="language-go">invalid operation: fn1 != fn2 (func can only be compared to nil)
+
+</code></pre>
+
+<p>函数只能与 nil 比较。</p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">type T struct {
+    n int
+}
+
+func main() {
+    m := make(map[int]T)
+    m[0].n = 1
+    fmt.Println(m[0].n)
+}
+</code></pre>
+
+<ul>
+<li>A. 1</li>
+<li>B. compilation error</li>
+</ul>
+
+<p>参考答案及解析：B。编译错误：</p>
+
+<pre><code class="language-go">cannot assign to struct field m[0].n in map
+</code></pre>
+
+<p>map[key]struct 中 struct 是不可寻址的，所以无法直接赋值。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">type T struct {
+     n int
+}
+ 
+func main() {
+     m := make(map[int]T)
+ 
+    t := T{1}
+    m[0] = t
+    fmt.Println(m[0].n)
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-52-struct寻址-map">Day 52. struct寻址, map</h2>
+
+<p>1.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">type X struct {}
+
+func (x *X) test()  {
+    println(x)
+}
+
+func main() {
+
+    var a *X
+    a.test()
+
+    X{}.test()
+}
+</code></pre>
+
+<p>参考答案及解析：X{} 是不可寻址的，不能直接调用方法。知识点：在方法中，指针类型的接收者必须是合法指针（包括 nil）,或能获取实例地址。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func main() {
+
+    var a *X
+    a.test()    // 相当于 test(nil)
+
+    var x = X{}
+    x.test()
+}
+</code></pre>
+
+<p>引自：《Go语言学习笔记》· 方法</p>
+
+<p>2.下面代码有什么不规范的地方吗？</p>
+
+<pre><code class="language-go">func main() {
+    x := map[string]string{&quot;one&quot;:&quot;a&quot;,&quot;two&quot;:&quot;&quot;,&quot;three&quot;:&quot;c&quot;}
+
+   if v := x[&quot;two&quot;]; v == &quot;&quot; { 
+        fmt.Println(&quot;no entry&quot;)
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：检查 map 是否含有某一元素，直接判断元素的值并不是一种合适的方式。最可靠的操作是使用访问 map 时返回的第二个值。</p>
+
+<p>修复代码如下：</p>
+
+<pre><code class="language-go">func main() {  
+    x := map[string]string{&quot;one&quot;:&quot;a&quot;,&quot;two&quot;:&quot;&quot;,&quot;three&quot;:&quot;c&quot;}
+
+    if _,ok := x[&quot;two&quot;]; !ok {
+        fmt.Println(&quot;no entry&quot;)
+    }
+}
+</code></pre>
+
+<p>引自：<a href="http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html" target="_blank">http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html</a></p>
+
+<p><br></p>
+
+<h2 id="day-53-channel-struct-寻址">Day 53. channel, struct 寻址，</h2>
+
+<p>1.关于 channel 下面描述正确的是？</p>
+
+<ul>
+<li>A. 向已关闭的通道发送数据会引发 panic；</li>
+<li>B. 从已关闭的缓冲通道接收数据，返回已缓冲数据或者零值；</li>
+<li>C. 无论接收还是接收，nil 通道都会阻塞；</li>
+</ul>
+
+<p>参考答案及解析：ABC。</p>
+
+<p>2.下面的代码有几处问题？请详细说明。</p>
+
+<pre><code class="language-go">type T struct {
+    n int
+}
+
+func (t *T) Set(n int) {
+    t.n = n
+}
+
+func getT() T {
+    return T{}
+}
+
+func main() {
+    getT().Set(1)
+}
+</code></pre>
+
+<p>参考答案及解析：有两处问题：</p>
+
+<ul>
+<li>1.直接返回的 T{} 不可寻址；</li>
+<li>2.不可寻址的结构体不能调用带结构体指针接收者的方法；</li>
+</ul>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">type T struct {
+    n int
+}
+
+func (t *T) Set(n int) {
+    t.n = n
+}
+
+func getT() T {
+    return T{}
+}
+
+func main() {
+    t := getT()
+    t.Set(2)
+    fmt.Println(t.n)
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-54-指针-方法表达式">Day 54. 指针，方法表达式</h2>
+
+<p>1.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">func (n N) value(){
+    n++
+   fmt.Printf(&quot;v:%p,%v\n&quot;,&amp;n,n)
+}
+
+func (n *N) pointer(){
+    *n++
+    fmt.Printf(&quot;v:%p,%v\n&quot;,n,*n)
+}
+
+
+func main() {
+
+    var a N = 25
+
+    p := &amp;a
+    p1 := &amp;p
+
+   p1.value()
+   p1.pointer()
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误：</p>
+
+<pre><code class="language-go">calling method value with receiver p1 (type **N) requires explicit dereference
+calling method pointer with receiver p1 (type **N) requires explicit dereference
+</code></pre>
+
+<p>不能使用多级指针调用方法。</p>
+
+<p>2.下面的代码输出什么？</p>
+
+<pre><code class="language-go">type N int
+
+func (n N) test(){
+    fmt.Println(n)
+}
+
+func main()  {
+    var n N = 10
+    fmt.Println(n)
+
+    n++
+    f1 := N.test
+    f1(n)
+
+    n++
+    f2 := (*N).test
+    f2(&amp;n)
+}
+</code></pre>
+
+<p>参考答案及解析：10 11 12。知识点：方法表达式。通过类型引用的方法表达式会被还原成普通函数样式，接收者是第一个参数，调用时显示传参。类型可以是 T 或 *T，只要目标方法存在于该类型的方法集中就可以。</p>
+
+<p>还可以直接使用方法表达式调用：</p>
+
+<pre><code class="language-go">func main()  {
+    var n N = 10
+
+    fmt.Println(n)
+
+    n++
+    N.test(n)
+
+    n++
+    (*N).test(&amp;n)
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-55-channel-struct">Day 55. channel, struct</h2>
+
+<p>1.关于 channel 下面描述正确的是？</p>
+
+<ul>
+<li>A. close() 可以用于只接收通道；</li>
+<li>B. 单向通道可以转换为双向通道；</li>
+<li>C. 不能在单向通道上做逆向操作（例如：只发送通道用于接收）；</li>
+</ul>
+
+<p>参考答案及解析：C。</p>
+
+<p>2.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">type T struct {
+    n int
+}
+
+func getT() T {
+    return T{}
+}
+
+func main() {
+    getT().n = 1
+}
+</code></pre>
+
+<p>参考答案及解析：编译错误：</p>
+
+<pre><code class="language-go">cannot assign to getT().n
+</code></pre>
+
+<p>直接返回的 T{} 无法寻址，不可直接赋值。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">type T struct {
+    n int
+}
+
+func getT() T {
+    return T{}
+}
+
+func main() {
+    t := getT()
+    p := &amp;t.n    // &lt;=&gt; p = &amp;(t.n)
+    *p = 1
+    fmt.Println(t.n)
+}
+</code></pre>
+
+<p><br></p>
+
+<h2 id="day-56-切片-方法值">Day 56. 切片，方法值</h2>
+
+<p>1.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func main() {
+    s := make([]int, 3, 9)
+    fmt.Println(len(s)) 
+    s2 := s[4:8]
+    fmt.Println(len(s2)) 
+}
+</code></pre>
+
+<p>参考答案及解析：代码没问题，输出 3 4。<strong>从一个基础切片派生出的子切片的长度可能大于基础切片的长度</strong>。假设基础切片是 baseSlice，使用操作符 [low,high]，有如下规则：0 &lt;= low &lt;= high &lt;= cap(baseSlice)，只要上述满足这个关系，下标 low 和 high 都可以大于 len(baseSlice)。</p>
+
+<p>2.下面代码输出什么？</p>
+
+<pre><code class="language-go">type N int
+
+func (n N) test(){
+    fmt.Println(n)
+}
+
+func main()  {
+    var n N = 10
+    p := &amp;n
+
+    n++
+    f1 := n.test
+
+    n++
+    f2 := p.test
+
+    n++
+    fmt.Println(n)
+
+    f1()
+    f2()
+}
+</code></pre>
+
+<p>参考答案及解析：13 11 12。知识点：方法值。当指针值赋值给变量或者作为函数参数传递时，会立即计算并复制该方法执行所需的接收者对象，与其绑定，以便在稍后执行时，能隐式第传入接收者参数。</p>
+
+<p><br></p>
+
+<h2 id="day-57-panic-select">Day 57. panic,select</h2>
+
+<p>1.下面哪一行代码会 panic，请说明原因？</p>
+
+<pre><code class="language-go">package main
+
+func main() {
+  var x interface{}
+  var y interface{} = []int{3, 5}
+  _ = x == x
+  _ = x == y
+  _ = y == y
+}
+</code></pre>
+
+<p>参考答案及解析：第 8 行。因为两个比较值的动态类型为同一个不可比较类型。</p>
+
+<p>2.下面的代码输出什么？</p>
+
+<pre><code class="language-go">var o = fmt.Print
+
+func main() {
+    c := make(chan int, 1)
+    for range [3]struct{}{} {
+        select {
+        default:
+            o(1)
+        case &lt;-c:
+            o(2)
+            c = nil
+        case c &lt;- 1:
+            o(3)
+        }
+    }
+}
+</code></pre>
+
+<p>参考答案及解析：321。第一次循环，写操作已经准备好，执行 o(3)，输出 3；第二次，读操作准备好，执行 o(2)，输出 2 并将 c 赋值为 nil；第三次，由于 c 为 nil，走的是 default 分支，输出 1。</p>
+
+<p><br></p>
+
+<h2 id="day-58-运算符优先级-panic">Day 58. 运算符优先级, panic</h2>
+
+<p>1.下面的代码输出什么？</p>
+
+<pre><code class="language-go">type T struct {
+    x int
+    y *int
+}
+
+func main() {
+
+    i := 20
+    t := T{10,&amp;i}
+
+    p := &amp;t.x
+
+    *p++
+    *p--
+
+    t.y = p
+
+    fmt.Println(*t.y)
+}
+</code></pre>
+
+<p>参考答案及解析：10。知识点：运算符优先级。如下规则：递增运算符 ++ 和递减运算符 &ndash; 的优先级低于解引用运算符 * 和取址运算符 &amp;，解引用运算符和取址运算符的优先级低于选择器 . 中的属性选择操作符。</p>
+
+<p>2.下面哪一行代码会 panic，请说明原因？</p>
+
+<pre><code class="language-go">package main
+
+func main() {
+    x := make([]int, 2, 10)
+    _ = x[6:10]
+    _ = x[6:]
+    _ = x[2:]
+}
+</code></pre>
+
+<p>参考答案：第 6 行，截取符号 [i:j]，如果 j 省略，默认是原切片或者数组的长度，x 的长度是 2，小于起始下标 6 ，所以 panic。</p>
+
+<p><br></p>
+
+<h2 id="day-59-panic-方法值">Day 59. panic, 方法值</h2>
+
+<p>1.下面的代码输出什么？</p>
+
+<pre><code class="language-go">type N int
+ 
+func (n *N) test(){
+     fmt.Println(*n)
+}
+ 
+func main()  {
+     var n N = 10
+     p := &amp;n
+
+    n++
+    f1 := n.test
+
+    n++
+    f2 := p.test
+
+    n++
+    fmt.Println(n)
+
+   f1()
+    f2()
+}
+</code></pre>
+
+<p>参考答案及解析：13 13 13。知识点：方法值。当目标方法的接收者是指针类型时，那么被复制的就是指针。</p>
+
+<p>引自：《Go语言学习笔记》· 方法</p>
+
+<p>2.下面哪一行代码会 panic，请说明原因？</p>
+
+<pre><code class="language-go">package main
+
+func main() {
+  var m map[int]bool // nil
+  _ = m[123]
+  var p *[5]string // nil
+for range p {
+    _ = len(p)
+  }
+  var s []int // nil
+  _ = s[:]
+  s, s[0] = []int{1, 2}, 9
+}
+</code></pre>
+
+<p>参考答案及解析：第 12 行。因为左侧的 s[0] 中的 s 为 nil。</p>
+
+<p><br></p>
+
+<h2 id="day-60-panic-mutex">Day 60. panic,mutex</h2>
+
+<p>1.下面哪一行代码会 panic，请说明原因？</p>
+
+<pre><code class="language-go">package main
+
+type T struct{}
+
+func (*T) foo() {
+}
+
+func (T) bar() {
+}
+
+type S struct {
+  *T
+}
+
+func main() {
+  s := S{}
+  _ = s.foo
+  s.foo()
+  _ = s.bar
+20}
+</code></pre>
+
+<p>参考答案及解析：第 19 行，因为 s.bar 将被展开为 (*s.T).bar，而 s.T 是个空指针，解引用会 panic。</p>
+
+<p>可以使用下面代码输出 s：</p>
+
+<pre><code class="language-go">func main() {
+    s := S{}
+    fmt.Printf(&quot;%#v&quot;,s)   // 输出：main.S{T:(*main.T)(nil)}
+}
+</code></pre>
+
+<p>引自：《Go语言101》</p>
+
+<p>2.下面的代码有什么问题？</p>
+
+<pre><code class="language-go">type data struct {
+    sync.Mutex
+}
+
+func (d data) test(s string)  {
+   d.Lock()
+    defer d.Unlock()
+
+    for i:=0;i&lt;5 ;i++  {
+        fmt.Println(s,i)
+        time.Sleep(time.Second)
+    }
+}
+
+
+func main() {
+
+    var wg sync.WaitGroup
+    wg.Add(2)
+    var d data
+
+    go func() {
+        defer wg.Done()
+        d.test(&quot;read&quot;)
+    }()
+
+    go func() {
+        defer wg.Done()
+        d.test(&quot;write&quot;)
+    }()
+
+    wg.Wait()
+}
+</code></pre>
+
+<p>参考答案及解析：锁失效。将 Mutex 作为匿名字段时，相关的方法必须使用指针接收者，否则会导致锁机制失效。</p>
+
+<p>修复代码：</p>
+
+<pre><code class="language-go">func (d *data) test(s string)  {     // 指针接收者
+    d.Lock()
+    defer d.Unlock()
+
+    for i:=0;i&lt;5 ;i++  {
+        fmt.Println(s,i)
+        time.Sleep(time.Second)
+    }
+}
+</code></pre>
+
+<p>或者可以通过嵌入 *Mutex 来避免复制的问题，但需要初始化。</p>
+
+<pre><code class="language-go">type data struct {
+    *sync.Mutex     // *Mutex
+}
+
+func (d data) test(s string) {    // 值方法
+    d.Lock()
+    defer d.Unlock()
+
+    for i := 0; i &lt; 5; i++ {
+        fmt.Println(s, i)
+        time.Sleep(time.Second)
+    }
+}
+
+func main() {
+
+    var wg sync.WaitGroup
+    wg.Add(2)
+
+    d := data{new(sync.Mutex)}   // 初始化
+
+    go func() {
+        defer wg.Done()
+        d.test(&quot;read&quot;)
+    }()
+
+   go func() {
+        defer wg.Done()
+        d.test(&quot;write&quot;)
+    }()
+
+    wg.Wait()
+}
+</code></pre>
+
+<p>引自：《Go 语言学习笔记》· 同步</p>
+
+              </div>
+              
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/go/">Go</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Go%e8%af%ad%e8%a8%80%e4%b8%ad%e6%96%87%e7%bd%91%e9%9d%a2%e8%af%95%e9%a2%98%2031-60&amp;body=/go/interview/31-60/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/go/interview/31-60/&amp;title=Go%e8%af%ad%e8%a8%80%e4%b8%ad%e6%96%87%e7%bd%91%e9%9d%a2%e8%af%95%e9%a2%98%2031-60" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f808c7066d59404fcf07aa7ea9e8d77_115157_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">季程雨</a></h5>
+      <h6 class="card-subtitle">北京 朝阳</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/weixin/wx.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/xbdh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/go/interview/1-30/">Go语言中文网面试题 1-30</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+            </div>
+        </article>
+  
+      </main>
+    </div>
+  </div>
+  
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js" integrity="sha256-/2C3CAfmuTGkUqK2mVrhkTacBscoR1caE0u2QZZ3Uh8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/go.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/cpp.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/c.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcfae8267aba63cc55af53a503896bd9.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+    
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+  <p>
+    <a href="http://www.beian.miit.gov.cn/">皖ICP备20009099号-1</a>
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

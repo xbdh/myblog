@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.2">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="季程雨">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="回文子序列">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/code/dynamic-progamming/5-palindromic-subsequence/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#000000">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.font.im/css?family=Source+Code+Pro:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/code/dynamic-progamming/5-palindromic-subsequence/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="细胞的核">
+  <meta property="og:url" content="/code/dynamic-progamming/5-palindromic-subsequence/">
+  <meta property="og:title" content="Dynamic Programming-5 Palindromic Subsequence | 细胞的核">
+  <meta property="og:description" content="回文子序列"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-07-01T16:35:47&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-07-01T16:35:47&#43;08:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Dynamic Programming-5 Palindromic Subsequence | 细胞的核</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    
+    
+      <a class="navbar-brand" href="/">细胞的核</a>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/go"><span>GO</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/code"><span>刷题</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/mix"><span>MIX</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/project"><span>Project</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/interview"><span>面试</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+
+
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+      
+      <div class="d-none d-sm-none d-xl-block d-lg-block d-md-block col-sm-2 col-md-3 col-xl-3 col-xs-0 docs-toc">
+        <ul class="nav toc-top">
+          <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+        </ul>
+        <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-longest-palindromic-subsequence">1. longest Palindromic Subsequence</a>
+<ul>
+<li><a href="#brute-force">Brute-force</a></li>
+<li><a href="#top-down">Top-down</a></li>
+<li><a href="#bottom-up">bottom-up</a></li>
+<li><a href="#bottom-up-优化">bottom-up 优化</a></li>
+</ul></li>
+<li><a href="#2-longest-palindromic-substring">2.  longest Palindromic Substring</a>
+<ul>
+<li><a href="#brute-force-1">Brute-force</a></li>
+<li><a href="#bottom-up-1">Bottom-up</a></li>
+</ul></li>
+<li><a href="#3-count-of-palindromic-substring">3. count of Palindromic Substring</a>
+<ul>
+<li><a href="#bottom-up-2">Bottom-up</a></li>
+</ul></li>
+<li><a href="#4-minimum-deletions-in-a-string-to-make-it-a-palindrome">4. minimum deletions in a string to make it a palindrome</a>
+<ul>
+<li><a href="#bottom-up-3">Bottom-up</a></li>
+<li><a href="#相似问题">相似问题</a></li>
+</ul></li>
+<li><a href="#5-palindromic-partitioning">5. palindromic partitioning</a>
+<ul>
+<li><a href="#brute-force-2">Brute-force</a></li>
+<li><a href="#bottom-up-4">Bottom-up</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        
+      </div>
+      
+      <main class="col-12 col-md-9 col-xl-9 col-sm-10 py-md-2 pl-md-3 docs-content" role="main">
+
+        <article class="article">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Dynamic Programming-5 Palindromic Subsequence</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 1, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/dynamic-programming/">Dynamic Programming</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+            <div class="article-container">
+              <div class="article-style">
+                
+
+<h2 id="1-longest-palindromic-subsequence">1. longest Palindromic Subsequence</h2>
+
+<blockquote>
+<p>求最长回文子序列(不连续)的长度</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	&quot;bbbab&quot;
+    
+output:	4
+    
+explanation: &quot;bbbb&quot;
+</code></pre>
+
+<pre><code class="language-c++">input:	&quot;cbbd&quot;
+    
+output:	2
+    
+explanation: &quot;bb&quot;
+</code></pre>
+
+<h3 id="brute-force">Brute-force</h3>
+
+<pre><code class="language-c++">int longestPalindromicSubsequenceRecursive(const string &amp;s, int startIndex, int endIndex) {
+    if (startIndex &gt; endIndex) {
+        return 0;
+    }
+    //只有一个字符
+    if (startIndex == endIndex) {
+        return 1;
+    }
+
+    if (s[startIndex] == s[endIndex]) {
+        return 2 + longestPalindromicSubsequenceRecursive(s, startIndex + 1, endIndex - 1);
+
+    }
+    //从头或尾跳过一个字符
+
+    int c1 = longestPalindromicSubsequenceRecursive(s, startIndex + 1, endIndex);
+    int c2 = longestPalindromicSubsequenceRecursive(s, startIndex, endIndex - 1);
+    return max(c1, c2);
+}
+
+int LPS(string s) {
+    return longestPalindromicSubsequenceRecursive(s, 0, s.size() - 1);
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>2^N</em> )</p>
+
+<p>Space Complexity : <em>O</em>(<em>N</em>)</p>
+
+<h3 id="top-down">Top-down</h3>
+
+<pre><code class="language-c++">int LPSRecursive2(const string &amp;s, int startIndex, int endIndex, vector&lt;vector&lt;int&gt;&gt; dp) {
+    if (startIndex &gt; endIndex) {
+        return 0;
+    }
+    //只有一个字符
+    if (startIndex == endIndex) {
+        return 1;
+    }
+
+    if (dp[startIndex][endIndex] == -1) {
+        if (s[startIndex] == s[endIndex]) {
+            dp[startIndex][endIndex] = 2 + LPSRecursive2(s, startIndex + 1, endIndex - 1, dp);
+        } else {
+            //从头或尾跳过一个字符
+            int c1 = LPSRecursive2(s, startIndex + 1, endIndex, dp);
+            int c2 = LPSRecursive2(s, startIndex, endIndex - 1, dp);
+            dp[startIndex][endIndex] = max(c1, c2);
+        }
+
+    }
+
+    return dp[startIndex][endIndex];
+}
+
+int LPS2(string s) {
+    vector&lt;vector&lt;int&gt;&gt; dp(s.length(), vector&lt;int&gt;(s.length(), -1));
+    return LPSRecursive2(s, 0, s.size() - 1, dp);
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N ^ 2</em>)</p>
+
+<p>Space Complexity : <em>O</em>(<em>N ^ 2</em>)</p>
+
+<h3 id="bottom-up">bottom-up</h3>
+
+<pre><code class="language-c++">int LPS3(string s) {
+    vector&lt;vector&lt;int&gt;&gt; dp(s.length(), vector&lt;int&gt;(s.length()));
+    for (int i = 0; i &lt; s.length(); i++) {
+        dp[i][i] = 1;
+    }
+    //dp[i][j]表示[i,j]区间内的字符串的最长回文子序列,上三角有效
+    //从下往上，从做往右处理。
+    for (int startIndex = s.length() - 1; startIndex &gt;= 0; startIndex--) {
+        for (int endIndex = startIndex + 1; endIndex &lt; s.length(); endIndex++) {
+            if (s[startIndex] == s[endIndex]) {
+                dp[startIndex][endIndex] = 2 + dp[startIndex + 1][endIndex - 1];
+            } else {
+                dp[startIndex][endIndex] = max(dp[startIndex + 1][endIndex], dp[startIndex][endIndex - 1]);
+            }
+        }
+    }
+
+    return dp[0][s.length() - 1];
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N ^ 2</em>)</p>
+
+<p>Space Complexity : <em>O</em>(<em>N ^ 2</em>)</p>
+
+<h3 id="bottom-up-优化">bottom-up 优化</h3>
+
+<pre><code class="language-c++">int lps(string s)
+{
+    int n = s.length();
+
+    // dp[i] is going to store length of longest 
+    // palindromic subsequence of substring s[0..i] 
+    int dp[n];
+
+    // Pick starting point 
+    for (int i = n - 1; i &gt;= 0; i--) {
+
+        int back_up = 0;
+        
+        // Pick ending points and see if s[i] 
+        // increases length of longest common 
+        // subsequence ending with s[j]. 
+        for (int j = i; j &lt; n; j++) {
+
+            // similar to 2D array L[i][j] == 1 
+            // i.e., handling substrings of length 
+            // one. 
+            if (j == i)
+                dp[j] = 1;
+
+                // Similar to 2D array L[i][j] = L[i+1][j-1]+2 
+                // i.e., handling case when corner characters 
+                // are same.  
+            else if (s[i] == s[j]){
+
+                // value a[j] is depend upon previous  
+                // unupdated value of a[j-1] but in  
+                // previous loop value of a[j-1] is  
+                // changed. To store the unupdated  
+                // value of a[j-1] back_up variable  
+                // is used. 
+                int temp = dp[j];
+                dp[j] = back_up + 2;
+                back_up = temp;
+            }else{
+                // similar to 2D array L[i][j] = max(L[i][j-1], 
+                // a[i+1][j]) 
+                back_up = dp[j];
+                dp[j] = max(dp[j - 1], dp[j]);
+            }
+        }
+    }
+    return dp[n - 1];
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N ^ 2</em>)</p>
+
+<p>Space Complexity : <em>O</em>(<em>N</em>)</p>
+
+<h2 id="2-longest-palindromic-substring">2.  longest Palindromic Substring</h2>
+
+<blockquote>
+<p>求最长回文串</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	&quot;abdbca&quot;
+    
+output:	bdb
+</code></pre>
+
+<pre><code class="language-c++">input:	&quot;abbc&quot;
+    
+output:	bb
+</code></pre>
+
+<pre><code class="language-c++">input:	&quot;abc&quot;
+    
+output:	a
+</code></pre>
+
+<h3 id="brute-force-1">Brute-force</h3>
+
+<pre><code class="language-c++">string LPS(string s) {
+    int len = s.length();
+    int maxLen = 1;//任意字符都是回文
+    int startIndex = 0;
+
+    for (int i = 0; i &lt; len; i++) {
+        for (int j = i + 1; j &lt; len; j++) {
+            int low = i;
+            int high = j;
+
+            while (low &lt; high &amp;&amp; s[low] == s[high]) {
+                low++;
+                high--;
+            }
+            //&quot;abbc&quot;模式，跳出循环low&gt;high
+            //&quot;abbtbbc&quot;模式，跳出循环low=high
+            //j - i + 1 &gt; maxLen,判断长度是否大于1
+            if (low &gt;= high &amp;&amp; j - i + 1 &gt; maxLen) {
+                maxLen = j - i + 1;
+                startIndex = i;
+            }
+        }
+    }
+    return s.substr(startIndex, maxLen);
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N^3</em> )</p>
+
+<p>Space Complexity : <em>O</em>(<em>1</em>)</p>
+
+<h3 id="bottom-up-1">Bottom-up</h3>
+
+<p><img src="./2-1.png" alt="" /></p>
+
+<pre><code class="language-C++">string LPS2(string s) {
+    int len = s.length();
+    int maxLen = 1;
+    int startIndex = 0;
+    //dp[i][j]代表[i,j]位置的字符串是否回文
+
+    //当 i == j，dp[i][j] 是回文子串（单字符都是回文子串）；
+    //当 j - i &lt; 3，只要 S[i] == S[j]，则 dp[i][j] 是回文子串（如&quot;aa&quot;，“aba”），否则不是；
+    //当 j - i &gt;= 3，如果 S[i] == S[j] &amp;&amp; dp[i+1][j-1] ，则 dp[i][j] 是回文子串，否则不是 。
+    vector&lt;vector&lt;bool&gt;&gt; dp(len, vector&lt;bool&gt;(len, false));
+
+	//for循环顺序变化，左侧列-&gt;右侧列，每列从上到下
+    //dp[i + 1][j - 1]在dp[i][j]的前一列，下一行，已经生成
+    for (int j = 0; j &lt; len; j++) {
+        for (int i = 0; i &lt;= j; i++) {
+            //小于3也行
+            if (j - i &lt; 2) {
+                dp[i][j] = (s[i] == s[j]);
+            } else {
+                dp[i][j] = (s[i] == s[j] &amp;&amp; dp[i + 1][j - 1]);
+            }
+
+            if (dp[i][j] &amp;&amp; j - i + 1 &gt; maxLen) {
+                maxLen = j - i + 1;
+                startIndex = i;
+            }
+        }
+    }
+//    //另一种解法
+//    for (int i = 0;i &lt; len; i++) {
+//    		dp[i][i] = true;
+//    }
+//    for (int i = len - 1; i &gt;= 0; i--) {
+//        //可以放在外面赋值
+//        for (int j = i; j &lt; len; j++) {
+//            //小于3也行
+//            if (j - i &lt; 2) {
+//                dp[i][j] = (s[i] == s[j]);
+//            } else {
+//                //要访问dp[i+1][j-1]，i从大到小，j从小到大
+//                dp[i][j] = (s[i] == s[j] &amp;&amp; dp[i + 1][j - 1]);
+//            }
+//
+//            if (dp[i][j] &amp;&amp; j - i + 1 &gt; maxLen) {
+//                maxLen = j - i + 1;
+//                startIndex = i;
+//            }
+//        }
+//    }
+    return s.substr(startIndex, maxLen);
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N^2</em> )</p>
+
+<p>Space Complexity : <em>O</em>(<em>N^2</em>)</p>
+
+<h2 id="3-count-of-palindromic-substring">3. count of Palindromic Substring</h2>
+
+<blockquote>
+<p>求最长回文串的个数</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	&quot;abdbca&quot;
+    
+output:	7
+    
+explanation :&quot;a&quot;,&quot;b&quot;, &quot;d&quot;,&quot;b&quot;,&quot;c&quot;,&quot;a&quot;,&quot;bdb&quot;
+</code></pre>
+
+<h3 id="bottom-up-2">Bottom-up</h3>
+
+<pre><code class="language-c++">int countLPS(string s) {
+    int count = 0;
+    int len = s.length();
+    vector&lt;vector&lt;bool&gt;&gt; dp(len, vector&lt;bool&gt;(len));
+    for (int j = 0; j &lt; len; j++) {
+        for (int i = 0; i &lt;= j; i++) {
+            //小于3也行
+            if (j - i &lt; 3) {
+                dp[i][j] = (s[i] == s[j]);
+            } else {
+                dp[i][j] = (s[i] == s[j] &amp;&amp; dp[i + 1][j - 1]);
+            }
+
+            if (dp[i][j]) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N^2</em> )</p>
+
+<p>Space Complexity : <em>O</em>(<em>N^2</em>)</p>
+
+<h2 id="4-minimum-deletions-in-a-string-to-make-it-a-palindrome">4. minimum deletions in a string to make it a palindrome</h2>
+
+<blockquote>
+<p>删除字符串的一些字符，使得其成为回文字符串，求最小的删除数</p>
+
+<p>=len(s) - len(longest Palindromic Subsequence),字符串长度减去最长回文序列长度</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	&quot;abdbca&quot;
+    
+output:	1
+    
+explanation: remove &quot;c&quot; -&gt; &quot;abdba&quot;
+</code></pre>
+
+<pre><code class="language-c++">input:	&quot;cddpd&quot;
+    
+output:	2
+    
+explanation: remove &quot;c&quot;,&quot;p&quot; -&gt; &quot;ddd&quot;
+</code></pre>
+
+<h3 id="bottom-up-3">Bottom-up</h3>
+
+<pre><code class="language-c++">int LPS3(string s) {
+    vector&lt;vector&lt;int&gt;&gt; dp(s.length(), vector&lt;int&gt;(s.length()));
+    for (int i = 0; i &lt; s.length(); i++) {
+        dp[i][i] = 1;
+    }
+    //dp[i][j]表示[i,j]区间内的字符串的最长回文子序列,上三角有效
+    //从下往上，从左往右处理。
+    //startIndex从大变小，endIndex从小变大
+    for (int startIndex = s.length() - 1; startIndex &gt;= 0; startIndex--) {
+        for (int endIndex = startIndex + 1; endIndex &lt; s.length(); endIndex++) {
+            if (s[startIndex] == s[endIndex]) {
+                dp[startIndex][endIndex] = 2 + dp[startIndex + 1][endIndex - 1];
+            } else {
+                dp[startIndex][endIndex] = max(dp[startIndex + 1][endIndex], dp[startIndex][endIndex - 1]);
+            }
+        }
+    }
+
+
+    return dp[0][s.length() - 1];
+}
+
+int countRemove(string s) {
+    return s.length() - LPS3(s);
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>N^2</em> )</p>
+
+<p>Space Complexity : <em>O</em>(<em>N^2</em>)</p>
+
+<h3 id="相似问题">相似问题</h3>
+
+<blockquote>
+<p>插入一些字符，使得字符串成为回文字符串，求最小的插入数</p>
+
+<p>同上</p>
+</blockquote>
+
+<h2 id="5-palindromic-partitioning">5. palindromic partitioning</h2>
+
+<blockquote>
+<p>给定字符串，分割成子串，使得子串都是回文字符串，求最小切割几刀</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	&quot;abdbca&quot;
+    
+output:	3
+    
+explanation: &quot;a&quot;,&quot;bdb&quot;,&quot;c&quot;,&quot;a&quot;
+</code></pre>
+
+<pre><code class="language-c++">input:	&quot;pqr&quot;
+    
+output:	3
+    
+explanation: &quot;p&quot;,&quot;q&quot;,&quot;r&quot;
+</code></pre>
+
+<pre><code class="language-c++">input:	&quot;pp&quot;
+    
+output:	0
+</code></pre>
+
+<h3 id="brute-force-2">Brute-force</h3>
+
+<pre><code class="language-c++">bool isPalindrome(string s, int start, int end) {
+    while (start &lt; end) {
+        if (s[start] == s[end]) {
+            start++;
+            end--;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+int minCutRecursive(string s, int startIndex, int endIndex) {
+    if (startIndex &gt;= endIndex || isPalindrome(s, startIndex, endIndex)) {
+        return 0;
+    }
+
+    //[startIndex,endIndex],的最大切值
+    int minCuts = endIndex - startIndex;
+
+    for (int i = startIndex; i &lt;= endIndex; i++) {
+        if (isPalindrome(s, startIndex, i)) {
+            minCuts = min(minCuts, 1 + minCutRecursive(s, i + 1, endIndex));
+        }
+    }
+    return minCuts;
+}
+
+int minCutLPS(string s) {
+    return minCutRecursive(s, 0, s.length() - 1);
+}
+</code></pre>
+
+<p>Time Complexity : <em>O</em>(<em>2^N</em> )</p>
+
+<p>Space Complexity : <em>O</em>(<em>N</em>)</p>
+
+<h3 id="bottom-up-4">Bottom-up</h3>
+
+<pre><code class="language-c++">待看
+</code></pre>
+
+              </div>
+              
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/palindromic-subsequence/">Palindromic Subsequence</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Dynamic%20Programming-5%20Palindromic%20Subsequence&amp;body=/code/dynamic-progamming/5-palindromic-subsequence/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/code/dynamic-progamming/5-palindromic-subsequence/&amp;title=Dynamic%20Programming-5%20Palindromic%20Subsequence" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f808c7066d59404fcf07aa7ea9e8d77_115157_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">季程雨</a></h5>
+      <h6 class="card-subtitle">北京 朝阳</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/weixin/wx.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/xbdh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+            </div>
+        </article>
+  
+      </main>
+    </div>
+  </div>
+  
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js" integrity="sha256-/2C3CAfmuTGkUqK2mVrhkTacBscoR1caE0u2QZZ3Uh8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/go.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/cpp.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/c.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcfae8267aba63cc55af53a503896bd9.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+    
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+  <p>
+    <a href="http://www.beian.miit.gov.cn/">皖ICP备20009099号-1</a>
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

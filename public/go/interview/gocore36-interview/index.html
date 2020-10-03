@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.2">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="季程雨">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="面试题答案">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/go/interview/gocore36-interview/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#000000">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.font.im/css?family=Source+Code+Pro:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/go/interview/gocore36-interview/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="细胞的核">
+  <meta property="og:url" content="/go/interview/gocore36-interview/">
+  <meta property="og:title" content="Go语言核心36讲面试题 | 细胞的核">
+  <meta property="og:description" content="面试题答案"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-07-28T23:35:06&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-07-28T23:35:06&#43;08:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Go语言核心36讲面试题 | 细胞的核</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    
+    
+      <a class="navbar-brand" href="/">细胞的核</a>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/go"><span>GO</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/code"><span>刷题</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/mix"><span>MIX</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/project"><span>Project</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/interview"><span>面试</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+
+
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+      
+      <div class="d-none d-sm-none d-xl-block d-lg-block d-md-block col-sm-2 col-md-3 col-xl-3 col-xs-0 docs-toc">
+        <ul class="nav toc-top">
+          <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+        </ul>
+        <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#1-工作区和gopath">1. 工作区和GOPATH</a></li>
+<li><a href="#2-命令源码文件">2. 命令源码文件</a></li>
+<li><a href="#3-库源码文件">3. 库源码文件</a></li>
+<li><a href="#4-程序实体的那些事儿-上">4. 程序实体的那些事儿（上）</a></li>
+<li><a href="#5-程序实体的那些事儿-中">5. 程序实体的那些事儿（中）</a></li>
+<li><a href="#6-程序实体的那些事儿-下">6. 程序实体的那些事儿 （下)</a></li>
+<li><a href="#7-数组和切片">7.  数组和切片</a></li>
+<li><a href="#8-container包中的那些容器">8. container包中的那些容器</a></li>
+<li><a href="#9-字典的操作和约束">9. 字典的操作和约束</a></li>
+<li><a href="#10-通道的基本操作">10. 通道的基本操作</a></li>
+</ul></li>
+</ul>
+</nav>
+        
+      </div>
+      
+      <main class="col-12 col-md-9 col-xl-9 col-sm-10 py-md-2 pl-md-3 docs-content" role="main">
+
+        <article class="article">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Go语言核心36讲面试题</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 28, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/interview/">interview</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+            <div class="article-container">
+              <div class="article-style">
+                
+
+<h2 id="1-工作区和gopath">1. 工作区和GOPATH</h2>
+
+<p><strong>问：你知道设置 GOPATH 有什么意义吗？</strong></p>
+
+<p>你可以把 GOPATH 简单理解成 Go 语言的工作目录，它的值是一个目录的路径，也可以是多个目录路径，每个目录都代表 Go 语言的一个工作区（workspace）。</p>
+
+<p>我们需要利于这些工作区，去放置 Go 语言的源码文件（source file），以及安装（install）后的归档文件（archive file，也就是以“.a”为扩展名的文件）和可执行文件（executable file）。</p>
+
+<p><br></p>
+
+<p>事实上，由于 Go 语言项目在其生命周期内的所有操作（编码、依赖管理、构建、测试、安装等）基本上都是围绕着 GOPATH 和工作区进行的。所以，它的背后至少有 3 个知识点，</p>
+
+<p>分别是：</p>
+
+<p><strong>1.1. Go 语言源码的组织方式是怎样的；</strong></p>
+
+<p>Go 语言的源码也是以代码包为基本组织单位的。在文件系统中，这些代码包其实是与目录一一对应的。由于目录可以有子目录，所以代码包也可以有子包。</p>
+
+<p>一个代码包中可以包含任意个以.go 为扩展名的源码文件，这些源码文件都需要被声明属于同一个代码包。</p>
+
+<p>代码包的名称一般会与源码文件所在的目录同名。如果不同名，那么在构建、安装的过程中会以代码包名称为准。每个代码包都会有导入路径。代码包的导入路径是其他代码在使用该包中的程序实体时，需要引入的路径。在实际使用程序实体之前，我们必须先导入其所在的代码包。具体的方式就是import该代码包的导入路径。</p>
+
+<p>在工作区中，一个代码包的导入路径实际上就是从 src 子目录，到该包的实际存储位置的相对路径。</p>
+
+<p>所以说，Go 语言源码的组织方式就是以环境变量 GOPATH、工作区、src 目录和代码包为主线的。一般情况下，Go 语言的源码文件都需要被存放在环境变量 GOPATH 包含的某个工作区（目录）中的 src 目录下的某个代码包（目录）中。</p>
+
+<p><strong>1.2. 你是否了解源码安装后的结果（只有在安装后，Go 语言源码才能被我们或其他代码使</strong></p>
+
+<p><strong>用）；</strong></p>
+
+<p>源码文件通常会被放在某个工作区的 src 子目录下。那么在安装后如果产生了归档文件（以“.a”为扩展名的文件），就会放进该工作区的 pkg子目录；如果产生了可执行文件，就可能会放进该工作区的 bin 子目录。</p>
+
+<p><strong>1.3. 你是否理解构建和安装 Go 程序的过程（这在开发程序以及查找程序问题的时候都很有</strong></p>
+
+<p><strong>用，否则你很可能会走弯路）。</strong></p>
+
+<p>构建使用命令go build，安装使用命令go install。构建和安装代码包的时候都会执行编译、打包等操作，并且，这些操作生成的任何文件都会先被保存到某个临时的目录中。</p>
+
+<p>如果构建的是库源码文件，那么操作后产生的结果文件只会存在于临时目录中。这里的构建的主要意义在于检查和验证。</p>
+
+<p>如果构建的是命令源码文件，那么操作的结果文件会被搬运到源码文件所在的目录中。</p>
+
+<p><br></p>
+
+<h2 id="2-命令源码文件">2. 命令源码文件</h2>
+
+<p><strong>问：命令源码文件的用途是什么，怎样编写它？</strong></p>
+
+<p>命令源码文件是程序的运行入口，是每个可独立运行的程序必须拥有的。我们可以通过构建或安装，生成与其对应的可执行文件，后者一般会与该命令源码文件的直接父目录同名。</p>
+
+<p><strong>如果一个源码文件声明属于<code>main</code>包，并且包含一个无参数声明且无结果声明的<code>main</code>函数，那么它就是命令源码文件。</strong> 就像下面这段代码：</p>
+
+<pre><code class="language-go">package main
+ 
+import &quot;fmt&quot;
+ 
+func main() {
+	fmt.Println(&quot;Hello, world!&quot;)
+}
+</code></pre>
+
+<p>如果你把这段代码存成 demo1.go 文件，那么运行<code>go run demo1.go</code>命令后就会在屏幕（标准输出）中看到<code>Hello, world!</code></p>
+
+<blockquote>
+<p>当需要模块化编程时，我们往往会将代码拆分到多个文件，甚至拆分到不同的代码包中。但无论怎样，对于一个独立的程序来说，命令源码文件永远只会也只能有一个。如果有与命令源码文件同包的源码文件，那么它们也应该声明属于<code>main</code>包。</p>
+</blockquote>
+
+<p><br></p>
+
+<h2 id="3-库源码文件">3. 库源码文件</h2>
+
+<p><strong>库源码文件是不能被直接运行的源码文件，它仅用于存放程序实体，这些程序实体可以被其他代码使用（只要遵从 Go 语言规范的话）。</strong></p>
+
+<p>这里的“其他代码”可以与被使用的程序实体在同一个源码文件内，也可以在其他源码文件，甚至其他代码包中。</p>
+
+<blockquote>
+<p>那么程序实体是什么呢？在 Go 语言中，程序实体是变量、常量、函数、结构体和接口的统称。</p>
+
+<p>我们总是会先声明（或者说定义）程序实体，然后再去使用。比如在上一篇的例子中，我们先定义了变量<code>name</code>，然后在<code>main</code>函数中调用<code>fmt.Printf</code>函数的时候用到了它。</p>
+
+<p>再多说一点，程序实体的名字被统称为标识符。标识符可以是任何 Unicode 编码可以表示的字母字符、数字以及下划线“_”，但是其首字母不能是数字。</p>
+
+<p>从规则上说，我们可以用中文作为变量的名字。但是，我觉得这种命名方式非常不好，自己也会在开发团队中明令禁止这种做法。作为一名合格的程序员，我们应该向着编写国际水准的程序无限逼近。</p>
+</blockquote>
+
+<p><strong>问：怎样把命令源码文件中的代码拆分到其他库源码文件？</strong></p>
+
+<p>第一条规则，同目录下的源码文件的代码包声明语句要一致。也就是说，它们要同属于一个代码包。这对于所有源码文件都是适用的。</p>
+
+<p>如果目录中有命令源码文件，那么其他种类的源码文件也应该声明属于<code>main</code>包。这也是我们能够成功构建和运行它们的前提。</p>
+
+<p>第二条规则，源码文件声明的代码包的名称可以与其所在的目录的名称不同。在针对代码包进行构建时，生成的结果文件的主名称与其父目录的名称一致。</p>
+
+<p>对于命令源码文件而言，构建生成的可执行文件的主名称会与其父目录的名称相同，这在我前面的回答中也验证过了。</p>
+
+<p><br></p>
+
+<h2 id="4-程序实体的那些事儿-上">4. 程序实体的那些事儿（上）</h2>
+
+<p><strong>Go 语言中的程序实体包括变量、常量、函数、结构体和接口。</strong> Go 语言是静态类型的编程语言，所以我们在声明变量或常量的时候，都需要指定它们的类型，或者给予足够的信息，这样才可以让 Go 语言能够推导出它们的类型。</p>
+
+<blockquote>
+<p>在 Go 语言中，变量的类型可以是其预定义的那些类型，也可以是程序自定义的函数、结构体或接口。常量的合法类型不多，只能是那些 Go 语言预定义的基本类型。它的声明方式也更简单一些</p>
+</blockquote>
+
+<p><strong>问：声明变量有几种方式？</strong></p>
+
+<p>一个是你要知道 Go 语言中的类型推断，以及它在代码中的基本体现，另一个是短变量声明的用法。</p>
+
+<p><strong>问：Go 语言的类型推断可以带来哪些好处？</strong></p>
+
+<p>Go 语言的类型推断可以明显提升程序的灵活性，使得代码重构变得更加容易，同时又不会给代码的维护带来额外负担（实际上，它恰恰可以避免散弹式的代码修改），更不会损失程序的运行效率。</p>
+
+<p><strong>问：2. 变量的重声明是什么意思？</strong></p>
+
+<p>这涉及了短变量声明。通过使用它，我们可以对同一个代码块中的变量进行重声明。其含义是对已经声明过的变量再次声明。变量重声明的前提条件如下。</p>
+
+<ol>
+<li>由于变量的类型在其初始化时就已经确定了，所以对它再次声明时赋予的类型必须与其原本的类型相同，否则会产生编译错误。</li>
+<li>变量的重声明只可能发生在某一个代码块中。如果与当前的变量重名的是外层代码块中的变量，那么就是另外一种含义了，我在下一篇文章中会讲到。</li>
+<li>变量的重声明只有在使用短变量声明时才会发生，否则也无法通过编译。如果要在此处声明全新的变量，那么就应该使用包含关键字<code>var</code>的声明语句，但是这时就不能与同一个代码块中的任何变量有重名了。</li>
+<li>被“声明并赋值”的变量必须是多个，并且其中至少有一个是新的变量。这时我们才可以说对其中的旧变量进行了重声明。</li>
+</ol>
+
+<p>这样来看，变量重声明其实算是一个语法糖（或者叫便利措施）。它允许我们在使用短变量声明时不用理会被赋值的多个变量中是否包含旧变量。</p>
+
+<h2 id="5-程序实体的那些事儿-中">5. 程序实体的那些事儿（中）</h2>
+
+<p>程序实体的访问权限有三种：包级私有的、模块级私有的和公开的。这其实就是 Go 语言在语言层面，依据代码块对程序实体作用域进行的定义。</p>
+
+<p><strong>一个程序实体的作用域总是会被限制在某个代码块中，而这个作用域最大的用处，就是对程序实体的访问权限的控制。</strong>对“高内聚，低耦合”这种程序设计思想的实践，恰恰可以从这里开始。</p>
+
+<p><strong>问：如果一个变量与其外层代码块中的变量重名会出现什么状况</strong></p>
+
+<pre><code class="language-go">package main
+ 
+import &quot;fmt&quot;
+ 
+var block = &quot;package&quot;
+ 
+func main() {
+	block := &quot;function&quot;
+	{
+		block := &quot;inner&quot;
+		fmt.Printf(&quot;The block is %s.\n&quot;, block)
+	}
+	fmt.Printf(&quot;The block is %s.\n&quot;, block)
+}
+</code></pre>
+
+<p>这个命令源码文件中有四个代码块，它们是：全域代码块、<code>main</code>包代表的代码块、<code>main</code>函数代表的代码块，以及在<code>main</code>函数中的一个用花括号包起来的代码块。</p>
+
+<p>能通过编译。运行后打印出的内容是：</p>
+
+<pre><code class="language-go">The block is inner.
+The block is function.
+</code></pre>
+
+<ul>
+<li>首先，代码引用变量的时候总会最优先查找当前代码块中的那个变量。注意，这里的“当前代码块”仅仅是引用变量的代码所在的那个代码块，并不包含任何子代码块。</li>
+<li>其次，如果当前代码块中没有声明以此为名的变量，那么程序会沿着代码块的嵌套关系，从直接包含当前代码块的那个代码块开始，一层一层地查找。</li>
+<li>一般情况下，程序会一直查到当前代码包代表的代码块。如果仍然找不到，那么 Go 语言的编译器就会报错了</li>
+</ul>
+
+<p><strong>问：不同代码块中的重名变量与变量重声明中的变量区别到底在哪儿？</strong></p>
+
+<p><strong>为了方便描述，我就把不同代码块中的重名变量叫做“可重名变量”吧。</strong>注意，在同一个代码块中不允许出现重名的变量，这违背了 Go 语言的语法。关于这两者的表象和机理，我们已经讨论得足够充分了。你现在可以说出几条区别？请想一想，然后再看下面的列表。</p>
+
+<ol>
+<li>变量重声明中的变量一定是在某一个代码块内的。注意，这里的“某一个代码块内”并不包含它的任何子代码块，否则就变成了“多个代码块之间”。而可重名变量指的正是在多个代码块之间由相同的标识符代表的变量。</li>
+<li>变量重声明是对同一个变量的多次声明，这里的变量只有一个。而可重名变量中涉及的变量肯定是有多个的。</li>
+<li>不论对变量重声明多少次，其类型必须始终一致，具体遵从它第一次被声明时给定的类型。而可重名变量之间不存在类似的限制，它们的类型可以是任意的。</li>
+<li>如果可重名变量所在的代码块之间，存在直接或间接的嵌套关系，那么它们之间一定会存在“屏蔽”的现象。但是这种现象绝对不会在变量重声明的场景下出现。</li>
+</ol>
+
+<p><img src="./36-5-1.png" alt="" /></p>
+
+<p><br></p>
+
+<h2 id="6-程序实体的那些事儿-下">6. 程序实体的那些事儿 （下)</h2>
+
+<p><strong>问：怎样判断一个变量的类型</strong></p>
+
+<p>答案是使用“类型断言”表达式。具体怎么写呢？</p>
+
+<pre><code class="language-go">value, ok := interface{}(container).([]string)
+
+</code></pre>
+
+<p>这里有一条赋值语句。在赋值符号的右边，是一个类型断言表达式。</p>
+
+<p>它包括了用来把<code>container</code>变量的值转换为空接口值的<code>interface{}(container)</code>。以及一个用于判断前者的类型是否为切片类型 <code>[]string</code> 的 <code>.([]string)</code>。</p>
+
+<p>这个表达式的结果可以被赋给两个变量，在这里由<code>value</code>和<code>ok</code>代表。变量<code>ok</code>是布尔（bool）类型的，它将代表类型判断的结果，<code>true</code>或<code>false</code>。</p>
+
+<p>如果是<code>true</code>，那么被判断的值将会被自动转换为<code>[]string</code>类型的值，并赋给变量<code>value</code>，否则<code>value</code>将被赋予<code>nil</code>（即“空”）。</p>
+
+<p>顺便提一下，这里的<code>ok</code>也可以没有。也就是说，类型断言表达式的结果，可以只被赋给一个变量，在这里是<code>value</code>。</p>
+
+<p>但是这样的话，当判断为否时就会引发异常。</p>
+
+<p>这种异常在 Go 语言中被叫做<code>panic</code>，我把它翻译为运行时恐慌。因为它是一种在 Go 程序运行期间才会被抛出的异常，而“恐慌”二字是英文 Panic 的中文直译。</p>
+
+<p>除非显式地“恢复”这种“恐慌”，否则它会使 Go 程序崩溃并停止。所以，在一般情况下，我们还是应该使用带<code>ok</code>变量的写法。</p>
+
+<p><strong>问题解析</strong></p>
+
+<p>正式说明一下，类型断言表达式的语法形式是<code>x.(T)</code>。其中的<code>x</code>代表要被判断类型的值。这个值当下的类型必须是接口类型的，不过具体是哪个接口类型其实是无所谓的。</p>
+
+<p>所以，当这里的<code>container</code>变量类型不是任何的接口类型时，我们就需要先把它转成某个接口类型的值。</p>
+
+<p>如果<code>container</code>是某个接口类型的，那么这个类型断言表达式就可以是<code>container.([]string)</code>。</p>
+
+<p>在 Go 语言中，<code>interface{}</code>代表空接口，任何类型都是它的实现类型。现在你只要知道，任何类型的值都可以很方便地被转换成空接口的值就行了。</p>
+
+<p>其中的<code>x</code>可以是一个变量，也可以是一个代表值的字面量（比如<code>1.23</code>和<code>struct{}</code>），还可以是一个表达式。</p>
+
+<p>注意，如果是表达式，那么该表达式的结果只能是一个值，而不能是多个值。在这个上下文中，<code>x</code>可以被叫做源值，它的类型就是源类型，而那个<code>T</code>代表的类型就是目标类型。</p>
+
+<p><br></p>
+
+<p><strong>问：什么是别名类型？什么是潜在类型？</strong></p>
+
+<p>我们可以用关键字<code>type</code>声明自定义的各种类型。当然了，这些类型必须在 Go 语言基本类型和高级类型的范畴之内。在它们当中，有一种被叫做“别名类型”的类型。我们可以像下面这样声明它：</p>
+
+<pre><code class="language-go">type MyString = string
+
+</code></pre>
+
+<p>这条声明语句表示，<code>MyString</code>是<code>string</code>类型的别名类型。顾名思义，别名类型与其源类型的区别恐怕只是在名称上，它们是完全相同的。</p>
+
+<p>源类型与别名类型是一对概念，是两个对立的称呼。别名类型主要是为了代码重构而存在的。更详细的信息可参见 Go 语言官方的文档<a href="https://golang.org/design/18130-type-alias" target="_blank">Proposal: Type Aliases</a>。</p>
+
+<p>Go 语言内建的基本类型中就存在两个别名类型。<code>byte</code>是<code>uint8</code>的别名类型，而<code>rune</code>是<code>int32</code>的别名类型。</p>
+
+<p>一定要注意，如果我这样声明：</p>
+
+<pre><code class="language-go">type MyString2 string // 注意，这里没有等号。
+</code></pre>
+
+<p><code>MyString2</code>和<code>string</code>就是两个不同的类型了。这里的<code>MyString2</code>是一个新的类型，不同于其他任何类型。</p>
+
+<p>这种方式也可以被叫做对类型的再定义。我们刚刚把<code>string</code>类型再定义成了另外一个类型<code>MyString2</code>。</p>
+
+<h2 id="7-数组和切片">7.  数组和切片</h2>
+
+<p><strong>数组类型的值（以下简称数组）的长度是固定的，而切片类型的值（以下简称切片）是可变长的。</strong></p>
+
+<p>数组的长度在声明它的时候就必须给定，并且之后不会再改变。可以说，数组的长度是其类型的一部分。比如，<code>[1]string</code>和<code>[2]string</code>就是两个不同的数组类型。</p>
+
+<p><strong>问：怎样正确估算切片的长度和容量？</strong></p>
+
+<p>当我们用<code>make</code>函数初始化切片时，如果不指明其容量，那么它就会和长度一致。如果在初始化时指明了容量，那么切片的实际容量也就是它了。</p>
+
+<p>切片的容量代表了它的底层数组的长度，但这仅限于使用<code>make</code>函数或者切片值字面量初始化切片的情况。</p>
+
+<p><strong>问：怎样估算切片容量的增长？</strong></p>
+
+<p>一旦一个切片无法容纳更多的元素，Go 语言就会想办法扩容。但它并不会改变原来的切片，而是会生成一个容量更大的切片，然后将把原有的元素和新元素一并拷贝到新切片中。在一般的情况下，你可以简单地认为新切片的容量（以下简称新容量）将会是原切片容量（以下简称原容量）的 2 倍。</p>
+
+<p>但是，当原切片的长度（以下简称原长度）大于或等于<code>1024</code>时，Go 语言将会以原容量的<code>1.25</code>倍作为新容量的基准（以下新容量基准）。新容量基准会被调整（不断地与<code>1.25</code>相乘），直到结果不小于原长度与要追加的元素数量之和（以下简称新长度）。最终，新容量往往会比新长度大一些，当然，相等也是可能的。</p>
+
+<p>另外，如果我们一次追加的元素过多，以至于使新长度比原容量的 2 倍还要大，那么新容量就会以新长度为基准。注意，与前面那种情况一样，最终的新容量在很多时候都要比新容量基准更大一些。更多细节可参见<code>runtime</code>包中 slice.go 文件里的<code>growslice</code>及相关函数的具体实现。</p>
+
+<p>我把展示上述扩容策略的一些例子都放到了 demo16.go 文件中。你可以去试运行看看。</p>
+
+<p><strong>问：切片的底层数组什么时候会被替换？</strong></p>
+
+<p>确切地说，一个切片的底层数组永远不会被替换。为什么？虽然在扩容的时候 Go 语言一定会生成新的底层数组，但是它也同时生成了新的切片。</p>
+
+<p>它只是把新的切片作为了新底层数组的窗口，而没有对原切片，及其底层数组做任何改动。</p>
+
+<p>请记住，在无需扩容时，<code>append</code>函数返回的是指向原底层数组的新切片，而在需要扩容时，<code>append</code>函数返回的是指向新底层数组的新切片。所以，严格来讲，“扩容”这个词用在这里虽然形象但并不合适。不过鉴于这种称呼已经用得很广泛了，我们也没必要另找新词了。</p>
+
+<p>顺便说一下，只要新长度不会超过切片的原容量，那么使用<code>append</code>函数对其追加元素的时候就不会引起扩容。这只会使紧邻切片窗口右边的（底层数组中的）元素被新的元素替换掉。</p>
+
+<h2 id="8-container包中的那些容器">8. container包中的那些容器</h2>
+
+<p>Go 语言的链表实现在标准库的<code>container/list</code>代码包中。这个代码包中有两个公开的程序实体——<code>List</code>和<code>Element</code>，List 实现了一个双向链表（以下简称链表），而 Element 则代表了链表中元素的结构。</p>
+
+<p><strong>问：可以把自己生成的<code>Element</code>类型值传给链表吗</strong></p>
+
+<p>我们在这里用到了<code>List</code>的四种方法。</p>
+
+<p><code>MoveBefore</code>方法和<code>MoveAfter</code>方法，它们分别用于把给定的元素移动到另一个元素的前面和后面。</p>
+
+<p><code>MoveToFront</code>方法和<code>MoveToBack</code>方法，分别用于把给定的元素移动到链表的最前端和最后端。</p>
+
+<p>在这些方法中，“给定的元素”都是<code>*Element</code>类型的，<code>*Element</code>类型是<code>Element</code>类型的指针类型，<code>*Element</code>的值就是元素的指针。</p>
+
+<pre><code class="language-go">func (l *List) MoveBefore(e, mark *Element)
+func (l *List) MoveAfter(e, mark *Element)
+ 
+func (l *List) MoveToFront(e *Element)
+func (l *List) MoveToBack(e *Element)
+</code></pre>
+
+<p>具体问题是，如果我们自己生成这样的值，然后把它作为“给定的元素”传给链表的方法，那么会发生什么？链表会接受它吗？</p>
+
+<p>这里，给出一个<strong>典型回答</strong>：不会接受，这些方法将不会对链表做出任何改动。因为我们自己生成的<code>Element</code>值并不在链表中，所以也就谈不上“在链表中移动元素”。更何况链表不允许我们把自己生成的<code>Element</code>值插入其中。</p>
+
+<p><strong>问题解析</strong></p>
+
+<p>在<code>List</code>包含的方法中，用于插入新元素的那些方法都只接受<code>interface{}</code>类型的值。这些方法在内部会使用<code>Element</code>值，包装接收到的新元素。</p>
+
+<p>这样做正是为了避免直接使用我们自己生成的元素，主要原因是避免链表的内部关联，遭到外界破坏，这对于链表本身以及我们这些使用者来说都是有益的。</p>
+
+<p><code>List</code>的方法还有下面这几种：</p>
+
+<p><code>Front</code>和<code>Back</code>方法分别用于获取链表中最前端和最后端的元素，
+<code>InsertBefore</code>和<code>InsertAfter</code>方法分别用于在指定的元素之前和之后插入新元素，<code>PushFront</code>和<code>PushBack</code>方法则分别用于在链表的最前端和最后端插入新元素。</p>
+
+<pre><code class="language-go">func (l *List) Front() *Element
+func (l *List) Back() *Element
+ 
+func (l *List) InsertBefore(v interface{}, mark *Element) *Element
+func (l *List) InsertAfter(v interface{}, mark *Element) *Element
+ 
+func (l *List) PushFront(v interface{}) *Element
+func (l *List) PushBack(v interface{}) *Element
+</code></pre>
+
+<p>这些方法都会把一个<code>Element</code>值的指针作为结果返回，它们就是链表留给我们的安全“接口”。拿到这些内部元素的指针，我们就可以去调用前面提到的用于移动元素的方法了。</p>
+
+<p><strong>知识扩展</strong></p>
+
+<p><strong>问：为什么链表可以做到开箱即用？</strong></p>
+
+<p><code>List</code>和<code>Element</code>都是结构体类型。结构体类型有一个特点，那就是它们的零值都会是拥有特定结构，但是没有任何定制化内容的值，相当于一个空壳。值中的字段也都会被分别赋予各自类型的零值。</p>
+
+<blockquote>
+<p>广义来讲，所谓的零值就是只做了声明，但还未做初始化的变量被给予的缺省值。每个类型的零值都会依据该类型的特性而被设定。</p>
+
+<p>比如，经过语句<code>var a [2]int</code>声明的变量<code>a</code>的值，将会是一个包含了两个<code>0</code>的整数数组。又比如，经过语句<code>var s []int</code>声明的变量<code>s</code>的值将会是一个<code>[]int</code>类型的、值为<code>nil</code>的切片。</p>
+</blockquote>
+
+<p>那么经过语句<code>var l list.List</code>声明的变量<code>l</code>的值将会是什么呢？[1] 这个零值将会是一个长度为<code>0</code>的链表。这个链表持有的根元素也将会是一个空壳，其中只会包含缺省的内容。那这样的链表我们可以直接拿来使用吗？</p>
+
+<p>答案是，可以的。这被称为“开箱即用”。Go 语言标准库中很多结构体类型的程序实体都做到了开箱即用。这也是在编写可供别人使用的代码包（或者说程序库）时，我们推荐遵循的最佳实践之一。那么，语句<code>var l list.List</code>声明的链表<code>l</code>可以直接使用，这是怎么做到的呢？</p>
+
+<p>关键在于它的“延迟初始化”机制。</p>
+
+<p>所谓的<strong>延迟初始化</strong>，你可以理解为把初始化操作延后，仅在实际需要的时候才进行。延迟初始化的优点在于“延后”，它可以分散初始化操作带来的计算量和存储空间消耗。</p>
+
+<p>例如，如果我们需要集中声明非常多的大容量切片的话，那么那时的 CPU 和内存空间的使用量肯定都会一个激增，并且只有设法让其中的切片及其底层数组被回收，内存使用量才会有所降低。</p>
+
+<p>如果数组是可以被延迟初始化的，那么计算量和存储空间的压力就可以被分散到实际使用它们的时候。这些数组被实际使用的时间越分散，延迟初始化带来的优势就会越明显。</p>
+
+<blockquote>
+<p>实际上，Go 语言的切片就起到了延迟初始化其底层数组的作用，你可以想一想为什么会这么说的理由。</p>
+
+<p>延迟初始化的缺点恰恰也在于“延后”。你可以想象一下，如果我在调用链表的每个方法的时候，它们都需要先去判断链表是否已经被初始化，那这也会是一个计算量上的浪费。在这些方法被非常频繁地调用的情况下，这种浪费的影响就开始显现了，程序的性能将会降低。</p>
+</blockquote>
+
+<p>在这里的链表实现中，一些方法是无需对是否初始化做判断的。比如<code>Front</code>方法和<code>Back</code>方法，一旦发现链表的长度为<code>0</code>, 直接返回<code>nil</code>就好了。</p>
+
+<p>又比如，在用于删除元素、移动元素，以及一些用于插入元素的方法中，只要判断一下传入的元素中指向所属链表的指针，是否与当前链表的指针相等就可以了。</p>
+
+<p>如果不相等，就一定说明传入的元素不是这个链表中的，后续的操作就不用做了。反之，就一定说明这个链表已经被初始化了。</p>
+
+<p>原因在于，链表的<code>PushFront</code>方法、<code>PushBack</code>方法、<code>PushBackList</code>方法以及<code>PushFrontList</code>方法总会先判断链表的状态，并在必要时进行初始化，这就是延迟初始化。</p>
+
+<p>而且，我们在向一个空的链表中添加新元素的时候，肯定会调用这四个方法中的一个，这时新元素中指向所属链表的指针，一定会被设定为当前链表的指针。所以，指针相等是链表已经初始化的充分必要条件。</p>
+
+<p>明白了吗？<code>List</code>利用了自身以及<code>Element</code>在结构上的特点，巧妙地平衡了延迟初始化的优缺点，使得链表可以开箱即用，并且在性能上可以达到最优。</p>
+
+<p><strong>问：<code>Ring</code>与<code>List</code>的区别在哪儿？</strong></p>
+
+<p><code>container/ring</code>包中的<code>Ring</code>类型实现的是一个循环链表，也就是我们俗称的环。其实<code>List</code>在内部就是一个循环链表。它的根元素永远不会持有任何实际的元素值，而该元素的存在就是为了连接这个循环链表的首尾两端。</p>
+
+<p>所以也可以说，<code>List</code>的零值是一个只包含了根元素，但不包含任何实际元素值的空链表。那么，既然<code>Ring</code>和<code>List</code>在本质上都是循环链表，那它们到底有什么不同呢？</p>
+
+<p>最主要的不同有下面几种。</p>
+
+<ol>
+<li><code>Ring</code>类型的数据结构仅由它自身即可代表，而<code>List</code>类型则需要由它以及<code>Element</code>类型联合表示。这是表示方式上的不同，也是结构复杂度上的不同。</li>
+<li>一个<code>Ring</code>类型的值严格来讲，只代表了其所属的循环链表中的一个元素，而一个<code>List</code>类型的值则代表了一个完整的链表。这是表示维度上的不同。</li>
+<li>在创建并初始化一个<code>Ring</code>值的时候，我们可以指定它包含的元素的数量，但是对于一个<code>List</code>值来说却不能这样做（也没有必要这样做）。循环链表一旦被创建，其长度是不可变的。这是两个代码包中的<code>New</code>函数在功能上的不同，也是两个类型在初始化值方面的第一个不同。</li>
+<li>仅通过<code>var r ring.Ring</code>语句声明的<code>r</code>将会是一个长度为<code>1</code>的循环链表，而<code>List</code>类型的零值则是一个长度为<code>0</code>的链表。别忘了<code>List</code>中的根元素不会持有实际元素值，因此计算长度时不会包含它。这是两个类型在初始化值方面的第二个不同。</li>
+<li><code>Ring</code>值的<code>Len</code>方法的算法复杂度是 O(N) 的，而<code>List</code>值的<code>Len</code>方法的算法复杂度则是 O(1) 的。这是两者在性能方面最显而易见的差别。</li>
+</ol>
+
+<p>其他的不同基本上都是方法方面的了。比如，循环链表也有用于插入、移动或删除元素的方法，不过用起来都显得更抽象一些，等等。</p>
+
+<p><br></p>
+
+<h2 id="9-字典的操作和约束">9. 字典的操作和约束</h2>
+
+<p>为什么字典的键类型会受到约束？</p>
+
+<p>Go 语言的字典类型其实是一个哈希表（hash table）的特定实现，在这个实现中，键和元素的最大不同在于，键的类型是受限的，而元素却可以是任意类型的。</p>
+
+<p>如果要探究限制的原因，我们就先要了解哈希表中最重要的一个过程：映射。</p>
+
+<p>你可以把键理解为元素的一个索引，我们可以在哈希表中通过键查找与它成对的那个元素。</p>
+
+<p>映射过程的第一步就是：把键值转换为哈希值。**</p>
+
+<p>在 Go 语言的字典中，每一个键值都是由它的哈希值代表的。也就是说，字典不会独立存储任何键的值，但会独立存储它们的哈希值。</p>
+
+<p><strong>问：字典的键类型不能是哪些类型？</strong></p>
+
+<p>Go 语言字典的键类型不可以是函数类型、字典类型和切片类型。</p>
+
+<p>Go 语言规范规定，在键类型的值之间必须可以施加操作符<code>==</code>和<code>!=</code>。换句话说，键类型的值必须要支持判等操作。由于函数类型、字典类型和切片类型的值并不支持判等操作，所以字典的键类型不能是这些类型。</p>
+
+<p>另外，如果键的类型是接口类型的，那么键值的实际类型也不能是上述三种类型，否则在程序运行过程中会引发 panic（即运行时恐慌）。</p>
+
+<p>我们举个例子：</p>
+
+<pre><code class="language-go">var badMap2 = map[interface{}]int{
+	&quot;1&quot;:   1,
+	[]int{2}: 2, // 这里会引发 panic。
+	3:    3,
+}
+</code></pre>
+
+<p>这里的变量<code>badMap2</code>的类型是键类型为<code>interface{}</code>、值类型为<code>int</code>的字典类型。这样声明并不会引起什么错误。或者说，我通过这样的声明躲过了 Go 语言编译器的检查。</p>
+
+<p>注意，我用字面量在声明该字典的同时对它进行了初始化，使它包含了三个键 - 元素对。其中第二个键 - 元素对的键值是<code>[]int{2}</code>，元素值是<code>2</code>。这样的键值也不会让 Go 语言编译器报错，因为从语法上说，这样做是可以的。</p>
+
+<p>但是，当我们运行这段代码的时候，Go 语言的运行时（runtime）系统就会发现这里的问题，它会抛出一个 panic，并把根源指向字面量中定义第二个键 - 元素对的那一行。我们越晚发现问题，修正问题的成本就会越高，所以最好不要把字典的键类型设定为任何接口类型。</p>
+
+<p>还要注意，如果键的类型是数组类型，那么还要确保该类型的元素类型不是函数类型、字典类型或切片类型。</p>
+
+<p><strong>问：应该优先考虑哪些类型作为字典的键类型？</strong></p>
+
+<p>你现在已经清楚了，在 Go 语言中，有些类型的值是支持判等的，有些是不支持的。那么在这些值支持判等的类型当中，哪些更适合作为字典的键类型呢？</p>
+
+<p><strong>求哈希和判等操作的速度越快，对应的类型就越适合作为键类型。</strong></p>
+
+<p>答案是，优先选用数值类型和指针类型，通常情况下类型的宽度越小越好。如果非要选择字符串类型的话，最好对键值的长度进行额外的约束。</p>
+
+<p><strong>问题 2：在值为<code>nil</code>的字典上执行读操作会成功吗，那写操作呢？</strong></p>
+
+<p>由于字典是引用类型，所以当我们仅声明而不初始化一个字典类型的变量的时候，它的值会是<code>nil</code>。</p>
+
+<p>除了添加键 - 元素对，我们在一个值为<code>nil</code>的字典上做任何操作都不会引起错误。当我们试图在一个值为<code>nil</code>的字典中添加键 - 元素对的时候，Go 语言的运行时系统就会立即抛出一个 panic。</p>
+
+<p><br></p>
+
+<h2 id="10-通道的基本操作">10. 通道的基本操作</h2>
+
+<p>通道类型的值本身就是并发安全的，这也是 Go 语言自带的、唯一一个可以满足并发安全性的类型。</p>
+
+<p>当容量为<code>0</code>时，我们可以称通道为非缓冲通道，也就是不带缓冲的通道。而当容量大于<code>0</code>时，我们可以称为缓冲通道，也就是带有缓冲的通道</p>
+
+<p><strong>一个通道相当于一个先进先出（FIFO）的队列。也就是说，通道中的各个元素值都是严格地按照发送的顺序排列的，先被发送通道的元素值一定会先被接收。元素值的发送和接收都需要用到操作符<code>&lt;-</code>。我们也可以叫它接送操作符。一个左尖括号紧接着一个减号形象地代表了元素值的传输方向。</strong></p>
+
+<p><strong>问：对通道的发送和接收操作都有哪些基本的特性？</strong></p>
+
+<p>它们的基本特性如下。</p>
+
+<ol>
+<li>对于同一个通道，发送操作之间是互斥的，接收操作之间也是互斥的。</li>
+<li>发送操作和接收操作中对元素值的处理都是不可分割的。</li>
+<li>发送操作在完全完成之前会被阻塞。接收操作也是如此。</li>
+</ol>
+
+<p><strong>问题解析</strong></p>
+
+<p><strong>我们先来看第一个基本特性。</strong> 在同一时刻，Go 语言的运行时系统（以下简称运行时系统）只会执行对同一个通道的任意个发送操作中的某一个。</p>
+
+<p>直到这个元素值被完全复制进该通道之后，其他针对该通道的发送操作才可能被执行。</p>
+
+<p>类似的，在同一时刻，运行时系统也只会执行，对同一个通道的任意个接收操作中的某一个。</p>
+
+<p>直到这个元素值完全被移出该通道之后，其他针对该通道的接收操作才可能被执行。即使这些操作是并发执行的也是如此。</p>
+
+<p>这里所谓的并发执行，你可以这样认为，多个代码块分别在不同的 goroutine 之中，并有机会在同一个时间段内被执行。</p>
+
+<p>另外，对于通道中的同一个元素值来说，发送操作和接收操作之间也是互斥的。例如，虽然会出现，正在被复制进通道但还未复制完成的元素值，但是这时它绝不会被想接收它的一方看到和取走。</p>
+
+<p><strong>这里要注意的一个细节是，元素值从外界进入通道时会被复制。更具体地说，进入通道的并不是在接收操作符右边的那个元素值，而是它的副本。</strong></p>
+
+<p>另一方面，元素值从通道进入外界时会被移动。这个移动操作实际上包含了两步，第一步是生成正在通道中的这个元素值的副本，并准备给到接收方，第二步是删除在通道中的这个元素值。</p>
+
+<p><strong>顺着这个细节再来看第二个基本特性。</strong> 这里的“不可分割”的意思是，它们处理元素值时都是一气呵成的，绝不会被打断。</p>
+
+<p>例如，发送操作要么还没复制元素值，要么已经复制完毕，绝不会出现只复制了一部分的情况。</p>
+
+<p>又例如，接收操作在准备好元素值的副本之后，一定会删除掉通道中的原值，绝不会出现通道中仍有残留的情况。</p>
+
+<p>这既是为了保证通道中元素值的完整性，也是为了保证通道操作的唯一性。对于通道中的同一个元素值来说，它只可能是某一个发送操作放入的，同时也只可能被某一个接收操作取出。</p>
+
+<p><strong>再来说第三个基本特性。</strong> 一般情况下，发送操作包括了“复制元素值”和“放置副本到通道内部”这两个步骤。</p>
+
+<p>在这两个步骤完全完成之前，发起这个发送操作的那句代码会一直阻塞在那里。也就是说，在它之后的代码不会有执行的机会，直到这句代码的阻塞解除。</p>
+
+<p>更细致地说，在通道完成发送操作之后，运行时系统会通知这句代码所在的 goroutine，以使它去争取继续运行代码的机会。</p>
+
+<p>另外，接收操作通常包含了“复制通道内的元素值”“放置副本到接收方”“删掉原值”三个步骤。</p>
+
+<p>在所有这些步骤完全完成之前，发起该操作的代码也会一直阻塞，直到该代码所在的 goroutine 收到了运行时系统的通知并重新获得运行机会为止。</p>
+
+<p>说到这里，你可能已经感觉到，<strong>如此阻塞代码其实就是为了实现操作的互斥和元素值的完整。</strong></p>
+
+<p><strong>知识扩展</strong></p>
+
+<p><strong>问题 1：发送操作和接收操作在什么时候可能被长时间的阻塞？</strong></p>
+
+<p>先说针对<strong>缓冲通道</strong>的情况。如果通道已满，那么对它的所有发送操作都会被阻塞，直到通道中有元素值被接收走。</p>
+
+<p>这时，通道会优先通知最早因此而等待的、那个发送操作所在的 goroutine，后者会再次执行发送操作。</p>
+
+<p>由于发送操作在这种情况下被阻塞后，它们所在的 goroutine 会顺序地进入通道内部的发送等待队列，所以通知的顺序总是公平的。</p>
+
+<p>相对的，如果通道已空，那么对它的所有接收操作都会被阻塞，直到通道中有新的元素值出现。这时，通道会通知最早等待的那个接收操作所在的 goroutine，并使它再次执行接收操作。</p>
+
+<p>因此而等待的、所有接收操作所在的 goroutine，都会按照先后顺序被放入通道内部的接收等待队列。</p>
+
+<p>对于<strong>非缓冲通道</strong>，情况要简单一些。无论是发送操作还是接收操作，一开始执行就会被阻塞，直到配对的操作也开始执行，才会继续传递。由此可见，非缓冲通道是在用同步的方式传递数据。也就是说，只有收发双方对接上了，数据才会被传递。</p>
+
+<p>并且，数据是直接从发送方复制到接收方的，中间并不会用非缓冲通道做中转。相比之下，缓冲通道则在用异步的方式传递数据。</p>
+
+<p>在大多数情况下，缓冲通道会作为收发双方的中间件。正如前文所述，元素值会先从发送方复制到缓冲通道，之后再由缓冲通道复制给接收方。</p>
+
+<p>但是，当发送操作在执行的时候发现空的通道中，正好有等待的接收操作，那么它会直接把元素值复制给接收方。</p>
+
+<p>以上说的都是在正确使用通道的前提下会发生的事情。下面我特别说明一下，由于错误使用通道而造成的阻塞。</p>
+
+<p>对于值为<code>nil</code>的通道，不论它的具体类型是什么，对它的发送操作和接收操作都会永久地处于阻塞状态。它们所属的 goroutine 中的任何代码，都不再会被执行。</p>
+
+<p>注意，由于通道类型是引用类型，所以它的零值就是<code>nil</code>。换句话说，当我们只声明该类型的变量但没有用<code>make</code>函数对它进行初始化时，该变量的值就会是<code>nil</code>。我们一定不要忘记初始化通道！</p>
+
+<p>你可以去看一下 demo21.go，我在里面用代码罗列了一下会造成阻塞的几种情况。</p>
+
+<p><strong>问题 2：发送操作和接收操作在什么时候会引发 panic？</strong></p>
+
+<p>对于一个已初始化，但并未关闭的通道来说，收发操作一定不会引发 panic。但是通道一旦关闭，再对它进行发送操作，就会引发 panic。</p>
+
+<p>另外，如果我们试图关闭一个已经关闭了的通道，也会引发 panic。注意，接收操作是可以感知到通道的关闭的，并能够安全退出。</p>
+
+<p>更具体地说，当我们把接收表达式的结果同时赋给两个变量时，第二个变量的类型就是一定<code>bool</code>类型。它的值如果为<code>false</code>就说明通道已经关闭，并且再没有元素值可取了。</p>
+
+<p>注意，如果通道关闭时，里面还有元素值未被取出，那么接收表达式的第一个结果，仍会是通道中的某一个元素值，而第二个结果值一定会是<code>true</code>。</p>
+
+<p>因此，通过接收表达式的第二个结果值，来判断通道是否关闭是可能有延时的。</p>
+
+<p>由于通道的收发操作有上述特性，所以除非有特殊的保障措施，我们千万不要让接收方关闭通道，而应当让发送方做这件事。</p>
+
+              </div>
+              
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/go/">Go</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Go%e8%af%ad%e8%a8%80%e6%a0%b8%e5%bf%8336%e8%ae%b2%e9%9d%a2%e8%af%95%e9%a2%98&amp;body=/go/interview/gocore36-interview/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/go/interview/gocore36-interview/&amp;title=Go%e8%af%ad%e8%a8%80%e6%a0%b8%e5%bf%8336%e8%ae%b2%e9%9d%a2%e8%af%95%e9%a2%98" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f808c7066d59404fcf07aa7ea9e8d77_115157_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">季程雨</a></h5>
+      <h6 class="card-subtitle">北京 朝阳</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/weixin/wx.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/xbdh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/go/interview/gocore36-think/">Go语言核心36讲思考题</a></li>
+      
+      <li><a href="/go/interview/91-120/">Go语言中文网面试题 91-120</a></li>
+      
+      <li><a href="/go/interview/61-90/">Go语言中文网面试题 61-90</a></li>
+      
+      <li><a href="/go/interview/31-60/">Go语言中文网面试题 31-60</a></li>
+      
+      <li><a href="/go/interview/1-30/">Go语言中文网面试题 1-30</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+            </div>
+        </article>
+  
+      </main>
+    </div>
+  </div>
+  
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js" integrity="sha256-/2C3CAfmuTGkUqK2mVrhkTacBscoR1caE0u2QZZ3Uh8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/go.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/cpp.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/c.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcfae8267aba63cc55af53a503896bd9.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+    
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+  <p>
+    <a href="http://www.beian.miit.gov.cn/">皖ICP备20009099号-1</a>
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

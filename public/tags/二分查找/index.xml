@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>二分查找 | 细胞的核</title>
+    <link>/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</link>
+      <atom:link href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/index.xml" rel="self" type="application/rss+xml" />
+    <description>二分查找</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 23 May 2020 17:55:06 +0800</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>二分查找</title>
+      <link>/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</link>
+    </image>
+    
+    <item>
+      <title>Pattern-12 Modified Binary Search</title>
+      <link>/code/pattern/modified-binary-search/</link>
+      <pubDate>Sat, 23 May 2020 17:55:06 +0800</pubDate>
+      <guid>/code/pattern/modified-binary-search/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-introduction&#34;&gt;1、introduction&lt;/h2&gt;
+
+&lt;p&gt;在数组，链表，矩阵中查找特定的值&lt;/p&gt;
+
+&lt;h2 id=&#34;2-order-agnostic-binary-search&#34;&gt;2、order-agnostic binary search&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定有序数组（不知升序，降序，有可能有重复）和Key值，判断key是否在数组中，返回其索引&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 6, 10] ,key=10
+    
+output: 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 2, 3, 4, 6] ,key=4
+    
+output: 3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int search(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    int start = 0;
+    int end = arr.size()-1;
+    bool isAscending = arr[start] &amp;lt; arr[end];
+
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+
+        if (key == arr[mid]) {
+            return mid;
+        }
+        if (isAscending) {
+            if (key &amp;lt; arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        } else {
+            if (key &amp;gt; arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+    }
+    return -1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;3-ceiling-of-a-number&#34;&gt;3、ceiling of a number&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定升序序列和key值，求ceiling of key（数组中最小的大于等于key的数），返回其索引&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 6, 10] ,key=6
+ 
+output:	1
+
+explanations:	6-&amp;gt;index=1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 3, 8, 10, 15] ,key=12
+ 
+output:	4
+
+explanations:	15-&amp;gt;index=4
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int searchCeilingOfANumber(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    if (key &amp;gt; arr[arr.size() - 1]) {
+        return -1;
+    }
+
+    int start = 0;
+    int end = arr.size() - 1;
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+        if (key &amp;lt; arr[mid]) {
+            end = mid - 1;
+        } else if (key &amp;gt; arr[mid]) {
+            start = mid + 1;
+        } else {
+            return mid;
+        }
+    }
+    //当循环结束时，start=end+1,没有找到等于key的元素，此时arr[start]
+    //就是最小的大于等于key的值，
+    //等同于 return end+1;
+    return start;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;4-next-letter&#34;&gt;4、next letter&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定包含小写字母的升序序列和key，寻找最小的字母使得大于key，假定序列为循环序列（当key大于等于arr[arr.size()-1]时，返回arr[0]&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[&#39;a&#39;,&#39;c&#39;,&#39;f&#39;,&#39;h&#39;] ,key=&#39;f&#39;
+ 
+output:	&#39;h&#39;
+
+explanations:	&#39;h&#39; &amp;gt; &#39;f&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[&#39;a&#39;,&#39;c&#39;,&#39;f&#39;,&#39;h&#39;] ,key=&#39;m&#39;
+ 
+output:	&#39;a&#39;
+
+explanations:循环后	&#39;a&#39; &amp;gt; &#39;m&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;char searchNextLetter(const vector&amp;lt;char&amp;gt; &amp;amp;letter, char key) {
+    int n = letter.size();
+
+    if (key &amp;lt; letter[0] || key &amp;gt;= letter[n - 1]) {
+        return letter[0];
+    }
+
+    int start = 0;
+    int end = n - 1;
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+        if (key &amp;lt; letter[mid]) {
+            end = mid - 1;
+        } else {
+            start = mid + 1;
+        }
+    }
+    //start=end+1
+    return letter[start];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;5-number-range&#34;&gt;5、number range&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定升序序列和key值，求key值得范围（key出现在序列中起始结束的索引）&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;code：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 6 ,6 ,6 ,9] ,key=6
+ 
+output:	[1 ,3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 3, 8, 10, 15] ,key=10
+ 
+output:	[3 ,3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 3, 8, 10, 15] ,key=112
+ 
+output:	[-1 ,-1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int search(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key, bool findMaxIndex) {
+    //findMaxIndex:是否找最大索引，每次search 只能找最大索引或最小索引
+    int keyIndex = -1;
+    int start = 0;
+    int end = arr.size() - 1;
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+        if (key &amp;lt; arr[mid]) {
+            end = mid - 1;
+        } else if (key &amp;gt; arr[mid]) {
+            start = mid + 1;
+        } else {
+            //记录最大索引或最小索引
+            keyIndex = mid;
+            if (findMaxIndex) {
+                //向后找最大索引
+                start = mid + 1;
+            } else {
+                //向前找最大索引
+                end = mid - 1;
+            }
+        }
+    }
+    return keyIndex;
+}
+
+pair&amp;lt;int, int&amp;gt; findRange(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    pair&amp;lt;int, int&amp;gt; result(-1, -1);
+    result.first = search(arr, key, false);
+    if (result.first != -1) {
+        result.second = search(arr, key, true);
+    }
+    return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;6-search-in-a-sorted-infinite-array&#34;&gt;6、search in a sorted infinite array&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定未知个数的升序序列和key，判断key是否在其中&lt;/p&gt;
+
+&lt;p&gt;待看&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;7-minimum-difference-element&#34;&gt;7、minimum difference element&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定升序序列和key，求序列中与key 的差的绝对值差距最小的数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 6 ,10] ,key=7
+ 
+output:	6
+    
+explanations:|6-7|=1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 6 ,10] ,key=4
+ 
+output:	4
+    
+explanations:|4-4|=0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int searchMinimumDifference(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    if (key &amp;lt; arr[0]) {
+        return arr[0];
+    }
+    if (key &amp;gt; arr[arr.size() - 1]) {
+        return arr[arr.size() - 1];
+    }
+
+    int start = 0;
+    int end = arr.size() - 1;
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+        if (key &amp;lt; arr[mid]) {
+            end = mid - 1;
+        } else if (key &amp;gt; arr[mid]) {
+            start = mid + 1;
+        } else {
+            return arr[mid];
+        }
+    }
+    if ((arr[start] - key) &amp;lt; (key - arr[end])) {
+        return arr[start];
+    }
+    return arr[end];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;8-bitonic-array-maximum&#34;&gt;8、bitonic array maximum&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求bitonic数组中的最大值&lt;/p&gt;
+
+&lt;p&gt;bitonic array：先单调递增，在单调递减，arr[i] != arr[i+1]&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 3, 8, 12, 4, 2]
+
+output:	12
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [3, 8, 3, 1]
+
+output:	8
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 3, 8, 12]
+
+output:	12
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [10, 9 , 8]
+
+output:	10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int finMax(const vector&amp;lt;int&amp;gt; &amp;amp;arr) {
+    int start = 0;
+    int end = arr.size() - 1;
+    while (start &amp;lt; end) {
+        int mid = start + (end - start) / 2;
+        //当arr[mid]&amp;gt;arr[mid+1]，位于后半段，最大值在mid前面
+        if (arr[mid] &amp;gt; arr[mid + 1]) {
+            end = mid;
+        } else {
+            //位于前半段，最大值在mid+1后面
+            start = mid + 1;
+        }
+    }
+    //循环结束start==end
+    return arr[start];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;9-search-bitonic-array&#34;&gt;9、search bitonic array&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定bitonic数组和key值，判断key是否在其中，返回索引&lt;/p&gt;
+
+&lt;p&gt;bitonic array：先单调递增，在单调递减，arr[i] != arr[i+1]&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 3, 8, 4, 3],key=4
+
+output:	3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [3, 8, 3, 1],key=8
+
+output:	1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 3, 8, 12],key=12
+
+output:	3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [10, 9 , 8],key=10
+
+output:	0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int binarySearch(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key, int start, int end) {
+
+    bool isAscending = arr[start] &amp;lt; arr[end];
+
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+
+        if (key == arr[mid]) {
+            return mid;
+        }
+        if (isAscending) {
+            if (key &amp;lt; arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        } else {
+            if (key &amp;gt; arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+    }
+    return -1;
+}
+
+//返回最大值得索引
+int finMax(const vector&amp;lt;int&amp;gt; &amp;amp;arr) {
+    int start = 0;
+    int end = arr.size() - 1;
+    while (start &amp;lt; end) {
+        int mid = start + (end - start) / 2;
+        //当arr[mid]&amp;gt;arr[mid+1]，位于后半段，最大值在mid前面
+        if (arr[mid] &amp;gt; arr[mid + 1]) {
+            end = mid;
+        } else {
+            //位于前半段，最大值在mid+1后面
+            start = mid + 1;
+        }
+    }
+    //循环结束start==end
+    return start;
+}
+
+int search(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    int maxIndex = finMax(arr);
+    //前半段
+    int keyIndex = binarySearch(arr, key, 0, maxIndex);
+    if (keyIndex != -1) {
+        return keyIndex;
+    }
+    //后半段
+    return binarySearch(arr, key, maxIndex + 1, arr.size() - 1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;10-search-in-rotated-array&#34;&gt;10、search in rotated array&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定rotated array(不含重复)和key，判断key是否在其中，返回索引&lt;/p&gt;
+
+&lt;p&gt;rotated array：旋转数组，有序数组旋转了有理数个位置，生成两段递增子数组&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;./10-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;code：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int search(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    int start = 0;
+    int end = arr.size() - 1;
+
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == key) {
+            return mid;
+        }
+        //左开左开右闭区间
+        //[start,mid]之间有序，较长段有序序列在前
+        if (arr[start] &amp;lt;= arr[mid]) {
+            //判断key在[start,mid]之间，还是在之后
+            if (key &amp;gt;= arr[start] &amp;amp;&amp;amp; key &amp;lt; arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+            //[mid，end]之间有序，较长段有序序列在后
+        } else {
+            if (key &amp;gt; arr[mid] &amp;amp;&amp;amp; key &amp;lt;= arr[end]) {
+                //判断key在[mid，end]之间，还是在之后
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+    }
+    return -1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;./10-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;p&gt;相似问题：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定rotated array(含重复)和key，判断key是否在其中，返回索引&lt;/p&gt;
+
+&lt;p&gt;rotated array：旋转数组，有序数组旋转了有理数个位置，生成两段递增子数组&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;./10-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int searchDuplicate(const vector&amp;lt;int&amp;gt; &amp;amp;arr, int key) {
+    int start = 0;
+    int end = arr.size() - 1;
+
+    while (start &amp;lt;= end) {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == key) {
+            return mid;
+        }
+        //左开左开右闭区间
+
+        //当arr[start]=arr[mid]==arr[end]时，无法分辨数组那一部分是有序的
+        if((arr[start]==arr[mid])&amp;amp;&amp;amp;(arr[end]==arr[mid])){
+            //跳过一位
+            start++;
+            end--;
+
+            //[start,mid]之间有序，较长段有序序列在前
+        }else if (arr[start] &amp;lt;= arr[mid]) {
+            //判断key在[start,mid]之间，还是在之后
+            if (key &amp;gt;= arr[start] &amp;amp;&amp;amp; key &amp;lt; arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+            
+            //[mid，end]之间有序，较长段有序序列在后
+        } else {
+            if (key &amp;gt; arr[mid] &amp;amp;&amp;amp; key &amp;lt;= arr[end]) {
+                //判断key在[mid，end]之间，还是在之后
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+    }
+    return -1;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)，最坏： &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;h2 id=&#34;11-rotation-count&#34;&gt;11、rotation count&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求旋转数组(无重复)旋转了几个位置&lt;/p&gt;
+
+&lt;p&gt;等同于求最小值的索引&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;./11-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./11-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countRotations(const vector&amp;lt;int&amp;gt; &amp;amp;arr) {
+    int start = 0;
+    int end = arr.size() - 1;
+
+    while (start &amp;lt; end) {
+        int mid = start + (end - start) / 2;
+
+        //最小值前面全是比它大的元素
+        if (mid &amp;lt; end &amp;amp;&amp;amp; arr[mid] &amp;gt; arr[mid + 1]) {
+            return mid +1;
+        }
+        if (mid &amp;gt; start &amp;amp;&amp;amp; arr[mid - 1] &amp;gt; arr[mid]) {
+            return mid;
+        }
+
+        //左侧有序，最小值在右面
+        if (arr[start] &amp;lt; arr[mid]) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+
+&lt;p&gt;相似问题：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求旋转数组(有重复)旋转了几个位置&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;./11-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countRotationsDuplicate(const vector&amp;lt;int&amp;gt; &amp;amp;arr) {
+    int start = 0;
+    int end = arr.size() - 1;
+
+    while (start &amp;lt; end) {
+        int mid = start + (end - start) / 2;
+
+        //最小值前面全是比它大的元素
+        if (mid &amp;lt; end &amp;amp;&amp;amp; arr[mid] &amp;gt; arr[mid + 1]) {
+            return mid + 1;
+        }
+        if (mid &amp;gt; start &amp;amp;&amp;amp; arr[mid - 1] &amp;gt; arr[mid]) {
+            return mid;
+        }
+
+        //arr[start] = arr[end] =arr[mid]，挑一步
+        if (arr[start] == arr[end] &amp;amp;&amp;amp; arr[end] == arr[mid]) {
+            if (arr[start] &amp;gt; arr[start + 1]) {
+                return start + 1;
+            }
+            start++;
+            if (arr[end - 1] &amp;gt; arr[end]) {
+                return end;
+            }
+            end--;
+
+            //左侧有序，最小值在右面
+        } else if (arr[start] &amp;lt; arr[mid] || (arr[start] == arr[mid]) &amp;amp;&amp;amp; (arr[mid] &amp;gt; arr[end])) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(log&lt;em&gt;N&lt;/em&gt;)，最坏： &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(1)&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

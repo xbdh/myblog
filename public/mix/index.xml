@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mixes | 细胞的核</title>
+    <link>/mix/</link>
+      <atom:link href="/mix/index.xml" rel="self" type="application/rss+xml" />
+    <description>Mixes</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 19 May 2020 17:07:24 +0800</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Mixes</title>
+      <link>/mix/</link>
+    </image>
+    
+    <item>
+      <title>Markdown</title>
+      <link>/mix/markdown/</link>
+      <pubDate>Tue, 19 May 2020 17:07:24 +0800</pubDate>
+      <guid>/mix/markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hugo</title>
+      <link>/mix/hugo/</link>
+      <pubDate>Tue, 19 May 2020 16:50:54 +0800</pubDate>
+      <guid>/mix/hugo/</guid>
+      <description>
+
+&lt;h3 id=&#34;1-新建文件&#34;&gt;1、新建文件&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;例子1：三个文件在同一文件夹内，index后缀默认路由
+
+hugo new -kind=post post/post-name/index.md
+//路由：http://www.example.com/post-name/
+
+hugo new -kind=post post/post-name/a.md
+//路由：http://www.example.com/post-name/a/
+
+hugo new -kind=post post/post-name/b.md
+//路由：http://www.example.com/post-name/b/
+
+
+例子2：
+hugo new -kind=post post/post-name.md
+//路由：http://www.example.com/post-name
+
+-kind 可以省略
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;2-启动&#34;&gt;2、启动&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;hugo server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;3-新建网站&#34;&gt;3、新建网站&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;hugo new site [path/name]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Learngit</title>
+      <link>/mix/learngit/</link>
+      <pubDate>Mon, 02 Dec 2019 16:29:57 +0800</pubDate>
+      <guid>/mix/learngit/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int main(){
+    cout&amp;lt;&amp;lt;&amp;quot;hello world&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

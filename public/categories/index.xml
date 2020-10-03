@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories | 细胞的核</title>
+    <link>/categories/</link>
+      <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <description>Categories</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 15 Sep 2020 21:50:27 +0800</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Categories</title>
+      <link>/categories/</link>
+    </image>
+    
+    <item>
+      <title>leetcode</title>
+      <link>/categories/leetcode/</link>
+      <pubDate>Tue, 15 Sep 2020 21:50:27 +0800</pubDate>
+      <guid>/categories/leetcode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>interview</title>
+      <link>/categories/interview/</link>
+      <pubDate>Tue, 28 Jul 2020 23:35:06 +0800</pubDate>
+      <guid>/categories/interview/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dynamic Programming</title>
+      <link>/categories/dynamic-programming/</link>
+      <pubDate>Wed, 01 Jul 2020 16:36:22 +0800</pubDate>
+      <guid>/categories/dynamic-programming/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.2">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="季程雨">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="双指针">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/code/pattern/two-pointers/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#000000">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.font.im/css?family=Source+Code+Pro:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/code/pattern/two-pointers/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="细胞的核">
+  <meta property="og:url" content="/code/pattern/two-pointers/">
+  <meta property="og:title" content="Pattern-3 Two Pointers | 细胞的核">
+  <meta property="og:description" content="双指针"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-05-23T17:45:10&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-05-23T17:45:10&#43;08:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Pattern-3 Two Pointers | 细胞的核</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    
+    
+      <a class="navbar-brand" href="/">细胞的核</a>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/go"><span>GO</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/code"><span>刷题</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/mix"><span>MIX</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/project"><span>Project</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/interview"><span>面试</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+
+
+        <article class="article">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Pattern-3 Two Pointers</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    May 23, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+            <div class="article-container">
+              <div class="article-style">
+                
+
+<h1 id="1-介绍">1、介绍</h1>
+
+<p>在<strong>有序</strong>数组或链表中查找出满足某些限定条件一组元素时，常用双指针法。</p>
+
+<h1 id="2-pair-with-target-sum">2、pair with target sum</h1>
+
+<blockquote>
+<p>给定有序数组、目标值target，在数组中找到一对值，使得其和等于目标值</p>
+
+<p>返回满足条件的对值的索引</p>
+</blockquote>
+
+<pre><code class="language-c++">input: [1,2,3,4,6] ,target=6
+
+output:	[1,3]
+
+2+4=6，index=[1,3]
+</code></pre>
+
+<pre><code class="language-c++">input: [2,5,9,11] ,target=11
+
+output:	[0,2]
+
+2+9=6，index=[0,2]
+</code></pre>
+
+<p>code:</p>
+
+<p>双指针法：</p>
+
+<pre><code class="language-c++">pair&lt;int, int&gt; search(const vector&lt;int&gt; &amp;arr, int targetSum) {
+    //指向起始，结束位置。
+    int left = 0;
+    int right = arr.size() - 1;
+    
+    while (right &gt; left) {
+        int currentSum = arr[left] + arr[right];
+        if (currentSum == targetSum) {
+            return make_pair(left, right);
+        }
+        if (targetSum &gt; currentSum) {
+            left++;
+        }
+        if (targetSum &lt; currentSum) {
+            right--;
+        }
+    }
+    return make_pair(-1, -1);
+}
+</code></pre>
+
+<p>Time:   <em>O</em>(N)</p>
+
+<p>Space:  <em>O</em>(1)</p>
+
+<p>哈希表：</p>
+
+<pre><code class="language-c++">pair&lt;int,int&gt; searchhash(const vector&lt;int&gt; &amp;arr,int targetSum){
+    unordered_map&lt;int,int&gt; nums;
+    for(int i=0;i&lt;arr.size();i++){
+        if(nums.find(targetSum-arr[i])!=nums.end()){
+            return make_pair(nums[targetSum-arr[i]],i);
+        }else{
+            nums[arr[i]]=i;
+        }
+    }
+    return make_pair(-1,-1);
+}
+</code></pre>
+
+<p>Time:   <em>O</em>(N)</p>
+
+<p>Space:  <em>O</em>(N)</p>
+
+<h1 id="3-remove-duplicates">3、remove Duplicates</h1>
+
+<blockquote>
+<p>删除有序数组中重复的元素，不准使用额外的存储空间，返回删除后的新数组长度</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[2,3,3,3,6,9,9] 
+
+output: 4
+
+after remove:[2,3,6,9]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">int remove(vector&lt;int&gt; &amp;arr) {
+    //nextNonDuplicate前面全是不重复的元素，同时承担计数功能
+    //nextNonDuplicate和i都是指针
+    int nextNonDuplicate = 1;
+    for (int i = 1; i &lt; arr.size(); i++) {
+        if (arr[nextNonDuplicate - 1] != arr[i]) {
+            arr[nextNonDuplicate] = arr[i];
+            nextNonDuplicate++;
+        }
+    }
+    return nextNonDuplicate;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N)</p>
+
+<p>Space Complexity :  <em>O</em>(1)</p>
+
+<p>相似问题：</p>
+
+<blockquote>
+<p>删除有序数组中所有等于Target的元素，返回删除后的新数组长度</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[3, 2, 3, 6, 3, 10, 9, 3],key=3
+
+output: 4
+
+after remove:[2,3,10,9]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">int removeTaget(vector&lt;int&gt; &amp;arr, int key) {
+    // nextElement代表不等于key的元素的新位置,同时计数
+    // nextElement和i都是指针
+    int nextElement = 0;
+    for (int i = 0; i &lt; arr.size(); i++) {
+        if (arr[i] != key) {
+            arr[nextElement] = arr[i];
+            nextElement++;
+        }
+    }
+    return nextElement;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N)</p>
+
+<p>Space Complexity :  <em>O</em>(1)</p>
+
+<h1 id="4-squaring-a-sorted-arrary">4、squaring a sorted arrary</h1>
+
+<blockquote>
+<p>给定有序数组，将所有元素的平方有序输出</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[-2, -1, 0, 2, 3]
+
+output: [0 ,1 ,4 ,4 ,9]
+</code></pre>
+
+<pre><code class="language-c++">input:	[-3, -1, 0, 1, 2]
+
+output: [0 ,1 ,4 ,4 ,9]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">vector&lt;int&gt; makeSqueare(vector&lt;int&gt; arr) {
+    int n = arr.size();
+    vector&lt;int&gt; square(n);
+    int highestSquareIndex = n - 1;
+    //双指针
+    int right = n - 1;
+    int left = 0;
+    
+    while (right &gt;= left) {
+        int leftSquare = arr[left] * arr[left];
+        int rightSquare = arr[right] * arr[right];
+        if (leftSquare &gt; rightSquare) {
+            square[highestSquareIndex] = leftSquare;
+            highestSquareIndex--;
+            left++;
+        } else {
+            square[highestSquareIndex] = rightSquare;
+            highestSquareIndex--;
+            right--;
+        }
+    }
+    return square;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="5-triplet-sum-to-zero">5、triplet sum to zero</h1>
+
+<blockquote>
+<p>给定未排序的整数数组，找出所有和为0、长度为3且不重复的子数组</p>
+
+<p>X+Y+Z=0  -&gt; X+Y=_Z</p>
+
+<p>为了确保不重复，排序后的数组，重复元素相邻可略过</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[-3, 0, 1, 2, -1, 1, -2]
+
+output: [[-3 1 2 ][-2 0 2 ][-1 0 1 ]]
+</code></pre>
+
+<pre><code class="language-c++">input:	[-5, 2, -1, -2, 3]
+
+output: [[-5 2 3 ][-2 -1 3 ]]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">void searchPair(const vector&lt;int&gt; &amp;arr, int targetSum, int left, vector&lt;vector&lt;int&gt;&gt; &amp;triplets) {
+    //双指针
+    int right = arr.size() - 1;
+    while (left &lt; right) {
+        int currentSum = arr[left] + arr[right];
+        if (currentSum == targetSum) {
+            triplets.push_back({-targetSum, arr[left], arr[right]});
+            left++;
+            right--;
+
+            //略过重复元素
+            while (left &lt; right &amp;&amp; arr[left] == arr[left - 1]) {
+                left++;
+            }
+            //略过重复元素
+            while (left &lt; right &amp;&amp; arr[right] == arr[right]) {
+                right--;
+            }
+        } else if (targetSum &gt; currentSum) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+}
+
+vector&lt;vector&lt;int&gt;&gt; searchTriplets(vector&lt;int&gt; &amp;arr) {
+    sort(arr.begin(), arr.end());
+    vector&lt;vector&lt;int&gt;&gt; triplets;
+    for (int i = 0; i &lt; arr.size() - 2; i++) {
+        //略过重复元素
+        if (i &gt; 0 &amp;&amp; arr[i] == arr[i - 1]) {
+            continue;
+        }
+        searchPair(arr, -arr[i], i + 1, triplets);
+    }
+    return triplets;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N^2)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="6-triplet-sum-close-to-target">6、triplet sum close to target</h1>
+
+<blockquote>
+<p>给定未排序数组和target值，找出长度为3的子数组，使得子数组的和尽可能接近target，返回子数组的和</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[-2, 0, 1, 2],target=2
+
+output: 1
+
+triplet: [-2,1,2]
+</code></pre>
+
+<pre><code class="language-c++">input:	[-3, 1, 1, 2],target=1
+
+output: 0
+
+triplet: [-3,1,2]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">int searchTriplet(vector&lt;int&gt; &amp;arr, int targetSum) {
+    sort(arr.begin(), arr.end());
+    int smallestDifference = INT_MAX;
+    for (int i = 0; i &lt; arr.size() - 2; i++) {
+        int left = i + 1;
+        int right = arr.size() - 1;
+        while (left &lt; right) {
+            int targetDiff = targetSum - arr[i] - arr[left] - arr[right];
+            if (targetDiff == 0) {
+                return targetSum - targetDiff;
+            }
+            if (abs(targetDiff) &lt; abs(smallestDifference)) {
+                smallestDifference = targetDiff;
+            }
+            if (targetDiff &gt; 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+    return targetSum - smallestDifference;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N^2)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="7-triplets-with-smaller-sum">7、triplets with smaller sum</h1>
+
+<blockquote>
+<p>给定未排序数组和target值，找出所有triplets，使得arr[i]+arr[j]+arr[k]&lt; target，i,j,k不相等，返回满足条件的triplets的个数</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[-1, 0, 2, 3],target=3
+
+output: 2
+
+triplet: [-1,0,3], [-1,0,2]
+</code></pre>
+
+<pre><code class="language-c++">input:	[-1, 4, 2, 1, 3],target=5
+
+output: 4
+
+triplet: [-1,1,4], [-1,1,3], [-1,1,2], [-1,2,3]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">int searchPair(const vector&lt;int&gt; &amp;arr, int targetSum, int first) {
+    int count = 0;
+    int left = first + 1;
+    int right = arr.size() - 1;
+    while (left &lt; right) {
+        if (arr[left] + arr[right] &lt; targetSum) {
+            count += right - left;
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return count;
+}
+
+int searchTriplets(vector&lt;int&gt; &amp;arr, int target) {
+    sort(arr.begin(), arr.end());
+    int count = 0;
+    for (int i = 0; i &lt; arr.size() - 2; i++) {
+        count += searchPair(arr, target - arr[i], i);
+    }
+    return count;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N^2)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<p>相似问题：</p>
+
+<blockquote>
+<p>返回所有的triplets</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[-1, 4, 2, 1, 3],target=5
+
+output: [-1,1,4], [-1,1,3], [-1,1,2], [-1,2,3]
+</code></pre>
+
+<pre><code class="language-c++">input:	[-1, 0, 2, 3],target=3
+
+output: [-1,0,3], [-1,0,2]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">
+void searchPair(const vector&lt;int&gt; &amp;arr, int targetSum, 
+                int first, vector&lt;vector&lt;int&gt;&gt; &amp;triplets) {
+
+    int left = first + 1;
+    int right = arr.size() - 1;
+    while (left &lt; right) {
+        if (arr[left] + arr[right] &lt; targetSum) {
+            for (int i = right; i &gt; left; i--) {
+                triplets.push_back({arr[first], arr[left], arr[i]});
+            }
+            left++;
+        } else {
+            right--;
+        }
+    }
+}
+
+vector&lt;vector&lt;int&gt;&gt; searchTriplets(vector&lt;int&gt; &amp;arr, int target) {
+    sort(arr.begin(), arr.end());
+    vector&lt;vector&lt;int&gt;&gt; triplets;
+
+    for (int i = 0; i &lt; arr.size() - 2; i++) {
+        searchPair(arr, target - arr[i], i, triplets);
+    }
+    return triplets;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N^3)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="8-subarrary-with-product-less-than-a-target">8、subarrary with product less than a target</h1>
+
+<blockquote>
+<p>给定只包含正整数的数组和target值，寻找所有连续子数组，使得子数组的元素的乘积小于target</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[2, 5, 3, 10], target=30
+
+output: [[2 ],[5 ],[2 5 ],[3 ],[5 3 ],[10 ]]
+</code></pre>
+
+<pre><code class="language-c++">input:	[8, 2, 6, 5], target50
+
+output: [[8 ],[2 ],[8 2 ],[6 ],[2 6 ],[5 ],[6 5 ]]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">vector&lt;vector&lt;int&gt;&gt; findSubarrary(const vector&lt;int&gt; &amp;arr, int target) {
+    vector&lt;vector&lt;int&gt;&gt; result;
+    int product = 1;
+    int left = 0;
+    for (int right = 0; right &lt; arr.size(); right++) {
+        product *= arr[right];
+        while (product &gt;= target &amp;&amp; left &lt; arr.size()) {
+            product /= arr[left];
+            left++;
+        }
+
+        deque&lt;int&gt; temList;
+        //[left,right]区间内乘积小于target，区间内的子数组当然小于target，
+        // 为了避免重复，只计算从arr[right]开始的子数组
+        for (int i = right; i &gt;= left; i--) {
+            temList.push_front(arr[i]);
+            vector&lt;int&gt; resultVec;
+            move(begin(temList), end(temList), back_inserter(resultVec));
+            result.push_back(resultVec);
+        }
+    }
+    return result;
+}
+
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N^3)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="9-dutch-national-flag-problem">9、dutch National flag problem</h1>
+
+<blockquote>
+<p>给定只包含0,1,2的数组，原地排序，不准计算0,1,2的个数</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[1, 0, 2, 1, 0]
+
+output: [0, 0, 1, 1, 2]
+</code></pre>
+
+<pre><code class="language-c++">input:	[2, 2, 0, 1, 2, 0]
+
+output: [0, 0, 1, 2, 2, 2]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">void swap(vector&lt;int&gt; &amp;arr, int i, int j) {
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+void sort(vector&lt;int&gt; &amp;arr) {
+    //所有0在low左侧，所有2在high右侧
+    int low = 0;
+    int high = arr.size() - 1;
+    
+    for (int i = 0; i &lt;= high;) {
+        if (arr[i] == 0) {
+            swap(arr, i, low);
+            i++;
+            low++;
+        } else if (arr[i] == 1) {
+            i++;
+        } else {
+            swap(arr, i, high);
+            high--;
+        }
+    }
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="10-quadruple-sum-to-target">10、quadruple sum to target</h1>
+
+<blockquote>
+<p>给定未排序数组和target值，找出所有不同的quadruple（长度为4的子数组），使得其和等于target</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[4, 1, 2, -1, 1, -3]
+
+output: [ [-3, -1, 1, 4 ], [-3, 1, 1, 2 ] ]
+</code></pre>
+
+<pre><code class="language-c++">input:	[2, 0, -1, 1, -2, 2 ]
+
+output:	[[-2, 0, 2 ,2 ], [-1, 0 ,1, 2 ]]
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">void searchPair(const vector&lt;int&gt; &amp;arr, int targetSum,
+                int fist, int second, vector&lt;vector&lt;int&gt;&gt; &amp;quadruplets) {
+
+    int left = second + 1;
+    int right = arr.size() - 1;
+    while (left &lt;= right) {
+        int sum = arr[fist] + arr[second] + arr[left] + arr[right];
+        if (sum == targetSum) {
+            quadruplets.push_back({arr[fist], arr[second], arr[left], arr[right]});
+            left++;
+            right--;
+
+            while (left &lt; right &amp;&amp; arr[left] == arr[left - 1]) {
+                left++;
+            }
+            while (left &gt; right &amp;&amp; arr[right] == arr[right - 1]) {
+                right--;
+            }
+        } else if (sum &lt; targetSum) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+}
+
+vector&lt;vector&lt;int&gt;&gt; searchQuadruplets(vector&lt;int&gt; &amp;arr, int target) {
+    sort(arr.begin(), arr.end());
+    vector&lt;vector&lt;int&gt;&gt; quadruplets;
+    for (int i = 0; i &lt; arr.size() - 3; i++) {
+        if (i &gt; 0 &amp;&amp; arr[i] == arr[i - 1]) {
+            continue;
+        }
+        for (int j = i + 1; j &lt; arr.size() - 2; j++) {
+            if (j &gt; i + 1 &amp;&amp; arr[j] == arr[j - 1]) {
+                continue;
+            }
+            searchPair(arr, target, i, j, quadruplets);
+        };
+    }
+    return quadruplets;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N^3)</p>
+
+<p>Space Complexity :  <em>O</em>(N)</p>
+
+<h1 id="11-comparing-strings-containing-backspaces">11、comparing strings containing backspaces</h1>
+
+<blockquote>
+<p>给定两个包含退格键的字符串，判断他们是否相同，backspace用#表示</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	str1=&quot;xy#z&quot; ,str2=&quot;xzz#&quot;
+
+output:	true
+
+after: str1=&quot;xz&quot; ,str2=&quot;xz&quot;
+</code></pre>
+
+<pre><code class="language-c++">input:	str1=&quot;xp#&quot;  ,str2=&quot;xyz##&quot;
+    
+output:	true
+ 
+after: str1=&quot;x&quot; ,str2=&quot;x&quot;
+</code></pre>
+
+<pre><code class="language-c++">input:	str1=&quot;xy#z&quot;  ,str2=&quot;xyz#&quot;
+    
+output:	false
+
+after: str1=&quot;xz&quot; ,str2=&quot;xy&quot;
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">int getNextValidCharIndex(const string &amp;str, int index) {
+    int backspacesCount = 0;
+    while (index &gt;= 0) {
+        if (str[index] == '#') {
+            backspacesCount++;
+        } else if (backspacesCount &gt; 0) {
+            backspacesCount--;
+        } else {
+            break;
+        }
+
+        index--;
+    }
+    return index;
+}
+
+bool compare(const string &amp;str1, const string &amp;str2) {
+    int index1 = str1.length() - 1;
+    int index2 = str2.length() - 1;
+    while (index1 &gt;= 0 || index2 &gt;= 0) {
+        int i1 = getNextValidCharIndex(str1, index1);
+        int i2 = getNextValidCharIndex(str2, index2);
+
+        if (i1 &lt; 0 &amp;&amp; i2 &lt; 0) {
+            return true;
+        }
+
+        if (i1 &lt; 0 || i2 &lt; 0) {
+            return false;
+        }
+        if (str1[i1] != str2[i2]) {
+            return false;
+        }
+        index1 = i1 - 1;
+        index2 = i2 - 1;
+    }
+    return true;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N+M)</p>
+
+<p>Space Complexity :  <em>O</em>(1)</p>
+
+<h1 id="12-mininum-window-sort">12、mininum window sort</h1>
+
+<blockquote>
+<p>求最短子数组的长度，子数组满足条件：当子数组排序后，整个数组是有序的</p>
+</blockquote>
+
+<pre><code class="language-c++">input:	[1, 2, 5, 3, 7, 10, 9, 12]
+    
+output:	5
+
+subarray:[5, 3, 7, 10, 9 ]
+</code></pre>
+
+<pre><code class="language-c++">input:	[1, 3, 2, 0, -1, 7, 10]
+    
+output:	5
+
+subarray:[ 3, 2, 0, -1, 7 ]
+</code></pre>
+
+<pre><code class="language-c++">input:	[1, 2, 3]
+    
+output:	0
+</code></pre>
+
+<pre><code class="language-c++">input:	[3, 2, 1]
+    
+output:	3
+</code></pre>
+
+<p>code:</p>
+
+<pre><code class="language-c++">int sort(const vector&lt;int&gt; &amp;arr) {
+    int low = 0;
+    int high = arr.size() - 1;
+    int subarrayMax = INT_MIN;
+    int subarrayMin = INT_MAX;
+
+    while (low &lt; arr.size() - 1 &amp;&amp; arr[low] &lt; arr[low + 1]) {
+        low++;
+    }
+    if (low == arr.size() - 1) {
+        return 0;
+    }
+    while (high &gt; 0 &amp;&amp; arr[high] &gt;= arr[high - 1]) {
+        high--;
+    }
+
+    for (int k = low; k &lt;= high; k++) {
+        subarrayMax = max(subarrayMax, arr[k]);
+        subarrayMin = min(subarrayMin, arr[k]);
+    }
+    while (low &gt; 0 &amp;&amp; arr[low - 1] &gt; subarrayMin) {
+        low--;
+    }
+    while (high &lt; arr.size() - 1 &amp;&amp; arr[high + 1] &lt; subarrayMax) {
+        high++;
+    }
+    return high - low + 1;
+}
+</code></pre>
+
+<p>Time Complexity :   <em>O</em>(N)</p>
+
+<p>Space Complexity :  <em>O</em>(1)</p>
+
+              </div>
+              
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/pattern/">pattern</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Pattern-3%20Two%20Pointers&amp;body=/code/pattern/two-pointers/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/code/pattern/two-pointers/&amp;title=Pattern-3%20Two%20Pointers" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f808c7066d59404fcf07aa7ea9e8d77_115157_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">季程雨</a></h5>
+      <h6 class="card-subtitle">北京 朝阳</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/weixin/wx.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/xbdh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/code/pattern/sliding-window/">Pattern-2 Sliding Window</a></li>
+      
+      <li><a href="/code/pattern/introduction/">Pattern-1 Introduction</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+            </div>
+        </article>
+  
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js" integrity="sha256-/2C3CAfmuTGkUqK2mVrhkTacBscoR1caE0u2QZZ3Uh8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/go.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/cpp.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/c.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcfae8267aba63cc55af53a503896bd9.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+    
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+  <p>
+    <a href="http://www.beian.miit.gov.cn/">皖ICP备20009099号-1</a>
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

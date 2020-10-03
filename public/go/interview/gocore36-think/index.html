@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.2">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="季程雨">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="思考题答案">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/go/interview/gocore36-think/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#000000">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.font.im/css?family=Source+Code+Pro:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/go/interview/gocore36-think/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="细胞的核">
+  <meta property="og:url" content="/go/interview/gocore36-think/">
+  <meta property="og:title" content="Go语言核心36讲思考题 | 细胞的核">
+  <meta property="og:description" content="思考题答案"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-07-28T19:25:43&#43;08:00">
+    
+    <meta property="article:modified_time" content="2020-07-28T19:25:43&#43;08:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Go语言核心36讲思考题 | 细胞的核</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    
+    
+      <a class="navbar-brand" href="/">细胞的核</a>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/go"><span>GO</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/code"><span>刷题</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/mix"><span>MIX</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/project"><span>Project</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/interview"><span>面试</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+
+
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+      
+      <div class="d-none d-sm-none d-xl-block d-lg-block d-md-block col-sm-2 col-md-3 col-xl-3 col-xs-0 docs-toc">
+        <ul class="nav toc-top">
+          <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+        </ul>
+        <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#基础概念篇">基础概念篇</a>
+<ul>
+<li><a href="#1-go-语言在多个工作区中查找依赖包的时候是以怎样的顺序进行的">1. Go 语言在多个工作区中查找依赖包的时候是以怎样的顺序进行的？</a></li>
+<li><a href="#2-如果在多个工作区中都存在导入路径相同的代码包会产生冲突吗">2. 如果在多个工作区中都存在导入路径相同的代码包会产生冲突吗？</a></li>
+<li><a href="#3-默认情况下-我们可以让命令源码文件接受哪些类型的参数值">3. 默认情况下，我们可以让命令源码文件接受哪些类型的参数值？</a></li>
+<li><a href="#4-我们可以把自定义的数据类型作为参数值的类型吗-如果可以-怎样做">4. 我们可以把自定义的数据类型作为参数值的类型吗？如果可以，怎样做？</a></li>
+<li><a href="#5-如果你需要导入两个代码包-而这两个代码包的导入路径的最后一级是相同的-比如-dep-lib-flag-和-flag-那么会产生冲突吗">5. 如果你需要导入两个代码包，而这两个代码包的导入路径的最后一级是相同的，比如：<code>dep/lib/flag</code>和<code>flag</code>，那么会产生冲突吗？</a></li>
+<li><a href="#6-如果会产生冲突-那么怎样解决这种冲突-有几种方式">6. 如果会产生冲突，那么怎样解决这种冲突？有几种方式？</a></li>
+<li><a href="#7-如果与当前的变量重名的是外层代码块中的变量-那么意味着什么">7. 如果与当前的变量重名的是外层代码块中的变量，那么意味着什么？</a></li>
+<li><a href="#8-如果通过-import-xxx-这种方式导入的代码包中的变量与当前代码包中的变量重名了-那么-go-语言是会把它们当做-可重名变量-看待还是会报错呢">8. 如果通过<code>import . XXX</code>这种方式导入的代码包中的变量与当前代码包中的变量重名了，那么 Go 语言是会把它们当做“可重名变量”看待还是会报错呢？</a></li>
+<li><a href="#9-除了-程序实体的那些事儿-3-一文中提及的那些-你还认为类型转换规则中有哪些值得注意的地方">9. 除了《程序实体的那些事儿 3》一文中提及的那些，你还认为类型转换规则中有哪些值得注意的地方？</a></li>
+<li><a href="#10-你能具体说说别名类型在代码重构过程中可以起到的哪些作用吗">10. 你能具体说说别名类型在代码重构过程中可以起到的哪些作用吗？</a></li>
+</ul></li>
+<li><a href="#数据类型和语句篇">数据类型和语句篇</a>
+<ul>
+<li><a href="#11-如果有多个切片指向了同一个底层数组-那么你认为应该注意些什么">11. 如果有多个切片指向了同一个底层数组，那么你认为应该注意些什么？</a></li>
+<li><a href="#12-怎样沿用-扩容-的思想对切片进行-缩容">12. 怎样沿用“扩容”的思想对切片进行“缩容”？</a></li>
+<li><a href="#13-container-ring-包中的循环链表的适用场景都有哪些">13. <code>container/ring</code>包中的循环链表的适用场景都有哪些？</a></li>
+<li><a href="#14-container-heap-包中的堆的适用场景又有哪些呢">14. <code>container/heap</code>包中的堆的适用场景又有哪些呢？</a></li>
+<li><a href="#15-字典类型的值是并发安全的吗-如果不是-那么在我们只在字典上添加或删除键-元素对的情况下-依然不安全吗">15. 字典类型的值是并发安全的吗？如果不是，那么在我们只在字典上添加或删除键 - 元素对的情况下，依然不安全吗？</a></li>
+<li><a href="#16-通道的长度代表着什么-它在什么时候会通道的容量相同">16. 通道的长度代表着什么？它在什么时候会通道的容量相同？</a></li>
+<li><a href="#17-元素值在经过通道传递时会被复制-那么这个复制是浅表复制还是深层复制呢">17. 元素值在经过通道传递时会被复制，那么这个复制是浅表复制还是深层复制呢？</a></li>
+<li><a href="#18-如果在-select-语句中发现某个通道已关闭-那么应该怎样屏蔽掉它所在的分支">18. 如果在<code>select</code>语句中发现某个通道已关闭，那么应该怎样屏蔽掉它所在的分支？</a></li>
+<li><a href="#19-在-select-语句与-for-语句联用时-怎样直接退出外层的-for-语句">19. 在<code>select</code>语句与<code>for</code>语句联用时，怎样直接退出外层的<code>for</code>语句？</a></li>
+<li><a href="#20-complexarray1-被传入函数的话-这个函数中对该参数值的修改会影响到它的原值吗">20. <code>complexArray1</code>被传入函数的话，这个函数中对该参数值的修改会影响到它的原值吗？</a></li>
+<li><a href="#21-函数真正拿到的参数值其实只是它们的副本-那么函数返回给调用方的结果值也会被复制吗">21. 函数真正拿到的参数值其实只是它们的副本，那么函数返回给调用方的结果值也会被复制吗？</a></li>
+<li><a href="#22-我们可以在结构体类型中嵌入某个类型的指针类型吗-如果可以-有哪些注意事项">22. 我们可以在结构体类型中嵌入某个类型的指针类型吗？如果可以，有哪些注意事项？</a></li>
+<li><a href="#23-字面量-struct-代表了什么-又有什么用处">23. 字面量<code>struct{}</code>代表了什么？又有什么用处？</a></li>
+<li><a href="#24-如果我们把一个值为-nil-的某个实现类型的变量赋给了接口变量-那么在这个接口变量上仍然可以调用该接口的方法吗-如果可以-有哪些注意事项-如果不可以-原因是什么">24. 如果我们把一个值为<code>nil</code>的某个实现类型的变量赋给了接口变量，那么在这个接口变量上仍然可以调用该接口的方法吗？如果可以，有哪些注意事项？如果不可以，原因是什么？</a></li>
+<li><a href="#25-引用类型的值的指针值是有意义的吗-如果没有意义-为什么-如果有意义-意义在哪里">25. 引用类型的值的指针值是有意义的吗？如果没有意义，为什么？如果有意义，意义在哪里？</a></li>
+<li><a href="#26-用什么手段可以对-goroutine-的启用数量加以限制">26. 用什么手段可以对 goroutine 的启用数量加以限制？</a></li>
+<li><a href="#27-runtime-包中提供了哪些与模型三要素-g-p-和-m-相关的函数">27. <code>runtime</code>包中提供了哪些与模型三要素 G、P 和 M 相关的函数？</a></li>
+<li><a href="#28-在类型-switch-语句中-我们怎样对被判断类型的那个值做相应的类型转换">28. 在类型<code>switch</code>语句中，我们怎样对被判断类型的那个值做相应的类型转换？</a></li>
+<li><a href="#29-在-if-语句中-初始化子句声明的变量的作用域是什么">29. 在<code>if</code>语句中，初始化子句声明的变量的作用域是什么？</a></li>
+<li><a href="#30-请列举出你经常用到或者看到的-3-个错误类型-它们所在的错误类型体系都是怎样的-你能画出一棵树来描述它们吗">30. 请列举出你经常用到或者看到的 3 个错误类型，它们所在的错误类型体系都是怎样的？你能画出一棵树来描述它们吗？</a></li>
+<li><a href="#31-请列举出你经常用到或者看到的-3-个错误值-它们分别在哪个错误值列表里-这些错误值列表分别包含的是哪个种类的错误">31. 请列举出你经常用到或者看到的 3 个错误值，它们分别在哪个错误值列表里？这些错误值列表分别包含的是哪个种类的错误？</a></li>
+<li><a href="#32-一个函数怎样才能把-panic-转化为-error-类型值-并将其作为函数的结果值返回给调用方">32. 一个函数怎样才能把 panic 转化为<code>error</code>类型值，并将其作为函数的结果值返回给调用方？</a></li>
+<li><a href="#33-我们可以在-defer-函数中恢复-panic-那么可以在其中引发-panic-吗">33. 我们可以在<code>defer</code>函数中恢复 panic，那么可以在其中引发 panic 吗？</a></li>
+</ul></li>
+<li><a href="#go-程序的测试">Go 程序的测试</a>
+<ul>
+<li><a href="#34-除了本文中提到的-你还知道或用过-testing-t-类型和-testing-b-类型的哪些方法-它们都是做什么用的">34. 除了本文中提到的，你还知道或用过<code>testing.T</code>类型和<code>testing.B</code>类型的哪些方法？它们都是做什么用的？</a></li>
+<li><a href="#35-在编写示例测试函数的时候-我们怎样指定预期的打印内容">35. 在编写示例测试函数的时候，我们怎样指定预期的打印内容？</a></li>
+<li><a href="#36-benchmem-标记和-benchtime-标记的作用分别是什么">36. <code>-benchmem</code>标记和<code>-benchtime</code>标记的作用分别是什么？</a></li>
+<li><a href="#37-怎样在测试的时候开启测试覆盖度分析-如果开启-会有什么副作用吗">37. 怎样在测试的时候开启测试覆盖度分析？如果开启，会有什么副作用吗？</a></li>
+</ul></li>
+<li><a href="#标准库的用法">标准库的用法</a>
+<ul>
+<li><a href="#38-你知道互斥锁和读写锁的指针类型都实现了哪一个接口吗">38. 你知道互斥锁和读写锁的指针类型都实现了哪一个接口吗？</a></li>
+<li><a href="#39-怎样获取读写锁中的读锁">39. 怎样获取读写锁中的读锁？</a></li>
+<li><a href="#40-sync-cond-类型的值可以被传递吗-那-sync-cond-类型的值呢">40. <code>*sync.Cond</code>类型的值可以被传递吗？那<code>sync.Cond</code>类型的值呢？</a></li>
+<li><a href="#41-sync-cond-类型中的公开字段-l-是做什么用的-我们可以在使用条件变量的过程中改变这个字段的值吗">41. <code>sync.Cond</code>类型中的公开字段<code>L</code>是做什么用的？我们可以在使用条件变量的过程中改变这个字段的值吗？</a></li>
+<li><a href="#42-如果要对原子值和互斥锁进行二选一-你认为最重要的三个决策条件应该是什么">42. 如果要对原子值和互斥锁进行二选一，你认为最重要的三个决策条件应该是什么？</a></li>
+<li><a href="#43-在使用-waitgroup-值实现一对多的-goroutine-协作流程时-怎样才能让分发子任务的-goroutine-获得各个子任务的具体执行结果">43. 在使用<code>WaitGroup</code>值实现一对多的 goroutine 协作流程时，怎样才能让分发子任务的 goroutine 获得各个子任务的具体执行结果？</a></li>
+<li><a href="#44-context-值在传达撤销信号的时候是广度优先的还是深度优先的-其优势和劣势都是什么">44. <code>Context</code>值在传达撤销信号的时候是广度优先的还是深度优先的？其优势和劣势都是什么？</a></li>
+<li><a href="#45-怎样保证一个临时对象池中总有比较充足的临时对象">45. 怎样保证一个临时对象池中总有比较充足的临时对象？</a></li>
+<li><a href="#46-关于保证并发安全字典中的键和值的类型正确性-你还能想到其他的方案吗">46. 关于保证并发安全字典中的键和值的类型正确性，你还能想到其他的方案吗？</a></li>
+<li><a href="#47-判断一个-unicode-字符是否为单字节字符通常有几种方式">47. 判断一个 Unicode 字符是否为单字节字符通常有几种方式？</a></li>
+<li><a href="#48-strings-builder-和-strings-reader-都分别实现了哪些接口-这样做有什么好处吗">48. <code>strings.Builder</code>和<code>strings.Reader</code>都分别实现了哪些接口？这样做有什么好处吗？</a></li>
+<li><a href="#49-对比-strings-builder-和-bytes-buffer-的-string-方法-并判断哪一个更高效-原因是什么">49. 对比<code>strings.Builder</code>和<code>bytes.Buffer</code>的<code>String</code>方法，并判断哪一个更高效？原因是什么？</a></li>
+<li><a href="#50-io-包中的同步内存管道的运作机制是什么">50. <code>io</code>包中的同步内存管道的运作机制是什么？</a></li>
+<li><a href="#51-bufio-scanner-类型的主要功用是什么-它有哪些特点">51. <code>bufio.Scanner</code>类型的主要功用是什么？它有哪些特点？</a></li>
+<li><a href="#52-怎样通过-os-包中的-api-创建和操纵一个系统进程">52. 怎样通过<code>os</code>包中的 API 创建和操纵一个系统进程？</a></li>
+<li><a href="#53-怎样在-net-conn-类型的值上正确地设定针对读操作和写操作的超时时间">53. 怎样在<code>net.Conn</code>类型的值上正确地设定针对读操作和写操作的超时时间？</a></li>
+<li><a href="#54-怎样优雅地停止基于-http-协议的网络服务程序">54. 怎样优雅地停止基于 HTTP 协议的网络服务程序？</a></li>
+<li><a href="#55-runtime-trace-代码包的功用是什么">55. <code>runtime/trace</code>代码包的功用是什么？</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        
+      </div>
+      
+      <main class="col-12 col-md-9 col-xl-9 col-sm-10 py-md-2 pl-md-3 docs-content" role="main">
+
+        <article class="article">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Go语言核心36讲思考题</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 28, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/interview/">interview</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+            <div class="article-container">
+              <div class="article-style">
+                
+
+<h2 id="基础概念篇">基础概念篇</h2>
+
+<h3 id="1-go-语言在多个工作区中查找依赖包的时候是以怎样的顺序进行的">1. Go 语言在多个工作区中查找依赖包的时候是以怎样的顺序进行的？</h3>
+
+<p>答：你设置的环境变量<code>GOPATH</code>的值决定了这个顺序。如果你在<code>GOPATH</code>中设置了多个工作区，那么这种查找会以从左到右的顺序在这些工作区中进行。</p>
+
+<p>你可以通过试验来确定这个问题的答案。例如：先在一个源码文件中导入一个在你的机器上并不存在的代码包，然后编译这个代码文件。最后，将输出的编译错误信息与<code>GOPATH</code>的值进行对比。</p>
+
+<h3 id="2-如果在多个工作区中都存在导入路径相同的代码包会产生冲突吗">2. 如果在多个工作区中都存在导入路径相同的代码包会产生冲突吗？</h3>
+
+<p>答：不会产生冲突。因为代码包的查找是按照已给定的顺序逐一地在多个工作区中进行的。</p>
+
+<h3 id="3-默认情况下-我们可以让命令源码文件接受哪些类型的参数值">3. 默认情况下，我们可以让命令源码文件接受哪些类型的参数值？</h3>
+
+<p>答：这个问题通过查看<code>flag</code>代码包的文档就可以回答了。概括来讲，有布尔类型、整数类型、浮点数类型、字符串类型，以及<code>time.Duration</code>类型。</p>
+
+<h3 id="4-我们可以把自定义的数据类型作为参数值的类型吗-如果可以-怎样做">4. 我们可以把自定义的数据类型作为参数值的类型吗？如果可以，怎样做？</h3>
+
+<p>答：狭义上讲是不可以的，但是广义上讲是可以的。这需要一些定制化的工作，并且被给定的参数值只能是序列化的。具体可参见<code>flag</code>代码包文档中的例子。</p>
+
+<h3 id="5-如果你需要导入两个代码包-而这两个代码包的导入路径的最后一级是相同的-比如-dep-lib-flag-和-flag-那么会产生冲突吗">5. 如果你需要导入两个代码包，而这两个代码包的导入路径的最后一级是相同的，比如：<code>dep/lib/flag</code>和<code>flag</code>，那么会产生冲突吗？</h3>
+
+<p>答：这会产生冲突。因为代表两个代码包的标识符重复了，都是<code>flag</code>。</p>
+
+<h3 id="6-如果会产生冲突-那么怎样解决这种冲突-有几种方式">6. 如果会产生冲突，那么怎样解决这种冲突？有几种方式？</h3>
+
+<p>答：接上一个问题。很简单，导入代码包的时候给它起一个别名就可以了，比如： <code>import libflag &quot;dep/lib/flag&quot;</code>。或者，以本地化的方式导入代码包，如：<code>import . &quot;dep/lib/flag&quot;</code>。</p>
+
+<h3 id="7-如果与当前的变量重名的是外层代码块中的变量-那么意味着什么">7. 如果与当前的变量重名的是外层代码块中的变量，那么意味着什么？</h3>
+
+<p>答：这意味着这两个变量成为了“可重名变量”。在内层的变量所处的那个代码块以及更深层次的代码块中，这个变量会“屏蔽”掉外层代码块中的那个变量。</p>
+
+<h3 id="8-如果通过-import-xxx-这种方式导入的代码包中的变量与当前代码包中的变量重名了-那么-go-语言是会把它们当做-可重名变量-看待还是会报错呢">8. 如果通过<code>import . XXX</code>这种方式导入的代码包中的变量与当前代码包中的变量重名了，那么 Go 语言是会把它们当做“可重名变量”看待还是会报错呢？</h3>
+
+<p>答：这两个变量会成为“可重名变量”。虽然这两个变量在这种情况下的作用域都是当前代码包的当前文件，但是它们所处的代码块是不同的。</p>
+
+<p>当前文件中的变量处在该文件所代表的代码块中，而被导入的代码包中的变量却处在声明它的那个文件所代表的代码块中。当然，我们也可以说被导入的代码包所代表的代码块包含了这个变量。</p>
+
+<p>在当前文件中，本地的变量会“屏蔽”掉被导入的变量。</p>
+
+<h3 id="9-除了-程序实体的那些事儿-3-一文中提及的那些-你还认为类型转换规则中有哪些值得注意的地方">9. 除了《程序实体的那些事儿 3》一文中提及的那些，你还认为类型转换规则中有哪些值得注意的地方？</h3>
+
+<p>答：简单来说，我们在进行类型转换的时候需要注意各种符号的优先级。具体可参见 Go 语言规范中的转换部分。</p>
+
+<h3 id="10-你能具体说说别名类型在代码重构过程中可以起到的哪些作用吗">10. 你能具体说说别名类型在代码重构过程中可以起到的哪些作用吗？</h3>
+
+<p>答：简单来说，我们可以通过别名类型实现外界无感知的代码重构。具体可参见 Go 语言官方的文档 Proposal: Type Aliases。</p>
+
+<h2 id="数据类型和语句篇">数据类型和语句篇</h2>
+
+<h3 id="11-如果有多个切片指向了同一个底层数组-那么你认为应该注意些什么">11. 如果有多个切片指向了同一个底层数组，那么你认为应该注意些什么？</h3>
+
+<p>答：我们需要特别注意的是，当操作其中一个切片的时候是否会影响到其他指向同一个底层数组的切片。</p>
+
+<p>如果是，那么问一下自己，这是你想要的结果吗？无论如何，通过这种方式来组织或共享数据是不正确的。你需要做的是，要么彻底切断这些切片的底层联系，要么立即为所有的相关操作加锁。</p>
+
+<h3 id="12-怎样沿用-扩容-的思想对切片进行-缩容">12. 怎样沿用“扩容”的思想对切片进行“缩容”？</h3>
+
+<p>答：关于切片的“缩容”，可参看官方的相关 wiki。不过，如果你需要频繁的“缩容”，那么就可能需要考虑其他的数据结构了，比如：<code>container/list</code>代码包中的<code>List</code>。</p>
+
+<h3 id="13-container-ring-包中的循环链表的适用场景都有哪些">13. <code>container/ring</code>包中的循环链表的适用场景都有哪些？</h3>
+
+<p>答：比如：可重用的资源（缓存等）的存储，或者需要灵活组织的资源池，等等。</p>
+
+<h3 id="14-container-heap-包中的堆的适用场景又有哪些呢">14. <code>container/heap</code>包中的堆的适用场景又有哪些呢？</h3>
+
+<p>答：它最重要的用途就是构建优先级队列，并且这里的“优先级”可以很灵活。所以，想象空间很大。</p>
+
+<h3 id="15-字典类型的值是并发安全的吗-如果不是-那么在我们只在字典上添加或删除键-元素对的情况下-依然不安全吗">15. 字典类型的值是并发安全的吗？如果不是，那么在我们只在字典上添加或删除键 - 元素对的情况下，依然不安全吗？</h3>
+
+<p>答：字典类型的值不是并发安全的，即使我们只是增减其中的键值对也是如此。其根本原因是，字典值内部有时候会根据需要进行存储方面的调整。</p>
+
+<h3 id="16-通道的长度代表着什么-它在什么时候会通道的容量相同">16. 通道的长度代表着什么？它在什么时候会通道的容量相同？</h3>
+
+<p>通道的长度代表它当前包含的元素值的个数。当通道已满时，其长度会与容量相同。</p>
+
+<h3 id="17-元素值在经过通道传递时会被复制-那么这个复制是浅表复制还是深层复制呢">17. 元素值在经过通道传递时会被复制，那么这个复制是浅表复制还是深层复制呢？</h3>
+
+<p>答：浅表复制。实际上，在 Go 语言中并不存在深层次的复制，除非我们自己来做。</p>
+
+<h3 id="18-如果在-select-语句中发现某个通道已关闭-那么应该怎样屏蔽掉它所在的分支">18. 如果在<code>select</code>语句中发现某个通道已关闭，那么应该怎样屏蔽掉它所在的分支？</h3>
+
+<p>答：很简单，把<code>nil</code>赋给代表了这个通道的变量就可以了。如此一来，对于这个通道（那个变量）的发送操作和接收操作就会永远被阻塞。</p>
+
+<h3 id="19-在-select-语句与-for-语句联用时-怎样直接退出外层的-for-语句">19. 在<code>select</code>语句与<code>for</code>语句联用时，怎样直接退出外层的<code>for</code>语句？</h3>
+
+<p>答：这一般会用到<code>goto</code>语句和标签（label），具体请参看 Go 语言规范的这部分。</p>
+
+<h3 id="20-complexarray1-被传入函数的话-这个函数中对该参数值的修改会影响到它的原值吗">20. <code>complexArray1</code>被传入函数的话，这个函数中对该参数值的修改会影响到它的原值吗？</h3>
+
+<p>答：文中<code>complexArray1</code>变量的声明如下：</p>
+
+<pre><code class="language-go">complexArray1 := [3][]string{
+	[]string{&quot;d&quot;, &quot;e&quot;, &quot;f&quot;},
+	[]string{&quot;g&quot;, &quot;h&quot;, &quot;i&quot;},
+	[]string{&quot;j&quot;, &quot;k&quot;, &quot;l&quot;},
+}
+</code></pre>
+
+<p>这要看怎样修改了。虽然<code>complexArray1</code>本身是一个数组，但是其中的元素却都是切片。如果对<code>complexArray1</code>中的元素进行增减，那么原值就不会受到影响。但若要修改它已有的元素值，那么原值也会跟着改变。</p>
+
+<h3 id="21-函数真正拿到的参数值其实只是它们的副本-那么函数返回给调用方的结果值也会被复制吗">21. 函数真正拿到的参数值其实只是它们的副本，那么函数返回给调用方的结果值也会被复制吗？</h3>
+
+<p>答：函数返回给调用方的结果值也会被复制。不过，在一般情况下，我们不用太在意。但如果函数在返回结果值之后依然保持执行并会对结果值进行修改，那么我们就需要注意了。</p>
+
+<h3 id="22-我们可以在结构体类型中嵌入某个类型的指针类型吗-如果可以-有哪些注意事项">22. 我们可以在结构体类型中嵌入某个类型的指针类型吗？如果可以，有哪些注意事项？</h3>
+
+<p>答：当然可以。在这时，我们依然需要注意各种“屏蔽”现象。由于某个类型的指针类型会包含与前者有关联的所有方法，所以我们更要注意。</p>
+
+<p>另外，我们在嵌入和引用这样的字段的时候还需要注意一些冲突方面的问题，具体请参看 Go 语言规范的这一部分。</p>
+
+<h3 id="23-字面量-struct-代表了什么-又有什么用处">23. 字面量<code>struct{}</code>代表了什么？又有什么用处？</h3>
+
+<p>答：字面量<code>struct{}</code>代表了空的结构体类型。这样的类型既不包含任何字段也没有任何方法。该类型的值所需的存储空间几乎可以忽略不计。</p>
+
+<p>因此，我们可以把这样的值作为占位值来使用。比如：在同一个应用场景下，<code>map[int] [int]bool</code>类型的值占用更少的存储空间。</p>
+
+<h3 id="24-如果我们把一个值为-nil-的某个实现类型的变量赋给了接口变量-那么在这个接口变量上仍然可以调用该接口的方法吗-如果可以-有哪些注意事项-如果不可以-原因是什么">24. 如果我们把一个值为<code>nil</code>的某个实现类型的变量赋给了接口变量，那么在这个接口变量上仍然可以调用该接口的方法吗？如果可以，有哪些注意事项？如果不可以，原因是什么？</h3>
+
+<p>答：可以调用。但是请注意，这个被调用的方法在此时所持有的接收者的值是<code>nil</code>。因此，如果该方法引用了其接收者的某个字段，那么就会引发 panic！</p>
+
+<h3 id="25-引用类型的值的指针值是有意义的吗-如果没有意义-为什么-如果有意义-意义在哪里">25. 引用类型的值的指针值是有意义的吗？如果没有意义，为什么？如果有意义，意义在哪里？</h3>
+
+<p>答：从存储和传递的角度看，没有意义。因为引用类型的值已经相当于指向某个底层数据结构的指针了。当然，引用类型的值不只是指针那么简单。</p>
+
+<h3 id="26-用什么手段可以对-goroutine-的启用数量加以限制">26. 用什么手段可以对 goroutine 的启用数量加以限制？</h3>
+
+<p>答：一个很简单且很常用的方法是，使用一个通道保存一些令牌。只有先拿到一个令牌，才能启用一个 goroutine。另外在<code>go</code>函数即将执行结束的时候还需要把令牌及时归还给那个通道。</p>
+
+<p>更高级的手段就需要比较完整的设计了。比如，任务分发器 + 任务管道（单层的通道）+ 固定个数的 goroutine。又比如，动态任务池（多层的通道）+ 动态 goroutine 池（可由前述的那个令牌方案演化而来）。等等。</p>
+
+<h3 id="27-runtime-包中提供了哪些与模型三要素-g-p-和-m-相关的函数">27. <code>runtime</code>包中提供了哪些与模型三要素 G、P 和 M 相关的函数？</h3>
+
+<p>答：关于这个问题，我相信你一查文档便知。在线文档在这里。不过光知道还不够，还要会用。</p>
+
+<h3 id="28-在类型-switch-语句中-我们怎样对被判断类型的那个值做相应的类型转换">28. 在类型<code>switch</code>语句中，我们怎样对被判断类型的那个值做相应的类型转换？</h3>
+
+<p>答：其实这个事情可以让 Go 语言自己来做，例如：</p>
+
+<pre><code class="language-go">switch t := x.(type) {
+// cases
+}
+</code></pre>
+
+<p>当流程进入到某个<code>case</code>子句的时候，变量<code>t</code>的值就已经被自动地转换为相应类型的值了。</p>
+
+<h3 id="29-在-if-语句中-初始化子句声明的变量的作用域是什么">29. 在<code>if</code>语句中，初始化子句声明的变量的作用域是什么？</h3>
+
+<p>答：如果这个变量是新的变量，那么它的作用域就是当前<code>if</code>语句所代表的代码块。注意，后续的<code>else if</code>子句和<code>else</code>子句也包含在当前的<code>if</code>语句代表的代码块之内。</p>
+
+<h3 id="30-请列举出你经常用到或者看到的-3-个错误类型-它们所在的错误类型体系都是怎样的-你能画出一棵树来描述它们吗">30. 请列举出你经常用到或者看到的 3 个错误类型，它们所在的错误类型体系都是怎样的？你能画出一棵树来描述它们吗？</h3>
+
+<p>答：略。这需要你自己去做，我代替不了你。</p>
+
+<h3 id="31-请列举出你经常用到或者看到的-3-个错误值-它们分别在哪个错误值列表里-这些错误值列表分别包含的是哪个种类的错误">31. 请列举出你经常用到或者看到的 3 个错误值，它们分别在哪个错误值列表里？这些错误值列表分别包含的是哪个种类的错误？</h3>
+
+<p>答：略。这需要你自己去做，我代替不了你。</p>
+
+<h3 id="32-一个函数怎样才能把-panic-转化为-error-类型值-并将其作为函数的结果值返回给调用方">32. 一个函数怎样才能把 panic 转化为<code>error</code>类型值，并将其作为函数的结果值返回给调用方？</h3>
+
+<p>答：可以这样编写：</p>
+
+<pre><code class="language-go">func doSomething() (err error) {
+	defer func() {
+		p := recover()
+		err = fmt.Errorf(&quot;FATAL ERROR: %s&quot;, p)
+	}()
+	panic(&quot;Oops!!&quot;)
+}
+</code></pre>
+
+<p>注意结果声明的写法。这是一个带有名称的结果声明。</p>
+
+<h3 id="33-我们可以在-defer-函数中恢复-panic-那么可以在其中引发-panic-吗">33. 我们可以在<code>defer</code>函数中恢复 panic，那么可以在其中引发 panic 吗？</h3>
+
+<p>答：当然可以。这样做可以把原先的 panic 包装一下再抛出去。</p>
+
+<h2 id="go-程序的测试">Go 程序的测试</h2>
+
+<h3 id="34-除了本文中提到的-你还知道或用过-testing-t-类型和-testing-b-类型的哪些方法-它们都是做什么用的">34. 除了本文中提到的，你还知道或用过<code>testing.T</code>类型和<code>testing.B</code>类型的哪些方法？它们都是做什么用的？</h3>
+
+<p>答：略。这需要你自己去做，我代替不了你。</p>
+
+<h3 id="35-在编写示例测试函数的时候-我们怎样指定预期的打印内容">35. 在编写示例测试函数的时候，我们怎样指定预期的打印内容？</h3>
+
+<p>答：这个问题的答案就在<code>testing</code>代码包的文档中。</p>
+
+<h3 id="36-benchmem-标记和-benchtime-标记的作用分别是什么">36. <code>-benchmem</code>标记和<code>-benchtime</code>标记的作用分别是什么？</h3>
+
+<p>答：<code>-benchmem</code>标记的作用是在性能测试完成后打印内存分配统计信息。<code>-benchtime</code>标记的作用是设定测试函数的执行时间上限。</p>
+
+<p>具体请看这里的文档。</p>
+
+<h3 id="37-怎样在测试的时候开启测试覆盖度分析-如果开启-会有什么副作用吗">37. 怎样在测试的时候开启测试覆盖度分析？如果开启，会有什么副作用吗？</h3>
+
+<p>答：<code>go test</code>命令可以接受<code>-cover</code>标记。该标记的作用就是开启测试覆盖度分析。不过，由于覆盖度分析开启之后<code>go test</code>命令可能会在程序被编译之前注释掉一部分源代码，所以，若程序编译或测试失败，那么错误报告可能会记录下与原始的源代码不对应的行号。</p>
+
+<h2 id="标准库的用法">标准库的用法</h2>
+
+<h3 id="38-你知道互斥锁和读写锁的指针类型都实现了哪一个接口吗">38. 你知道互斥锁和读写锁的指针类型都实现了哪一个接口吗？</h3>
+
+<p>答：它们都实现了<code>sync.Locker</code>接口。</p>
+
+<h3 id="39-怎样获取读写锁中的读锁">39. 怎样获取读写锁中的读锁？</h3>
+
+<p>答：<code>sync.RWMutex</code>类型有一个名为<code>RLocker</code>的指针方法可以获取其读锁。</p>
+
+<h3 id="40-sync-cond-类型的值可以被传递吗-那-sync-cond-类型的值呢">40. <code>*sync.Cond</code>类型的值可以被传递吗？那<code>sync.Cond</code>类型的值呢？</h3>
+
+<p>答：<code>sync.Cond</code>类型的值一旦被使用就不应该再被传递了，传递往往意味着拷贝。拷贝一个已经被使用的<code>sync.Cond</code>值会引发 panic。但是它的指针值是可以被拷贝的。</p>
+
+<h3 id="41-sync-cond-类型中的公开字段-l-是做什么用的-我们可以在使用条件变量的过程中改变这个字段的值吗">41. <code>sync.Cond</code>类型中的公开字段<code>L</code>是做什么用的？我们可以在使用条件变量的过程中改变这个字段的值吗？</h3>
+
+<p>答：这个字段代表的是当前的<code>sync.Cond</code>值所持有的那个锁。我们可以在使用条件变量的过程中改变该字段的值，但是在改变之前一定要搞清楚这样做的影响。</p>
+
+<h3 id="42-如果要对原子值和互斥锁进行二选一-你认为最重要的三个决策条件应该是什么">42. 如果要对原子值和互斥锁进行二选一，你认为最重要的三个决策条件应该是什么？</h3>
+
+<p>答：我觉得首先需要考虑下面几个问题。</p>
+
+<ul>
+<li>被保护的数据是什么类型的？是值类型的还是引用类型的？</li>
+<li>操作被保护数据的方式是怎样的？是简单的读和写还是更复杂的操作？</li>
+<li>操作被保护数据的代码是集中的还是分散的？如果是分散的，是否可以变为集中的？</li>
+</ul>
+
+<p>在搞清楚上述问题（以及你关注的其他问题）之后，优先使用原子值。</p>
+
+<h3 id="43-在使用-waitgroup-值实现一对多的-goroutine-协作流程时-怎样才能让分发子任务的-goroutine-获得各个子任务的具体执行结果">43. 在使用<code>WaitGroup</code>值实现一对多的 goroutine 协作流程时，怎样才能让分发子任务的 goroutine 获得各个子任务的具体执行结果？</h3>
+
+<p>答：可以考虑使用锁 + 容器（数组、切片或字典等），也可以考虑使用通道。另外，你或许也可以用上<code>golang.org/x/sync/errgroup</code>代码包中的程序实体，相应的文档在这里。</p>
+
+<h3 id="44-context-值在传达撤销信号的时候是广度优先的还是深度优先的-其优势和劣势都是什么">44. <code>Context</code>值在传达撤销信号的时候是广度优先的还是深度优先的？其优势和劣势都是什么？</h3>
+
+<p>答：它是深度优先的。其优势和劣势都是：直接分支的产生时间越早，其中的所有子节点就会越先接收到信号。至于什么时候是优势、什么时候是劣势还要看具体的应用场景。</p>
+
+<p>例如，如果子节点的存续时间与资源的消耗是正相关的，那么这可能就是一个优势。但是，如果每个分支中的子节点都很多，而且各个分支中的子节点的产生顺序并不依从于分支的产生顺序，那么这种优势就很可能会变成劣势。最终的定论还是要看测试的结果。</p>
+
+<h3 id="45-怎样保证一个临时对象池中总有比较充足的临时对象">45. 怎样保证一个临时对象池中总有比较充足的临时对象？</h3>
+
+<p>答：首先，我们应该事先向临时对象池中放入足够多的临时对象。其次，在用完临时对象之后，我们需要及时地把它归还给临时对象池。</p>
+
+<p>最后，我们应该保证它的<code>New</code>字段所代表的值是可用的。虽然<code>New</code>函数返回的临时对象并不会被放入池中，但是起码能够保证池的<code>Get</code>方法总能返回一个临时对象。</p>
+
+<h3 id="46-关于保证并发安全字典中的键和值的类型正确性-你还能想到其他的方案吗">46. 关于保证并发安全字典中的键和值的类型正确性，你还能想到其他的方案吗？</h3>
+
+<p>答：这是一道开放的问题，需要你自己去思考。其实怎样做完全取决于你的应用场景。不过，我们应该尽量避免使用反射，因为它对程序性能还是有一定的影响的。</p>
+
+<h3 id="47-判断一个-unicode-字符是否为单字节字符通常有几种方式">47. 判断一个 Unicode 字符是否为单字节字符通常有几种方式？</h3>
+
+<p>答：<code>unicode/utf8</code>代码包中有几个可以做此判断的函数，比如：<code>RuneLen</code>函数、<code>EncodeRune</code>函数等。我们需要根据输入的不同来选择和使用它们。具体可以查看该代码包的文档。</p>
+
+<h3 id="48-strings-builder-和-strings-reader-都分别实现了哪些接口-这样做有什么好处吗">48. <code>strings.Builder</code>和<code>strings.Reader</code>都分别实现了哪些接口？这样做有什么好处吗？</h3>
+
+<p>答：<code>strings.Builder</code>类型实现了 3 个接口，分别是：<code>fmt.Stringer</code>、<code>io.Writer</code>和<code>io.ByteWriter</code>。</p>
+
+<p>而<code>strings.Reader</code>类型则实现了 8 个接口，即：<code>io.Reader</code>、<code>io.ReaderAt</code>、<code>io.ByteReader</code>、<code>io.RuneReader</code>、<code>io.Seeker</code>、<code>io.ByteScanner</code>、<code>io.RuneScanner</code>和<code>io.WriterTo</code>。</p>
+
+<p>好处是显而易见的。实现的接口越多，它们的用途就越广。它们会适用于那些要求参数的类型为这些接口类型的地方。</p>
+
+<h3 id="49-对比-strings-builder-和-bytes-buffer-的-string-方法-并判断哪一个更高效-原因是什么">49. 对比<code>strings.Builder</code>和<code>bytes.Buffer</code>的<code>String</code>方法，并判断哪一个更高效？原因是什么？</h3>
+
+<p>答：<code>strings.Builder</code>的<code>String</code>方法更高效。因为该方法只对其所属值的内容容器（那个字节切片）做了简单的类型转换，并且直接使用了底层的值（或者说内存空间）。它的源码如下：</p>
+
+<pre><code class="language-go">// String returns the accumulated string.
+func (b *Builder) String() string {
+		return *(*string)(unsafe.Pointer(&amp;b.buf))
+}
+</code></pre>
+
+<p>数组值和字符串值在底层的存储方式其实是一样的。所以从切片值到字符串值的指针值的转换可以是直截了当的。又由于字符串值是不可变的，所以这样做也是安全的。</p>
+
+<p>不过，由于一些历史、结构和功能方面的原因，<code>bytes.Buffer</code>的<code>String</code>方法却不能这样做。</p>
+
+<h3 id="50-io-包中的同步内存管道的运作机制是什么">50. <code>io</code>包中的同步内存管道的运作机制是什么？</h3>
+
+<p>答：我们实际上已经在正文中做了基本的说明。</p>
+
+<p><code>io.Pipe</code>函数会返回一个<code>io.PipeReader</code>类型的值和一个<code>io.PipeWriter</code>类型的值，并将它们分别作为管道的两端。而这两个值在底层其实只是代理了同一个<code>*io.pipe</code>类型值的功能而已。</p>
+
+<p><code>io.pipe</code>类型通过无缓冲的通道实现了读操作与写操作之间的同步，并且通过互斥锁实现了写操作之间的串行化。另外，它还使用原子值来处理错误。这些共同保证了这个同步内存管道的并发安全性。</p>
+
+<h3 id="51-bufio-scanner-类型的主要功用是什么-它有哪些特点">51. <code>bufio.Scanner</code>类型的主要功用是什么？它有哪些特点？</h3>
+
+<p>答：<code>bufio.Scanner</code>类型俗称带缓存的扫描器。它的功能还是比较强大的。</p>
+
+<p>比如，我们可以自定义每次扫描的边界，或者说内容的分段方法。我们在调用它的<code>Scan</code>方法对目标进行扫描之前，可以先调用其<code>Split</code>方法并传入一个函数来自定义分段方法。</p>
+
+<p>在默认情况下，扫描器会以行为单位对目标内容进行扫描。<code>bufio</code>代码包提供了一些现成的分段方法。实际上，扫描器在默认情况下会使用<code>bufio.ScanLines</code>函数作为分段方法。</p>
+
+<p>又比如，我们还可以在扫描之前自定义缓存的载体和缓存的最大容量，这需要调用它的<code>Buffer</code>方法。在默认情况下，扫描器内部设定的最大缓存容量是<code>64K</code>个字节。</p>
+
+<p>换句话说，目标内容中的每一段都不能超过<code>64K</code>个字节。否则，扫描器就会使它的<code>Scan</code>方法返回<code>false</code>，并通过其<code>Err</code>方法给予我们一个表示“token too long”的错误值。这里的“token”代表的就是一段内容。</p>
+
+<p>关于<code>bufio.Scanner</code>类型的更多特点和使用注意事项，你可以通过它的文档获得。</p>
+
+<h3 id="52-怎样通过-os-包中的-api-创建和操纵一个系统进程">52. 怎样通过<code>os</code>包中的 API 创建和操纵一个系统进程？</h3>
+
+<p>答：你可以从<code>os</code>包的<code>FindProcess</code>函数和<code>StartProcess</code>函数开始。前者用于通过进程 ID（pid）查找进程，后者用来基于某个程序启动一个进程。</p>
+
+<p>这两者都会返回一个<code>*os.Process</code>类型的值。该类型提供了一些方法，比如，用于杀掉当前进程的<code>Kill</code>方法，又比如，可以给当前进程发送系统信号的<code>Signal</code>方法，以及会等待当前进程结束的<code>Wait</code>方法。</p>
+
+<p>与此相关的还有<code>os.ProcAttr</code>类型、<code>os.ProcessState</code>类型、<code>os.Signal</code>类型，等等。你可以通过积极的实践去探索更多的玩法。</p>
+
+<h3 id="53-怎样在-net-conn-类型的值上正确地设定针对读操作和写操作的超时时间">53. 怎样在<code>net.Conn</code>类型的值上正确地设定针对读操作和写操作的超时时间？</h3>
+
+<p>答：<code>net.Conn</code>类型有 3 个可用于设置超时时间的方法，分别是：<code>SetDeadline</code>、<code>SetReadDeadline</code>和<code>SetWriteDeadline</code>。</p>
+
+<p>这三个方法的签名是一模一样的，只是名称不同罢了。它们都接受一个<code>time.Time</code>类型的参数，并都会返回一个<code>error</code>类型的结果。其中的<code>SetDeadline</code>方法是用来同时设置读操作超时和写操作超时的。</p>
+
+<p>有一点需要特别注意，这三个方法都会针对任何正在进行以及未来将要进行的相应操作进行超时设定。</p>
+
+<p>因此，如果你要在一个循环中进行读操作或写操作的话，最好在每次迭代中都进行一次超时设定。</p>
+
+<p>否则，靠后的操作就有可能因触达超时时间而直接失败。另外，如果有必要，你应该再次调用它们并传入<code>time.Time</code>类型的零值来表达不再限定超时时间。</p>
+
+<h3 id="54-怎样优雅地停止基于-http-协议的网络服务程序">54. 怎样优雅地停止基于 HTTP 协议的网络服务程序？</h3>
+
+<p>答：<code>net/http.Server</code>类型有一个名为<code>Shutdown</code>的指针方法可以实现“优雅的停止”。也就是说，它可以在不中断任何正处在活动状态的连接的情况下平滑地关闭当前的服务器。</p>
+
+<p>它会先关闭所有的空闲连接，并一直等待。只有活动的连接变为空闲之后，它才会关闭它们。当所有的连接都被平滑地关闭之后，它会关闭当前的服务器并返回。当有错误发生时，它还会把相应的错误值返回。</p>
+
+<p>另外，你还可以通过调用<code>Server</code>值的<code>RegisterOnShutdown</code>方法来注册可以在服务器即将关闭时被自动调用的函数。</p>
+
+<p>更确切地说，当前服务器的<code>Shutdown</code>方法会以异步的方式调用如此注册的所有函数。我们可以利用这样的函数来通知长连接的客户端“连接即将关闭”。</p>
+
+<h3 id="55-runtime-trace-代码包的功用是什么">55. <code>runtime/trace</code>代码包的功用是什么？</h3>
+
+<p>答：简单来说，这个代码包是用来帮助 Go 程序实现内部跟踪操作的。其中的程序实体可以帮助我们记录程序中各个 goroutine 的状态、各种系统调用的状态，与 GC 有关的各种事件，以及内存相关和 CPU 相关的变化，等等。</p>
+
+<p>通过它们生成的跟踪记录可以通过<code>go tool trace</code>命令来查看。更具体的说明可以参看<code>runtime/trace</code>代码包的文档。</p>
+
+<p>有了<code>runtime/trace</code>代码包，我们就可以为 Go 程序加装上可以满足个性化需求的跟踪器了。Go 语言标准库中有的代码包正是通过使用该包实现了自身的功能，例如<code>net/http/pprof</code>包。</p>
+
+              </div>
+              
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/go/">Go</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Go%e8%af%ad%e8%a8%80%e6%a0%b8%e5%bf%8336%e8%ae%b2%e6%80%9d%e8%80%83%e9%a2%98&amp;body=/go/interview/gocore36-think/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/go/interview/gocore36-think/&amp;title=Go%e8%af%ad%e8%a8%80%e6%a0%b8%e5%bf%8336%e8%ae%b2%e6%80%9d%e8%80%83%e9%a2%98" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu2f808c7066d59404fcf07aa7ea9e8d77_115157_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">季程雨</a></h5>
+      <h6 class="card-subtitle">北京 朝阳</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/weixin/wx.jpg" >
+        <i class="fab fa-weixin"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/xbdh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/files/cv.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/go/interview/91-120/">Go语言中文网面试题 91-120</a></li>
+      
+      <li><a href="/go/interview/61-90/">Go语言中文网面试题 61-90</a></li>
+      
+      <li><a href="/go/interview/31-60/">Go语言中文网面试题 31-60</a></li>
+      
+      <li><a href="/go/interview/1-30/">Go语言中文网面试题 1-30</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+            </div>
+        </article>
+  
+      </main>
+    </div>
+  </div>
+  
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js" integrity="sha256-/2C3CAfmuTGkUqK2mVrhkTacBscoR1caE0u2QZZ3Uh8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/go.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/cpp.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/languages/c.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.bcfae8267aba63cc55af53a503896bd9.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+    
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+  <p>
+    <a href="http://www.beian.miit.gov.cn/">皖ICP备20009099号-1</a>
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

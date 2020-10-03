@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Palindromic Subsequence | 细胞的核</title>
+    <link>/tags/palindromic-subsequence/</link>
+      <atom:link href="/tags/palindromic-subsequence/index.xml" rel="self" type="application/rss+xml" />
+    <description>Palindromic Subsequence</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jul 2020 16:35:47 +0800</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Palindromic Subsequence</title>
+      <link>/tags/palindromic-subsequence/</link>
+    </image>
+    
+    <item>
+      <title>Dynamic Programming-5 Palindromic Subsequence</title>
+      <link>/code/dynamic-progamming/5-palindromic-subsequence/</link>
+      <pubDate>Wed, 01 Jul 2020 16:35:47 +0800</pubDate>
+      <guid>/code/dynamic-progamming/5-palindromic-subsequence/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-longest-palindromic-subsequence&#34;&gt;1. longest Palindromic Subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长回文子序列(不连续)的长度&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;bbbab&amp;quot;
+    
+output:	4
+    
+explanation: &amp;quot;bbbb&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;cbbd&amp;quot;
+    
+output:	2
+    
+explanation: &amp;quot;bb&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force&#34;&gt;Brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int longestPalindromicSubsequenceRecursive(const string &amp;amp;s, int startIndex, int endIndex) {
+    if (startIndex &amp;gt; endIndex) {
+        return 0;
+    }
+    //只有一个字符
+    if (startIndex == endIndex) {
+        return 1;
+    }
+
+    if (s[startIndex] == s[endIndex]) {
+        return 2 + longestPalindromicSubsequenceRecursive(s, startIndex + 1, endIndex - 1);
+
+    }
+    //从头或尾跳过一个字符
+
+    int c1 = longestPalindromicSubsequenceRecursive(s, startIndex + 1, endIndex);
+    int c2 = longestPalindromicSubsequenceRecursive(s, startIndex, endIndex - 1);
+    return max(c1, c2);
+}
+
+int LPS(string s) {
+    return longestPalindromicSubsequenceRecursive(s, 0, s.size() - 1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down&#34;&gt;Top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LPSRecursive2(const string &amp;amp;s, int startIndex, int endIndex, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp) {
+    if (startIndex &amp;gt; endIndex) {
+        return 0;
+    }
+    //只有一个字符
+    if (startIndex == endIndex) {
+        return 1;
+    }
+
+    if (dp[startIndex][endIndex] == -1) {
+        if (s[startIndex] == s[endIndex]) {
+            dp[startIndex][endIndex] = 2 + LPSRecursive2(s, startIndex + 1, endIndex - 1, dp);
+        } else {
+            //从头或尾跳过一个字符
+            int c1 = LPSRecursive2(s, startIndex + 1, endIndex, dp);
+            int c2 = LPSRecursive2(s, startIndex, endIndex - 1, dp);
+            dp[startIndex][endIndex] = max(c1, c2);
+        }
+
+    }
+
+    return dp[startIndex][endIndex];
+}
+
+int LPS2(string s) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s.length(), vector&amp;lt;int&amp;gt;(s.length(), -1));
+    return LPSRecursive2(s, 0, s.size() - 1, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N ^ 2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N ^ 2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LPS3(string s) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s.length(), vector&amp;lt;int&amp;gt;(s.length()));
+    for (int i = 0; i &amp;lt; s.length(); i++) {
+        dp[i][i] = 1;
+    }
+    //dp[i][j]表示[i,j]区间内的字符串的最长回文子序列,上三角有效
+    //从下往上，从做往右处理。
+    for (int startIndex = s.length() - 1; startIndex &amp;gt;= 0; startIndex--) {
+        for (int endIndex = startIndex + 1; endIndex &amp;lt; s.length(); endIndex++) {
+            if (s[startIndex] == s[endIndex]) {
+                dp[startIndex][endIndex] = 2 + dp[startIndex + 1][endIndex - 1];
+            } else {
+                dp[startIndex][endIndex] = max(dp[startIndex + 1][endIndex], dp[startIndex][endIndex - 1]);
+            }
+        }
+    }
+
+    return dp[0][s.length() - 1];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N ^ 2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N ^ 2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-优化&#34;&gt;bottom-up 优化&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int lps(string s)
+{
+    int n = s.length();
+
+    // dp[i] is going to store length of longest 
+    // palindromic subsequence of substring s[0..i] 
+    int dp[n];
+
+    // Pick starting point 
+    for (int i = n - 1; i &amp;gt;= 0; i--) {
+
+        int back_up = 0;
+        
+        // Pick ending points and see if s[i] 
+        // increases length of longest common 
+        // subsequence ending with s[j]. 
+        for (int j = i; j &amp;lt; n; j++) {
+
+            // similar to 2D array L[i][j] == 1 
+            // i.e., handling substrings of length 
+            // one. 
+            if (j == i)
+                dp[j] = 1;
+
+                // Similar to 2D array L[i][j] = L[i+1][j-1]+2 
+                // i.e., handling case when corner characters 
+                // are same.  
+            else if (s[i] == s[j]){
+
+                // value a[j] is depend upon previous  
+                // unupdated value of a[j-1] but in  
+                // previous loop value of a[j-1] is  
+                // changed. To store the unupdated  
+                // value of a[j-1] back_up variable  
+                // is used. 
+                int temp = dp[j];
+                dp[j] = back_up + 2;
+                back_up = temp;
+            }else{
+                // similar to 2D array L[i][j] = max(L[i][j-1], 
+                // a[i+1][j]) 
+                back_up = dp[j];
+                dp[j] = max(dp[j - 1], dp[j]);
+            }
+        }
+    }
+    return dp[n - 1];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N ^ 2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;2-longest-palindromic-substring&#34;&gt;2.  longest Palindromic Substring&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长回文串&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;abdbca&amp;quot;
+    
+output:	bdb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;abbc&amp;quot;
+    
+output:	bb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;abc&amp;quot;
+    
+output:	a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-1&#34;&gt;Brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;string LPS(string s) {
+    int len = s.length();
+    int maxLen = 1;//任意字符都是回文
+    int startIndex = 0;
+
+    for (int i = 0; i &amp;lt; len; i++) {
+        for (int j = i + 1; j &amp;lt; len; j++) {
+            int low = i;
+            int high = j;
+
+            while (low &amp;lt; high &amp;amp;&amp;amp; s[low] == s[high]) {
+                low++;
+                high--;
+            }
+            //&amp;quot;abbc&amp;quot;模式，跳出循环low&amp;gt;high
+            //&amp;quot;abbtbbc&amp;quot;模式，跳出循环low=high
+            //j - i + 1 &amp;gt; maxLen,判断长度是否大于1
+            if (low &amp;gt;= high &amp;amp;&amp;amp; j - i + 1 &amp;gt; maxLen) {
+                maxLen = j - i + 1;
+                startIndex = i;
+            }
+        }
+    }
+    return s.substr(startIndex, maxLen);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^3&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;1&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-1&#34;&gt;Bottom-up&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C++&#34;&gt;string LPS2(string s) {
+    int len = s.length();
+    int maxLen = 1;
+    int startIndex = 0;
+    //dp[i][j]代表[i,j]位置的字符串是否回文
+
+    //当 i == j，dp[i][j] 是回文子串（单字符都是回文子串）；
+    //当 j - i &amp;lt; 3，只要 S[i] == S[j]，则 dp[i][j] 是回文子串（如&amp;quot;aa&amp;quot;，“aba”），否则不是；
+    //当 j - i &amp;gt;= 3，如果 S[i] == S[j] &amp;amp;&amp;amp; dp[i+1][j-1] ，则 dp[i][j] 是回文子串，否则不是 。
+    vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; dp(len, vector&amp;lt;bool&amp;gt;(len, false));
+
+	//for循环顺序变化，左侧列-&amp;gt;右侧列，每列从上到下
+    //dp[i + 1][j - 1]在dp[i][j]的前一列，下一行，已经生成
+    for (int j = 0; j &amp;lt; len; j++) {
+        for (int i = 0; i &amp;lt;= j; i++) {
+            //小于3也行
+            if (j - i &amp;lt; 2) {
+                dp[i][j] = (s[i] == s[j]);
+            } else {
+                dp[i][j] = (s[i] == s[j] &amp;amp;&amp;amp; dp[i + 1][j - 1]);
+            }
+
+            if (dp[i][j] &amp;amp;&amp;amp; j - i + 1 &amp;gt; maxLen) {
+                maxLen = j - i + 1;
+                startIndex = i;
+            }
+        }
+    }
+//    //另一种解法
+//    for (int i = 0;i &amp;lt; len; i++) {
+//    		dp[i][i] = true;
+//    }
+//    for (int i = len - 1; i &amp;gt;= 0; i--) {
+//        //可以放在外面赋值
+//        for (int j = i; j &amp;lt; len; j++) {
+//            //小于3也行
+//            if (j - i &amp;lt; 2) {
+//                dp[i][j] = (s[i] == s[j]);
+//            } else {
+//                //要访问dp[i+1][j-1]，i从大到小，j从小到大
+//                dp[i][j] = (s[i] == s[j] &amp;amp;&amp;amp; dp[i + 1][j - 1]);
+//            }
+//
+//            if (dp[i][j] &amp;amp;&amp;amp; j - i + 1 &amp;gt; maxLen) {
+//                maxLen = j - i + 1;
+//                startIndex = i;
+//            }
+//        }
+//    }
+    return s.substr(startIndex, maxLen);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;3-count-of-palindromic-substring&#34;&gt;3. count of Palindromic Substring&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长回文串的个数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;abdbca&amp;quot;
+    
+output:	7
+    
+explanation :&amp;quot;a&amp;quot;,&amp;quot;b&amp;quot;, &amp;quot;d&amp;quot;,&amp;quot;b&amp;quot;,&amp;quot;c&amp;quot;,&amp;quot;a&amp;quot;,&amp;quot;bdb&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bottom-up-2&#34;&gt;Bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countLPS(string s) {
+    int count = 0;
+    int len = s.length();
+    vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; dp(len, vector&amp;lt;bool&amp;gt;(len));
+    for (int j = 0; j &amp;lt; len; j++) {
+        for (int i = 0; i &amp;lt;= j; i++) {
+            //小于3也行
+            if (j - i &amp;lt; 3) {
+                dp[i][j] = (s[i] == s[j]);
+            } else {
+                dp[i][j] = (s[i] == s[j] &amp;amp;&amp;amp; dp[i + 1][j - 1]);
+            }
+
+            if (dp[i][j]) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;4-minimum-deletions-in-a-string-to-make-it-a-palindrome&#34;&gt;4. minimum deletions in a string to make it a palindrome&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;删除字符串的一些字符，使得其成为回文字符串，求最小的删除数&lt;/p&gt;
+
+&lt;p&gt;=len(s) - len(longest Palindromic Subsequence),字符串长度减去最长回文序列长度&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;abdbca&amp;quot;
+    
+output:	1
+    
+explanation: remove &amp;quot;c&amp;quot; -&amp;gt; &amp;quot;abdba&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;cddpd&amp;quot;
+    
+output:	2
+    
+explanation: remove &amp;quot;c&amp;quot;,&amp;quot;p&amp;quot; -&amp;gt; &amp;quot;ddd&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bottom-up-3&#34;&gt;Bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LPS3(string s) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s.length(), vector&amp;lt;int&amp;gt;(s.length()));
+    for (int i = 0; i &amp;lt; s.length(); i++) {
+        dp[i][i] = 1;
+    }
+    //dp[i][j]表示[i,j]区间内的字符串的最长回文子序列,上三角有效
+    //从下往上，从左往右处理。
+    //startIndex从大变小，endIndex从小变大
+    for (int startIndex = s.length() - 1; startIndex &amp;gt;= 0; startIndex--) {
+        for (int endIndex = startIndex + 1; endIndex &amp;lt; s.length(); endIndex++) {
+            if (s[startIndex] == s[endIndex]) {
+                dp[startIndex][endIndex] = 2 + dp[startIndex + 1][endIndex - 1];
+            } else {
+                dp[startIndex][endIndex] = max(dp[startIndex + 1][endIndex], dp[startIndex][endIndex - 1]);
+            }
+        }
+    }
+
+
+    return dp[0][s.length() - 1];
+}
+
+int countRemove(string s) {
+    return s.length() - LPS3(s);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;相似问题&#34;&gt;相似问题&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;插入一些字符，使得字符串成为回文字符串，求最小的插入数&lt;/p&gt;
+
+&lt;p&gt;同上&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;5-palindromic-partitioning&#34;&gt;5. palindromic partitioning&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定字符串，分割成子串，使得子串都是回文字符串，求最小切割几刀&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;abdbca&amp;quot;
+    
+output:	3
+    
+explanation: &amp;quot;a&amp;quot;,&amp;quot;bdb&amp;quot;,&amp;quot;c&amp;quot;,&amp;quot;a&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;pqr&amp;quot;
+    
+output:	3
+    
+explanation: &amp;quot;p&amp;quot;,&amp;quot;q&amp;quot;,&amp;quot;r&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;pp&amp;quot;
+    
+output:	0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-2&#34;&gt;Brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool isPalindrome(string s, int start, int end) {
+    while (start &amp;lt; end) {
+        if (s[start] == s[end]) {
+            start++;
+            end--;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+int minCutRecursive(string s, int startIndex, int endIndex) {
+    if (startIndex &amp;gt;= endIndex || isPalindrome(s, startIndex, endIndex)) {
+        return 0;
+    }
+
+    //[startIndex,endIndex],的最大切值
+    int minCuts = endIndex - startIndex;
+
+    for (int i = startIndex; i &amp;lt;= endIndex; i++) {
+        if (isPalindrome(s, startIndex, i)) {
+            minCuts = min(minCuts, 1 + minCutRecursive(s, i + 1, endIndex));
+        }
+    }
+    return minCuts;
+}
+
+int minCutLPS(string s) {
+    return minCutRecursive(s, 0, s.length() - 1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-4&#34;&gt;Bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;待看
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

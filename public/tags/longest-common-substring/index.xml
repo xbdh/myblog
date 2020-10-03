@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Longest Common Substring | 细胞的核</title>
+    <link>/tags/longest-common-substring/</link>
+      <atom:link href="/tags/longest-common-substring/index.xml" rel="self" type="application/rss+xml" />
+    <description>Longest Common Substring</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jul 2020 16:36:22 +0800</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Longest Common Substring</title>
+      <link>/tags/longest-common-substring/</link>
+    </image>
+    
+    <item>
+      <title>Dynamic Programming-6 Longest Common Substring</title>
+      <link>/code/dynamic-progamming/6-longest-common-substring/</link>
+      <pubDate>Wed, 01 Jul 2020 16:36:22 +0800</pubDate>
+      <guid>/code/dynamic-progamming/6-longest-common-substring/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-longest-common-substring&#34;&gt;1. longest common substring&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长公共子串的长度&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;abdca&amp;quot;, s2=&amp;quot;cbda&amp;quot;
+    
+ouput:	2
+   
+explanation: &amp;quot;bd&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;passport&amp;quot;, s2=&amp;quot;ppsspt&amp;quot;
+    
+ouput:	3
+   
+explanation: &amp;quot;ssp&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCSRecursive(string &amp;amp;s1, string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex, int count) {
+    if (s1CurrentIndex &amp;gt;= s1.length() || s2CurrentIndex &amp;gt;= s2.length()) {
+        return count;
+    }
+
+    if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+        count =  LCSRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1, count+1);
+    }
+    //count清零
+    int c1 = LCSRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex, 0);
+    int c2 = LCSRecursive(s1, s2, s1CurrentIndex, s2CurrentIndex + 1, 0);
+
+    return max(count, max(c1, c2));
+}
+
+
+int LCS(string s1, string s2) {
+
+    return LCSRecursive(s1, s2, 0, 0, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;3^(M+N)&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N+M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCS2(string s1, string s2) {
+
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int maxlen = 0;
+    for (int i = 0; i &amp;lt; len1; i++) {
+        for (int j = 0; j &amp;lt; len2; j++) {
+            int len = 0;
+            while (i + len &amp;lt; len1 &amp;amp;&amp;amp; j + len &amp;lt; len2 &amp;amp;&amp;amp; s1[i + len] == s2[j + len]) {
+                len++;//暴力匹配
+            }
+            if (len &amp;gt; maxlen) {
+                maxlen = len;
+            }
+        }
+    }
+    return maxlen;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bottom-up&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCSLength(string s1, string s2) {
+
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int maxLength = 0;
+
+    //使用 d[i][j] 表示以 X[0,i-1]长度为i 与Y[0,j-1] 长度为j 最长公共子串的长度
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(len1 + 1, vector&amp;lt;int&amp;gt;(len2 + 1));
+    for (int i = 0; i &amp;lt;= len1; i++) {
+       //可不要
+        dp[0][i] = 0;
+        dp[i][0] = 0;
+    }
+    for (int i = 1; i &amp;lt;= len1; i++) {
+        for (int j = 1; j &amp;lt;= len2; j++) {
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+                maxLength = max(maxLength, dp[i][j]);
+            }
+        }
+    }
+    return maxLength;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-6.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-7.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-8.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;2-longest-common-subsequence&#34;&gt;2. longest common subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长公共子序列&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;abdca&amp;quot;, s2=&amp;quot;cbda&amp;quot;
+    
+ouput:	3
+   
+explanation: &amp;quot;bda&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;passport&amp;quot;, s2=&amp;quot;ppsspt&amp;quot;
+    
+ouput:	3
+   
+explanation: &amp;quot;ssp&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-1&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCSRecursive(string &amp;amp;s1, string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex) {
+    if (s1CurrentIndex &amp;gt;= s1.length() || s2CurrentIndex &amp;gt;= s2.length()) {
+        return 0;
+    }
+
+    if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+        return 1 + LCSRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+    }
+    //count清零
+    int c1 = LCSRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex);
+    int c2 = LCSRecursive(s1, s2, s1CurrentIndex, s2CurrentIndex + 1);
+
+    return max(c1, c2);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^(M+N)&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N+M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCS(string s1, string s2) {
+
+    return LCSRecursive(s1, s2, 0, 0);
+}
+
+int LCSRecursive2(string &amp;amp;s1, string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (s1CurrentIndex &amp;gt;= s1.length() || s2CurrentIndex &amp;gt;= s2.length()) {
+        return 0;
+    }
+
+    if (dp[s1CurrentIndex][s2CurrentIndex] == -1) {
+        if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+            dp[s1CurrentIndex][s2CurrentIndex] = 1 + LCSRecursive2(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1, dp);
+        } else {
+            int c1 = LCSRecursive2(s1, s2, s1CurrentIndex + 1, s2CurrentIndex, dp);
+            int c2 = LCSRecursive2(s1, s2, s1CurrentIndex, s2CurrentIndex + 1, dp);
+
+            dp[s1CurrentIndex][s2CurrentIndex] = max(c1, c2);
+        }
+    }
+    return dp[s1CurrentIndex][s2CurrentIndex];
+}
+
+int LCS2(string s1, string s2) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s1.length(), vector&amp;lt;int&amp;gt;(s2.length(), -1));
+    return LCSRecursive2(s1, s2, 0, 0, dp);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-1&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCS3(string s1, string s2) {
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int maxLength = 0;
+
+    //使用 d[i][j] 表示以 X[0,i-1]长度为i 与Y[0,j-1] 长度为j 最长公共子序列的长度
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(len1 + 1, vector&amp;lt;int&amp;gt;(len2 + 1));
+    for (int i = 0; i &amp;lt;= len1; i++) {
+        //可不要
+        dp[0][i] = 0;
+        dp[i][0] = 0;
+    }
+    for (int i = 1; i &amp;lt;= len1; i++) {
+        for (int j = 1; j &amp;lt;= len2; j++) {
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+            maxLength = max(maxLength, dp[i][j]);
+        }
+    }
+    return maxLength;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-6.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-7.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./2-8.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;3-minimum-deletions-or-insertions-to-transform-a-string-into-another&#34;&gt;3. minimum deletions or insertions to transform a string into another&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定字符串S1,S2,通过删除插入字符使得S1变成S2，求最小的删除插入数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;abc&amp;quot;,s2=&amp;quot;fbc&amp;quot;
+    
+output:	1 deletions ,1 insertions
+   
+explanation: s1:delete(a),insert(f) -&amp;gt;s2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;abdca&amp;quot;,s2=&amp;quot;cbda&amp;quot;
+    
+output:	2 deletions ,1 insertions
+   
+explanation: s1:delete(a,c),insert(c) -&amp;gt;s2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bottom-up-2&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LCS3(string s1, string s2) {
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int maxLength = 0;
+
+    //使用 d[i][j] 表示以 X[0,i-1]长度为i 与Y[0,j-1] 长度为j 最长公共子序列的长度
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(len1 + 1, vector&amp;lt;int&amp;gt;(len2 + 1));
+    for (int i = 0; i &amp;lt;= len1; i++) {
+        //可不要
+        dp[0][i] = 0;
+        dp[i][0] = 0;
+    }
+    for (int i = 1; i &amp;lt;= len1; i++) {
+        for (int j = 1; j &amp;lt;= len2; j++) {
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+            maxLength = max(maxLength, dp[i][j]);
+        }
+    }
+    return maxLength;
+}
+
+pair&amp;lt;int, int&amp;gt; minDeleteInsert(string s1, string s2) {
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int c = LCS3(s1, s2);
+    return make_pair(len1 - c, len2 - c);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;4-longest-increasing-subsequence&#34;&gt;4. longest increasing subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长递增子序列的长度&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 2, 3, 6, 10, 1, 12]
+
+output:	5
+    
+explanation:[2, 3, 6, 10, 12]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[-4, 10, 3, 7, 15]
+
+output:	4
+    
+explanation:[-4, 3, 7, 15]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-2&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LISLengthRecursive(vector&amp;lt;int&amp;gt; &amp;amp;nums, int currentIndex, int previousIndex) {
+    if (currentIndex &amp;gt;= nums.size()) {
+        return 0;
+    }
+    int c1 = 0;
+
+    //大于先前元素，包含在内
+    if (previousIndex == -1 || nums[currentIndex] &amp;gt; nums[previousIndex]) {
+        c1 = 1 + LISLengthRecursive(nums, currentIndex + 1, currentIndex);
+    }
+
+    //不包含
+    int c2 = LISLengthRecursive(nums, currentIndex + 1, previousIndex);
+
+    return max(c1, c2);
+}
+
+int LIS(vector&amp;lt;int&amp;gt; nums) {
+    return LISLengthRecursive(nums, 0, -1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down-1&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LISLengthRecursive2(vector&amp;lt;int&amp;gt; &amp;amp;nums, int currentIndex, int previousIndex, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (currentIndex &amp;gt;= nums.size()) {
+        return 0;
+    }
+    //previousIndex的取值范围为[-1,n-1]转变为[0,n]
+    if (dp[currentIndex][previousIndex + 1] == -1) {
+        int c1 = 0;
+
+        //大于先前元素，包含在内
+        if (previousIndex == -1 || nums[currentIndex] &amp;gt; nums[previousIndex]) {
+            c1 = 1 + LISLengthRecursive2(nums, currentIndex + 1, currentIndex, dp);
+        }
+        //不包含
+        int c2 = LISLengthRecursive2(nums, currentIndex + 1, previousIndex, dp);
+
+        dp[currentIndex][previousIndex + 1] = max(c1, c2);
+    }
+    return dp[currentIndex][previousIndex + 1];
+}
+
+int LIS2(vector&amp;lt;int&amp;gt; nums) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(nums.size(), vector&amp;lt;int&amp;gt;(nums.size() + 1, -1));
+    return LISLengthRecursive2(nums, 0, -1, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-3&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LIS3(vector&amp;lt;int&amp;gt; nums) {
+    vector&amp;lt;int&amp;gt; dp(nums.size());
+    dp[0] = 1;
+    int maxLength = 1;
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        dp[i] = 1;
+        for (int j = 0; j &amp;lt; i; j++) {
+            if (nums[i] &amp;gt; nums[j] &amp;amp;&amp;amp; dp[i] &amp;lt;= dp[j]) {
+                dp[i] = dp[j] + 1;
+                maxLength = max(maxLength, dp[i]);
+            }
+        }
+    }
+    return maxLength;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-6.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./4-7.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;5-max-sum-increasing-subsequence&#34;&gt;5. max sum increasing subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求 和最大的递增子序列&lt;/p&gt;
+
+&lt;p&gt;不同于题4&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 1, 2, 6, 10, 1, 12]
+
+output:	32
+    
+explanation:sum[4, 6, 10, 12]=32
+    LIS：sum[1,2,6,10,12]=31,两者和不同
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[-4, 10, 3, 7, 15]
+
+output:	25
+    
+explanation:sum[10, 15]=sum[3,7,5]=25
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-3&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int maxSumISRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int currentIndex, int previousIndex, int sum) {
+    if (currentIndex &amp;gt;= nums.size()) {
+        return sum;
+    }
+    int s1 = sum;
+
+    if (previousIndex == -1 || nums[currentIndex] &amp;gt; nums[previousIndex]) {
+        s1 = maxSumISRecursive(nums, currentIndex + 1, currentIndex, sum + nums[currentIndex]);
+    }
+
+    int s2 = maxSumISRecursive(nums, currentIndex + 1, previousIndex, sum);
+
+    return max(s1, s2);
+}
+
+int maxSumIS(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    return maxSumISRecursive(nums, 0, -1, 0);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down-2&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;三维表或哈希表&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;bottom-up-4&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./5-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;
+int maxSumIS2(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    vector&amp;lt;int&amp;gt; dp(nums.size());
+    dp[0] = nums[0];
+
+    int maxSum = nums[0];
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        dp[i] = nums[i];
+        for (int j = 0; j &amp;lt; i; j++) {
+            if (nums[i] &amp;gt; nums[j] &amp;amp;&amp;amp; dp[i] &amp;lt; nums[j] + dp[j]) {
+                dp[i] = dp[j] + nums[i];
+                maxSum = max(maxSum, dp[i]);
+            }
+        }
+    }
+    return maxSum;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./5-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./5-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./5-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./5-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;6-shortest-common-super-sequence&#34;&gt;6. shortest common super-sequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定字符串S1,S2,求最短的公共超级序列的长度，使得S1和S2都是其子序列&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;abcf&amp;quot; ,s2=&amp;quot;bdcf&amp;quot;
+    
+output:	5
+    
+explanation: &amp;quot;abdcf&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s1=&amp;quot;dynamic&amp;quot;, s2=&amp;quot;programming&amp;quot;
+    
+output: 15
+    
+explanation: &amp;quot;dynprogramming&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-4&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int SCSLengthRecursive(const string &amp;amp;s1, const string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex) {
+    if (s1CurrentIndex &amp;gt;= s1.length()) {
+        return s2.length() - s2CurrentIndex;
+    }
+    if (s2CurrentIndex &amp;gt;= s2.length()) {
+        return s1.length() - s1CurrentIndex;
+    }
+
+    if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+        return 1 + SCSLengthRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+
+    }
+    int length1 = 1 + SCSLengthRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex);
+    int length2 = 1 + SCSLengthRecursive(s1, s2, s1CurrentIndex, s2CurrentIndex + 1);
+
+    return min(length1, length2);
+}
+
+int SCSLength(const string &amp;amp;s1, const string &amp;amp;s2) {
+    return SCSLengthRecursive(s1, s2, 0, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^(M+N)&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N+M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down-3&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int SCSLengthRecursive2(const string &amp;amp;s1, const string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex,
+                        vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (s1CurrentIndex &amp;gt;= s1.length()) {
+        return s2.length() - s2CurrentIndex;
+    }
+    if (s2CurrentIndex &amp;gt;= s2.length()) {
+        return s1.length() - s1CurrentIndex;
+    }
+
+    if (dp[s1CurrentIndex][s2CurrentIndex] == -1) {
+        if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+            dp[s1CurrentIndex][s2CurrentIndex] = 1 + SCSLengthRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+
+        }
+        int length1 = 1 + SCSLengthRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex);
+        int length2 = 1 + SCSLengthRecursive(s1, s2, s1CurrentIndex, s2CurrentIndex + 1);
+
+        dp[s1CurrentIndex][s2CurrentIndex] = min(length1, length2);
+    }
+    return dp[s1CurrentIndex][s2CurrentIndex];
+}
+
+int SCSLength2(const string &amp;amp;s1, const string &amp;amp;s2) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s1.length(), vector&amp;lt;int&amp;gt;(s2.length(), -1));
+    return SCSLengthRecursive2(s1, s2, 0, 0, dp);
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-5&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int SCSLength3(const string &amp;amp;s1, const string &amp;amp;s2) {
+    //长度
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s1.length() + 1, vector&amp;lt;int&amp;gt;(s2.length() + 1));
+
+    for (int i = 0; i &amp;lt;= s1.length(); i++) {
+        dp[i][0] = i;
+    }
+
+    for (int j = 1; j &amp;lt;= s2.length(); j++) {
+        dp[0][j] = j;
+    }
+
+    for (int i = 1; i &amp;lt;= s1.length(); i++) {
+        for (int j = 1; j &amp;lt;= s2.length(); j++) {
+            //长度为i，索引为i-1
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = 1 + dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = min(1 + dp[i - 1][j], 1 + dp[i][j - 1]);
+            }
+        }
+    }
+    return dp[s1.length()][s2.length()];
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-6.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./6-7.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;7-minimum-deletions-to-make-a-sequence-sorted&#34;&gt;7. minimum deletions to make a sequence sorted&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定数字序列，删除一些数，使得剩下的增序，求最小的删除数&lt;/p&gt;
+
+&lt;p&gt;同题4&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[4, 2, 3, 6, 10, 1, 12]
+
+output: 2
+    
+explanation: delete [4,1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[-4, 10, 3, 7, 15]
+
+output: 1
+    
+explanation: delete [10]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[3, 2, 1, 0]
+
+output: 3
+    
+explanation: 只剩下一个即可
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-5&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LIS(vector&amp;lt;int&amp;gt; nums) {
+    vector&amp;lt;int&amp;gt; dp(nums.size());
+    dp[0] = 1;
+    int maxLength = 1;
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        dp[i] = 1;
+        for (int j = 0; j &amp;lt; i; j++) {
+            if (nums[i] &amp;gt; nums[j] &amp;amp;&amp;amp; dp[i] &amp;lt;= dp[j]) {
+                dp[i] = dp[j] + 1;
+                maxLength = max(maxLength, dp[i]);
+            }
+        }
+    }
+    return maxLength;
+}
+
+int minDelete(vector&amp;lt;int&amp;gt; &amp;amp;nums){
+    return nums.size() - LIS(nums);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;8-longest-repeating-subsequence&#34;&gt;8. longest repeating subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长重复子序列，此子序列出现超过两次，索引位置不重复&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;tomorrow&amp;quot;
+
+output:	2
+    
+explanation: or,or
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	&amp;quot;aabdbcec&amp;quot;
+    
+output:	3
+ 
+explanation: abc, abc
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: &amp;quot;fmff&amp;quot;
+    
+output: 2
+    
+explanation: ff,ff,索引不重复
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-6&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-C++&#34;&gt;int LRSRecursive(const string &amp;amp;s, int i1, int i2) {
+    if (i1 &amp;gt;= s.length() || i2 &amp;gt;= s.length()) {
+        return 0;
+    }
+    if (i1 != i2 &amp;amp;&amp;amp; s[i1] == s[i2]) {
+        return 1 + LRSRecursive(s, i1 + 1, i2 + 1);
+    }
+
+    int c1 = LRSRecursive(s, i1 + 1, i2);
+    int c2 = LRSRecursive(s, i1, i2 + 1);
+
+    return max(c1, c2);
+}
+
+int LRSLength(const string &amp;amp;s) {
+    return LRSRecursive(s, 0, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down-4&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LRSRecursive2(const string &amp;amp;s, int i1, int i2, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (i1 &amp;gt;= s.length() || i2 &amp;gt;= s.length()) {
+        return 0;
+    }
+    if (dp[i1][i2] == -1) {
+        if (i1 != i2 &amp;amp;&amp;amp; s[i1] == s[i2]) {
+            dp[i1][i2] = 1 + LRSRecursive2(s, i1 + 1, i2 + 1, dp);
+        } else {
+            int c1 = LRSRecursive2(s, i1 + 1, i2, dp);
+            int c2 = LRSRecursive2(s, i1, i2 + 1, dp);
+            dp[i1][i2] = max(c1, c2);
+        }
+    }
+
+    return dp[i1][i2];
+
+}
+
+int LRSLength2(const string &amp;amp;s) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s.length(), vector&amp;lt;int&amp;gt;(s.length(), -1));
+    return LRSRecursive2(s, 0, 0, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-6&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int LRSLength3(const string &amp;amp;s) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s.length() + 1, vector&amp;lt;int&amp;gt;(s.length() + 1));
+
+    for (int i = 0; i &amp;lt;= s.length(); i++) {
+        dp[i][0] = 0;
+        dp[0][i] = 0;
+    }
+    int maxLen = 0;
+    for (int i1 = 1; i1 &amp;lt;= s.length(); i1++) {
+        for (int i2 = 1; i2 &amp;lt;= s.length(); i2++) {
+            //长度为i，索引为i-1
+            if (i1 != i2 &amp;amp;&amp;amp; s[i1 - 1] == s[i2 - 1]) {
+                dp[i1][i2] = 1 + dp[i1 - 1][i2 - 1];
+            } else {
+                dp[i1][i2] = max(dp[i1 - 1][i2], dp[i1][i2 - 1]);
+            }
+            //没必要maxlen，就是右下角
+            maxLen = max(maxLen, dp[i1][i2]);
+        }
+    }
+    //return  dp[i1][i2] 
+    return maxLen;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;9-subsequence-pattern-matching&#34;&gt;9. subsequence pattern matching&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定字符串S1，模式串S2，求S1中出现S2(作为序列)的次数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	s=&amp;quot;baxmx&amp;quot; p=&amp;quot;ax&amp;quot;
+    
+output:	2
+    
+explanation: bAXmx, bAxmX
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: s=&amp;quot;tomorrow&amp;quot; ,p=&amp;quot;tor&amp;quot;
+    
+output:4
+    
+explanation: TOmoRrow ,TomORrow,TOmorRow ,TomOrRow,
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-7&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countPatternMatchRecursive(const string &amp;amp;s, const string &amp;amp;p, int sCurrentIndex, int pCurrentIndex) {
+    //模式串比完
+    if (pCurrentIndex &amp;gt;= p.length()) {
+        return 1;
+    }
+
+    if (sCurrentIndex &amp;gt;= s.length()) {
+        return 0;
+    }
+
+    int c1 = 0;
+    if (s[sCurrentIndex] == p[pCurrentIndex]) {
+        c1 = countPatternMatchRecursive(s, p, sCurrentIndex + 1, pCurrentIndex + 1);
+    }
+    //只有s索引增加
+    int c2 = countPatternMatchRecursive(s, p, sCurrentIndex + 1, pCurrentIndex);
+
+    return c1 + c2;
+}
+
+int patternMatch(const string &amp;amp;s, const string &amp;amp;p) {
+    return countPatternMatchRecursive(s, p, 0, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; ) ,N为S的长度&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down-5&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;
+int countPatternMatchRecursive2(const string &amp;amp;s, const string &amp;amp;p, int sCurrentIndex, int pCurrentIndex,
+                                vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    //模式串比完
+    if (pCurrentIndex &amp;gt;= p.length()) {
+        return 1;
+    }
+
+    if (sCurrentIndex &amp;gt;= s.length()) {
+        return 0;
+    }
+
+
+    if (dp[sCurrentIndex][pCurrentIndex] == -1) {
+        int c1 = 0;
+        if (s[sCurrentIndex] == p[pCurrentIndex]) {
+            c1 = countPatternMatchRecursive2(s, p, sCurrentIndex + 1, pCurrentIndex + 1, dp);
+        }
+        //只有s索引增加
+        int c2 = countPatternMatchRecursive2(s, p, sCurrentIndex + 1, pCurrentIndex, dp);
+
+        dp[sCurrentIndex][pCurrentIndex] = c1 + c2;
+    }
+    return dp[sCurrentIndex][pCurrentIndex];
+}
+
+int patternMatch2(const string &amp;amp;s, const string &amp;amp;p) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; dp(s.length(), vector&amp;lt;int&amp;gt;(p.length(), -1));
+    return countPatternMatchRecursive2(s, p, 0, 0, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;bottom-up-7&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./9-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int patternMatch3(const string &amp;amp;s, const string &amp;amp;p) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; dp(s.length() + 1, vector&amp;lt;int&amp;gt;(p.length() + 1));
+
+    //模式串为0，有一个
+    for (int i = 0; i &amp;lt;= s.length(); i++) {
+        dp[i][0] = 1;
+    }
+    //第一行为0
+
+    for (int i = 1; i &amp;lt;= s.length(); i++) {
+        for (int j = 1; j &amp;lt;= p.length(); j++) {
+
+            if (s[i - 1] == p[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+            } else {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+    return dp[s.length()][p.length()];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;M * N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;10-longest-bitonic-subsequence&#34;&gt;10. longest bitonic subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长的双调子序列的长度&lt;/p&gt;
+
+&lt;p&gt;双调：先单调递增，再单调递减&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [4, 2, 3, 6, 10, 1, 12]
+
+output:	5
+    
+explanation: [2, 3, 6, 10, 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [4, 2, 5, 9, 7, 6, 10, 3, 1]
+
+output:	7
+    
+explanation: [4, 5, 9, 7, 6, 3, 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-8&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;//从currentIndex到end最长递减序列
+int LISLengthRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int currentIndex, int previousIndex) {
+    if (currentIndex &amp;gt;= nums.size()) {
+        return 0;
+    }
+    int c1 = 0;
+
+    //大于先前元素，包含在内
+    if (previousIndex == -1 || nums[currentIndex] &amp;lt; nums[previousIndex]) {
+        c1 = 1 + LISLengthRecursive(nums, currentIndex + 1, currentIndex);
+    }
+
+    //不包含
+    int c2 = LISLengthRecursive(nums, currentIndex + 1, previousIndex);
+
+    return max(c1, c2);
+}
+
+//从currentIndex到start最长递减序列
+int LISLengthRecursiveReverse(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int currentIndex, int previousIndex) {
+    if (currentIndex &amp;lt; 0) {
+        return 0;
+    }
+    int c1 = 0;
+
+    //大于先前元素，包含在内
+    if (previousIndex == -1 || nums[currentIndex] &amp;lt; nums[previousIndex]) {
+        c1 = 1 + LISLengthRecursiveReverse(nums, currentIndex - 1, currentIndex);
+    }
+
+    //不包含
+    int c2 = LISLengthRecursiveReverse(nums, currentIndex - 1, previousIndex);
+
+    return max(c1, c2);
+}
+
+int LBSLength(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    int maxLen = 0;
+
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        int length1 = LISLengthRecursive(nums, i, -1);
+        int length2 = LISLengthRecursiveReverse(nums, i, -1);
+        maxLen = max(maxLen, length1 + length2 - 1);
+    }
+
+    return maxLen;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-8&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;有误，待看
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N^2&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;11-longest-alternating-subsequence&#34;&gt;11. longest alternating subsequence&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;求最长交替子序列的长度&lt;/p&gt;
+
+&lt;p&gt;模式：a&amp;gt; b &lt;c  ,a&lt; b &gt;c&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 2 ,3 , 4]
+
+output: 2
+    
+explanation: [1,2] [3,4],[1,3],[1,4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [3, 2, 1, 4]
+
+output: 3
+    
+explanation: [3, 2, 4] [2,1,4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 3, 2, 4]
+
+output: 4
+    
+explanation: [1, 3, 2, 4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;待看&#34;&gt;待看&lt;/h3&gt;
+
+&lt;h2 id=&#34;12-edit-distance&#34;&gt;12. edit distance&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定字符串S1,S2,通过删除,插入,替换字符使得S1变成S2，求最小的操作数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: s1=&amp;quot;bat&amp;quot;,s2=&amp;quot;but&amp;quot;
+    
+output: 1
+    
+explanation : replace a-&amp;gt;u
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: s1=&amp;quot;abdca&amp;quot;,s2=&amp;quot;cbda&amp;quot;
+    
+output: 2
+    
+explanation : replace a-&amp;gt;c,delete second c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: s1=&amp;quot;passpot&amp;quot;,s2=&amp;quot;ppsspqrt&amp;quot;
+    
+output: 3
+    
+explanation : replace a-&amp;gt;p,o-&amp;gt;q,insert r
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;brute-force-9&#34;&gt;brute-force&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int minOperationRecursive(const string &amp;amp;s1, const string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex) {
+    if (s1CurrentIndex &amp;gt;= s1.length()) {
+        return s2.length() - s2CurrentIndex;
+    }
+    if (s2CurrentIndex &amp;gt;= s2.length()) {
+        return s1.length() - s1CurrentIndex;
+    }
+
+    if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+        return minOperationRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+
+    }
+
+    //分别为删除，插入，取代
+    int length1 = 1 + minOperationRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex);
+    int length2 = 1 + minOperationRecursive(s1, s2, s1CurrentIndex, s2CurrentIndex + 1);
+    int length3 = 1 + minOperationRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+    return min(length1, min(length2, length3));
+}
+
+int minOperation(const string &amp;amp;s1, const string &amp;amp;s2) {
+    return minOperationRecursive(s1, s2, 0, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;3^(N+M)&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N+M&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;top-down-6&#34;&gt;top-down&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;
+int minOperationRecursive2(const string &amp;amp;s1, const string &amp;amp;s2, int s1CurrentIndex, int s2CurrentIndex,
+                           vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp) {
+    if (s1CurrentIndex &amp;gt;= s1.length()) {
+        return s2.length() - s2CurrentIndex;
+    }
+    if (s2CurrentIndex &amp;gt;= s2.length()) {
+        return s1.length() - s1CurrentIndex;
+    }
+
+    if (dp[s1CurrentIndex][s2CurrentIndex] == -1) {
+        if (s1[s1CurrentIndex] == s2[s2CurrentIndex]) {
+            dp[s1CurrentIndex][s2CurrentIndex] = minOperationRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+
+        } else {
+            int length1 = 1 + minOperationRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex);
+            int length2 = 1 + minOperationRecursive(s1, s2, s1CurrentIndex, s2CurrentIndex + 1);
+            int length3 = 1 + minOperationRecursive(s1, s2, s1CurrentIndex + 1, s2CurrentIndex + 1);
+            dp[s1CurrentIndex][s2CurrentIndex] = min(length1, min(length2, length3));
+        }
+
+    }
+    return dp[s1CurrentIndex][s2CurrentIndex];
+}
+
+int minOperation(const string &amp;amp;s1, const string &amp;amp;s2) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s1.length(), vector&amp;lt;int&amp;gt;(s2.length(), -1));
+    return minOperationRecursive2(s1, s2, 0, 0, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt; )&lt;/p&gt;
+
+&lt;h3 id=&#34;bottom-up-9&#34;&gt;bottom-up&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./12-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int minOperation(const string &amp;amp;s1, const string &amp;amp;s2) {
+    //长度
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(s1.length() + 1, vector&amp;lt;int&amp;gt;(s2.length() + 1));
+
+    for (int i = 0; i &amp;lt;= s1.length(); i++) {
+        dp[i][0] = i;
+    }
+
+    for (int j = 1; j &amp;lt;= s2.length(); j++) {
+        dp[0][j] = j;
+    }
+
+    for (int i = 1; i &amp;lt;= s1.length(); i++) {
+        for (int j = 1; j &amp;lt;= s2.length(); j++) {
+            //长度为i，索引为i-1
+            if (s1[i - 1] == s2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = min(1 + dp[i - 1][j], min(1 + dp[i][j - 1], 1 + dp[i - 1][j - 1]));
+            }
+        }
+    }
+    return dp[s1.length()][s2.length()];
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * M&lt;/em&gt; )&lt;/p&gt;
+
+&lt;h2 id=&#34;13-strings-interleaving&#34;&gt;13. strings interleaving&lt;/h2&gt;
+
+&lt;h3 id=&#34;待看待看&#34;&gt;待看待看&lt;/h3&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

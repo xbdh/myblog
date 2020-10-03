@@ -1,0 +1,1003 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>0-1 Knapsack | 细胞的核</title>
+    <link>/tags/0-1-knapsack/</link>
+      <atom:link href="/tags/0-1-knapsack/index.xml" rel="self" type="application/rss+xml" />
+    <description>0-1 Knapsack</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jul 2020 16:33:38 +0800</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>0-1 Knapsack</title>
+      <link>/tags/0-1-knapsack/</link>
+    </image>
+    
+    <item>
+      <title>Dynamic Programming-2 0-1 Knapsack</title>
+      <link>/code/dynamic-progamming/2-0-1-knapsack/</link>
+      <pubDate>Wed, 01 Jul 2020 16:33:38 +0800</pubDate>
+      <guid>/code/dynamic-progamming/2-0-1-knapsack/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-0-1-knapsack&#34;&gt;1、0-1 Knapsack&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定N个物品的价值和重量，一个容量为C的背包。每个物品只能挑选一次且总容量不能超过C，求最大价值&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	weights=[2, 3, 1, 4]
+    	profits=[4, 5, 3, 7]
+    	C=5
+    
+output:	10  
+  
+explanations:	1+4=5,3+7=10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;暴力法&#34;&gt;暴力法&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int knapsackRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity, int currentIndex) {
+    if (capacity &amp;lt;= 0 || currentIndex &amp;gt;= weight.size() || weight.size() != profits.size()) {
+        return 0;
+    }
+
+    int profit1 = 0;
+
+    if (weight[currentIndex] &amp;lt;= capacity) {
+        profit1 = profits[currentIndex] +
+                  knapsackRecursive(weight, profits, capacity - weight[currentIndex], currentIndex + 1);
+    }
+
+    int profit2 = knapsackRecursive(weight, profits, capacity, currentIndex + 1);
+
+    return max(profit1, profit2);
+}
+
+int knapsack(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity) {
+    return knapsackRecursive(weight, profits, capacity, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自顶向下&#34;&gt;自顶向下&lt;/h3&gt;
+
+&lt;p&gt;有重复&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int knapsackRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp,
+                       int currentIndex) {
+    if (capacity &amp;lt;= 0 || currentIndex &amp;gt;= weight.size()) {
+        return 0;
+    }
+
+    if (dp[currentIndex][capacity] != -1) {
+        return dp[currentIndex][capacity];
+    }
+
+    int profit1 = 0;
+
+    if (weight[currentIndex] &amp;lt;= capacity) {
+        profit1 = profits[currentIndex] +
+                  knapsackRecursive(weight, profits, capacity - weight[currentIndex], dp, currentIndex + 1);
+    }
+
+    int profit2 = knapsackRecursive(weight, profits, capacity, dp, currentIndex + 1);
+    dp[currentIndex][capacity] = max(profit1, profit2);
+
+    return dp[currentIndex][capacity];
+}
+
+int knapsack(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity) {
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(weight.size(), vector&amp;lt;int&amp;gt;(capacity + 1, -1));
+    return knapsackRecursive(weight, profits, capacity, dp, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自底向上&#34;&gt;自底向上&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-6.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-7.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-8.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-9.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-10.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-11.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-12.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-13.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-14.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-15.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int knapsack3(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity) {
+    if (capacity &amp;lt;= 0 || profits.empty() || profits.size() != weight.size()) {
+        return 0;
+    }
+
+    int n = profits.size();
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(n, vector&amp;lt;int&amp;gt;(capacity + 1));
+
+    for (int i = 0; i &amp;lt; n; i++) {
+        dp[i][0] = 0;
+    }
+
+    //如果第一个物品小于物品重量，放置
+    for (int j = 0; j &amp;lt;= capacity; j++) {
+        if (weight[0] &amp;lt;= j) {
+            dp[0][j] = profits[0];
+        }
+    }
+
+    //之后的物品
+    for (int i = 1; i &amp;lt; n; i++) {
+        for (int j = 1; j &amp;lt;= capacity; j++) {
+            int profit1 = 0, profit2 = 0;
+
+            if (weight[i] &amp;lt;= j) {
+                profit1 = profits[i] + dp[i - 1][j - weight[i]];
+            }
+            profit2 = dp[i - 1][j];
+            dp[i][j] = max(profit1, profit2);
+        }
+    }
+	
+    return dp[n - 1][capacity];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;输出选择的物品：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;当某个物品不选择时，dp的值来源于正上方，且相等。若不相等，则此物品被选中。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-16.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;void printSelectElements(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    int n = weight.size();
+    int totalProfit = dp[n - 1][capacity];
+    cout &amp;lt;&amp;lt; &amp;quot;--------&amp;quot;;
+    //不能等于0，会越界
+    for (int i = n - 1; i &amp;gt; 0; i--) {
+        //最值与正上方比较,选中
+        if (totalProfit != dp[i - 1][capacity]) {
+
+            cout &amp;lt;&amp;lt; weight[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+            cout &amp;lt;&amp;lt; &amp;quot;index=&amp;quot; &amp;lt;&amp;lt; i &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+            capacity -= weight[i];
+            totalProfit -= profits[i];
+        }
+    }
+    //判断第一个元素是否被选中
+    if (totalProfit != 0) {
+        cout &amp;lt;&amp;lt; weight[0];
+        cout &amp;lt;&amp;lt; &amp;quot;index=&amp;quot; &amp;lt;&amp;lt; 0 &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+    }
+    cout &amp;lt;&amp;lt; &amp;quot;--------&amp;quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;优化一：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int knapsack4(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity) {
+    if (capacity &amp;lt;= 0 || profits.empty() || profits.size() != weight.size()) {
+        return 0;
+    }
+
+    int n = profits.size();
+    //当前dp的值，只与上一行有关，两行就行，覆盖即可，
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(2, vector&amp;lt;int&amp;gt;(capacity + 1));
+
+
+    //如果第一个物品小于物品重量，放置
+    for (int j = 0; j &amp;lt;= capacity; j++) {
+        if (weight[0] &amp;lt;= j) {
+            dp[0][j] = dp[1][j] = profits[0];
+        }
+    }
+
+    //之后的物品
+    for (int i = 1; i &amp;lt; n; i++) {
+        for (int j = 1; j &amp;lt;= capacity; j++) {
+            int profit1 = 0, profit2 = 0;
+
+            if (weight[i] &amp;lt;= j) {
+                profit1 = profits[i] + dp[(i - 1) % 2][j - weight[i]];
+            }
+            profit2 = dp[(i - 1) % 2][j];
+            dp[i % 2][j] = max(profit1, profit2);
+        }
+    }
+    return dp[(n - 1) % 2][capacity];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;优化二：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int knapsack5(const vector&amp;lt;int&amp;gt; &amp;amp;weight, const vector&amp;lt;int&amp;gt; &amp;amp;profits, int capacity) {
+    if (capacity &amp;lt;= 0 || profits.empty() || profits.size() != weight.size()) {
+        return 0;
+    }
+
+    int n = profits.size();
+    vector&amp;lt;int&amp;gt; dp(capacity + 1);
+
+
+    //如果第一个物品小于物品重量，放置
+    for (int j = 0; j &amp;lt;= capacity; j++) {
+        if (weight[0] &amp;lt;= j) {
+            dp[j] = profits[0];
+        }
+    }
+
+    //之后的物品
+    for (int i = 1; i &amp;lt; n; i++) {
+        //顺序改变防止覆盖
+        for (int j = capacity; j &amp;gt;= 0; j--) {
+            int profit1 = 0, profit2 = 0;
+
+            if (weight[i] &amp;lt;= j) {
+                profit1 = profits[i] + dp[j - weight[i]];
+            }
+            profit2 = dp[j];
+            dp[j] = max(profit1, profit2);
+        }
+    }
+    return dp[capacity];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;C&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;2-equal-subsets-sum-partition&#34;&gt;2、equal subsets sum partition&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定正整数数组，是否存在一种分法将数组分为不相交的两部分，使得他们的和相等&lt;/p&gt;
+
+&lt;p&gt;即求是否存在子数组使得其和为数组和的一半&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;暴力法-1&#34;&gt;暴力法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool partitionRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum, int currentIndex) {
+    if (sum == 0) {
+        return true;
+    }
+
+    if (currentIndex &amp;gt;= nums.size()) {
+        return false;
+    }
+    if (nums[currentIndex] &amp;lt;= sum) {
+        if (partitionRecursive(nums, sum - nums[currentIndex], currentIndex + 1)) {
+            return true;
+        }
+    }
+    return partitionRecursive(nums, sum, currentIndex + 1);
+}
+
+bool equalSubset(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    if (nums.empty()) {
+        return false;
+    }
+    
+    int sum = 0;
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        sum += nums[i];
+    }
+
+    if (sum % 2 != 0) {
+        return false;
+    }
+
+    return partitionRecursive(nums, sum / 2, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(2^&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自顶向下-1&#34;&gt;自顶向下&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool partitionRecursive2(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum, int currentIndex, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (sum == 0) {
+        return true;
+    }
+
+    if (currentIndex &amp;gt;= nums.size()) {
+        return false;
+    }
+
+    if (dp[currentIndex][sum] == -1) {
+        if (nums[currentIndex] &amp;lt;= sum) {
+            if (partitionRecursive(nums, sum - nums[currentIndex], currentIndex + 1)) {
+                dp[currentIndex][sum] = 1;
+                return true;
+            }
+        }
+        dp[currentIndex][sum] = partitionRecursive(nums, sum, currentIndex + 1) ? 1 : 0;
+    }
+
+    return dp[currentIndex][sum] == 1 ? true : false;
+}
+
+bool equalSubset2(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    if (nums.empty()) {
+        return false;
+    }
+
+    int sum = 0;
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        sum += nums[i];
+    }
+
+    if (sum % 2 != 0) {
+        return false;
+    }
+
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(nums.size(), vector&amp;lt;int&amp;gt;(sum / 2 + 1, -1));
+    return partitionRecursive2(nums, sum / 2, 0, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;) ，S为数组和&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自底向上-1&#34;&gt;自底向上&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool equalSubset3(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    if (nums.empty()) {
+        return false;
+    }
+
+    int sum = 0;
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        sum += nums[i];
+    }
+
+    if (sum % 2 != 0) {
+        return false;
+    }
+    int halfSum = sum / 2;
+
+    vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; dp(nums.size(), vector&amp;lt;bool&amp;gt;(halfSum + 1));
+
+    //第一列
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        dp[i][0] = true;
+    }
+
+    //第一行：第二个到最后一个
+    //此行非常重要，值不一定相同，视情况而定
+    //当处理nums[0]时，如果其值等于s,表明数组其余的元素和也是s
+    for (int s = 1; s &amp;lt;= halfSum; s++) {
+        //dp[0][s]= (nums[0]==s? true: false);
+        if (nums[0] == s) {
+            dp[0][s] = true;
+        } else {
+            dp[0][s] = false;
+        }
+
+    }
+
+    for (int i = 1; i &amp;lt; nums.size(); i++) {
+        for (int s = 1; s &amp;lt;= halfSum; s++) {
+            //选中nums[i]
+            if(dp[i-1][s]) {
+                //跳过nums[i]
+                dp[i][s] = dp[i - 1][s];
+            
+            }else if (nums[i] &amp;lt;= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+    return dp[nums.size() - 1][halfSum];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;) ，S为数组和&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;拓展：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;输出和相等的两个分组&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; printPartition(const vector&amp;lt;int&amp;gt; &amp;amp;nums, const vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; &amp;amp;dp) {
+    int row = nums.size();
+    int halfSum = dp[0].size() - 1;
+    //能否分成和相等的两部分
+    bool canPartition = dp[row - 1][halfSum];
+
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result;
+    vector&amp;lt;int&amp;gt; part1;
+    vector&amp;lt;int&amp;gt; part2;
+
+
+    for (int i = row - 1; i &amp;gt; 0; i--) {
+        //选中，上一行和此行比较
+        if (dp[i - 1][halfSum] != canPartition) {
+            part1.push_back(nums[i]);
+
+            //跳到选中之前的一步
+            halfSum -= nums[i];
+            //既然两行的值不一样，下一步比较时，canPartition取反
+            canPartition = dp[i - 1][halfSum];
+        } else {
+            part2.push_back(nums[i]);
+            //canPartition = dp[i][halfSum];
+        }
+
+    }
+
+    //处理第一行，halfSum==0时，未选中。
+    if (halfSum != 0) {
+        part1.push_back(nums[0]);
+    } else {
+        part2.push_back(nums[0]);
+    }
+    result.push_back(part1);
+    result.push_back(part2);
+    return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;3-subset-sum&#34;&gt;3、subset sum&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定正整数数组和S值，判断是否存在子数组，使得其和等于S&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 2, 3, 7], s=6
+    
+output:	true
+    
+explanation:sum(1, 2, 3)=6
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 2, 7, 1, 5], s=10
+    
+output:	true
+    
+explanation:sum(1, 2, 7)=10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input: [1, 3, 4, 8], s=6
+    
+output:	false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;暴力法-2&#34;&gt;暴力法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool subsetSumRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum, int currentIndex) {
+    if (sum == 0) {
+        return true;
+    }
+    if (currentIndex &amp;gt;= nums.size()) {
+        return false;
+    }
+    
+    if (nums[currentIndex] &amp;lt;= sum) {
+        //一定要加if判断，此分支(及分支的分支···）为假，不代表下一分支假
+        //为假时跳到下一步
+        if (subsetSumRecursive(nums, sum - nums[currentIndex], currentIndex + 1)) {
+            return true;
+        }
+    }
+    //上一分支为假
+    return subsetSumRecursive(nums, sum, currentIndex + 1);
+}
+
+bool subsetSum(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    if (sum == 0) {
+        return true;
+    }
+    if (nums.empty()) {
+        return false;
+    }
+    return subsetSumRecursive(nums, sum, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(2^&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自顶向下-2&#34;&gt;自顶向下&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool subsetSumRecursive2(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum, int currentIndex, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (sum == 0) {
+        return true;
+    }
+
+    if (currentIndex &amp;gt;= nums.size()) {
+        return false;
+    }
+
+    if (dp[currentIndex][sum] == -1) {
+
+        if (nums[currentIndex] &amp;lt;= sum) {
+            if (subsetSumRecursive2(nums, sum - nums[currentIndex], currentIndex + 1, dp)) {
+                dp[currentIndex][sum] = 1;
+                return true;
+            }
+        }
+        dp[currentIndex][sum] = subsetSumRecursive2(nums, sum, currentIndex + 1, dp) ? 1 : 0;
+
+    }
+
+    return dp[currentIndex][sum] == 1 ? true : false;
+}
+
+bool subsetSum2(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    if (sum == 0) {
+        return true;
+    }
+    if (nums.empty()) {
+        return false;
+    }
+    int n = nums.size();
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(n, vector&amp;lt;int&amp;gt;(sum + 1, -1));
+    return subsetSumRecursive2(nums, sum, 0, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自底向上-2&#34;&gt;自底向上&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-17.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-18.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-19.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-20.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-21.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;bool subsetSum3(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    if (sum == 0) {
+        return true;
+    }
+    if (nums.empty()) {
+        return false;
+    }
+    int n = nums.size();
+    vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; dp(n, vector&amp;lt;bool&amp;gt;(sum + 1));
+
+    for (int i = 0; i &amp;lt; n; i++) {
+        dp[i][0] = true;
+    }
+    for (int s = 1; s &amp;lt;= sum; s++) {
+        if (nums[0] == s) {
+            dp[0][s] = true;
+        } else {
+            dp[0][s] = false;
+        }
+    }
+
+    for (int i = 1; i &amp;lt; n; i++) {
+        for (int s = 1; s &amp;lt;= sum; s++) {
+          	//选中nums[i]
+            if(dp[i-1][s]) {
+                //跳过nums[i]
+                dp[i][s] = dp[i - 1][s];
+                
+            }else if (nums[i] &amp;lt;= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+    return dp[n - 1][sum];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;4-minimum-subset-sum-different&#34;&gt;4、minimum subset sum different&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定正整数组成的数组，将其分为不重合的两个子数组，使得子数组的和 的差的绝对值最小，输出最小的差&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 2, 3, 9]
+
+output:	3
+    
+explanation：|sum(1,2,3) - sum(9)| = 3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 2, 7, 1, 5]
+
+output:	0
+    
+explanation：|sum(1,2,5) - sum(7,1)| = 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1,  3, 100, 4]
+
+output:	92
+    
+explanation：|sum(1,3,4) - sum(100)| = 92
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;暴力法-3&#34;&gt;暴力法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int minSubsetSumDifferentRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum1, int sum2, int currentIndex) {
+    if (currentIndex == nums.size()) {
+        return abs(sum1 - sum2);
+    }
+    
+    int diff1 = minSubsetSumDifferentRecursive(nums, sum1 + nums[currentIndex], sum2, currentIndex + 1);
+    int diff2 = minSubsetSumDifferentRecursive(nums, sum1, sum2 + nums[currentIndex], currentIndex + 1);
+
+    return min(diff1, diff2);
+}
+
+
+int minSubsetSumDifferent(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    return minSubsetSumDifferentRecursive(nums, 0, 0, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自顶向下-3&#34;&gt;自顶向下&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int minSubsetSumDifferentRecursive2(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum1, int sum2,
+        int currentIndex,vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (currentIndex == nums.size()) {
+        return abs(sum1-sum2);
+    }
+    if(dp[currentIndex][sum1]==-1){
+        int diff1 = minSubsetSumDifferentRecursive(nums, sum1 + nums[currentIndex], sum2, currentIndex + 1);
+        int diff2 = minSubsetSumDifferentRecursive(nums, sum1, sum2 + nums[currentIndex], currentIndex + 1);
+
+        dp[currentIndex][sum1] = min(diff1,diff2);
+    }
+    
+    return dp[currentIndex][sum1];
+}
+
+int minSubsetSumDifferent2(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    int sum=0;
+    for(int i=0;i&amp;lt;nums.size();i++){
+        sum+=nums[i];
+    }
+    
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(nums.size(),vector&amp;lt;int&amp;gt;(sum+1,-1));
+    return minSubsetSumDifferentRecursive2(nums, 0, 0, 0,dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自底向上-3&#34;&gt;自底向上&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;子数组和等于Sum/2时，有最小值，如果不等于，求最接近sum/2的子数组。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-22.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-23.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-24.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-25.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-26.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-27.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int minSubsetSumDifferent3(const vector&amp;lt;int&amp;gt; &amp;amp;nums) {
+    int sum = 0;
+    for (int i = 0; i &amp;lt; nums.size(); i++) {
+        sum += nums[i];
+    }
+    int n = nums.size();
+    int halfSum = sum / 2;
+
+    vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; dp(n, vector&amp;lt;bool&amp;gt;(halfSum + 1));
+
+    for (int i = 0; i &amp;lt; n; i++) {
+        dp[i][0] = true;
+    }
+
+    for (int s = 1; s &amp;lt;= halfSum; s++) {
+        dp[0][s] = (nums[0] == s ? true : false);
+    }
+    for (int i = 1; i &amp;lt; n; i++) {
+        for (int s = 1; s &amp;lt;= halfSum; s++) {
+            if(dp[i-1][s]) {
+                //跳过nums[i]
+                dp[i][s] = dp[i - 1][s];
+
+            }else if (nums[i] &amp;lt;= s) {
+                dp[i][s] = dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+
+    int sum1 = 0;
+
+    //最后一行索引最大的值
+    for (int i = halfSum; i &amp;gt;= 0; i--) {
+        if (dp[n - 1][i] == true) {
+            sum1 = i;
+            break;
+        }
+    }
+    int sum2 = sum - sum1;
+    return abs(sum2 - sum1);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h2 id=&#34;5-count-of-subset-sum&#34;&gt;5、count of subset sum&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定正整数数组和S值，求满足子数组和等于S的子数组所有个数&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 1, 2, 3], S=4
+    
+output:	3
+    
+explanation:[1,1,2], [1,3], [1,3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 2, 7, 1 , 5], S=9
+    
+output:	3
+    
+explanation:[2,7], [1,7,1], [1,2,1,5]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;暴力法-4&#34;&gt;暴力法&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countSubsetRecursive(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum, int currentIndex) {
+    if (sum == 0) {
+        return 1;
+    }
+    if (currentIndex &amp;gt;= nums.size()) {
+        return 0;
+    }
+    int sum1 = 0;
+    if (nums[currentIndex] &amp;lt;= sum) {
+        sum1 = countSubsetRecursive(nums, sum - nums[currentIndex], currentIndex + 1);
+
+    }
+    int sum2 = countSubsetRecursive(nums, sum, currentIndex + 1);
+
+    return sum1 + sum2;
+}
+
+int countSubset(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    if (nums.empty()) {
+        return 0;
+    }
+
+    return countSubsetRecursive(nums, sum, 0);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;2^N&lt;/em&gt; )&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自顶向下-4&#34;&gt;自顶向下&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;
+int countSubsetRecursive2(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum, int currentIndex, vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; &amp;amp;dp) {
+    if (sum == 0) {
+        return 1;
+    }
+    if (currentIndex &amp;gt;= nums.size()) {
+        return 0;
+    }
+
+    if (dp[currentIndex][sum] == -1) {
+        int sum1 = 0;
+        if (nums[currentIndex] &amp;lt;= sum) {
+            sum1 = countSubsetRecursive(nums, sum - nums[currentIndex], currentIndex + 1);
+
+        }
+        int sum2 = countSubsetRecursive(nums, sum, currentIndex + 1);
+        dp[currentIndex][sum] = sum1 + sum2;
+    }
+
+    return dp[currentIndex][sum];
+}
+
+int countSubset2(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    if (nums.empty()) {
+        return 0;
+    }
+
+    int n = nums.size();
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(n, vector&amp;lt;int&amp;gt;(sum + 1, -1));
+
+    return countSubsetRecursive2(nums, sum, 0, dp);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;h3 id=&#34;自底向上-4&#34;&gt;自底向上&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countSubset3(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    if (nums.empty()) {
+        return 0;
+    }
+
+    int n = nums.size();
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(n, vector&amp;lt;int&amp;gt;(sum + 1, 0));
+
+
+    for (int i = 0; i &amp;lt; n; i++) {
+        dp[i][0] = 1;
+    }
+
+    for (int s = 1; s &amp;lt;= sum; s++) {
+        dp[0][s] = (nums[0] == s ? 1 : 0);
+    }
+    for (int i = 1; i &amp;lt; n; i++) {
+        for (int s = 1; s &amp;lt;= sum; s++) {
+            //未加入，顺序不能错
+            dp[i][s] = dp[i - 1][s];
+
+            //加入
+            if (nums[i] &amp;lt;= s) {
+                dp[i][s] = dp[i][s] + dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+    return dp[n - 1][sum];
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-3.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-4.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-5.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-6.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;./1-5-7.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;6-target-sum&#34;&gt;6、target sum&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;给定正整数数组和值S，数组每个数前缀&amp;rdquo;+&amp;ldquo;或&amp;rdquo;-&amp;ldquo;，使得所有数的和为S，求多少种方式&lt;/p&gt;
+
+&lt;p&gt;即求子数组a1，子数组a2，使得sum(a1) - sum(a2)=S&lt;/p&gt;
+
+&lt;p&gt;且sum(a1) + sum(a2)= S-total&lt;/p&gt;
+
+&lt;p&gt;则：sum(a1)=(S + S-total)/2&lt;/p&gt;
+
+&lt;p&gt;即求子数组，使得其和为(S + S-total)/2&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1, 2, 2, 3] ,s=1
+    
+output:	3
+   
+explanation:+1-1-2+3=1, -1+1-2+3=1, +1+1+2-3=1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;input:	[1 ,2 ,7, 1] ,s=9
+   
+output:	2
+    
+explanation:+1+2+7-1=9 , -1+2+7+1=2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;自底向上-5&#34;&gt;自底向上&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int countSubsets(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int sum) {
+    int n = nums.size();
+    vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; dp(n, vector&amp;lt;int&amp;gt;(sum + 1));
+    for (int i = 0; i &amp;lt; n; i++) {
+        dp[i][0] = 1;
+    }
+
+    for (int s = 1; s &amp;lt;= sum; s++) {
+        dp[0][s] = (nums[0] == s ? 1 : 0);
+    }
+
+    for (int i = 1; i &amp;lt; n; i++) {
+        for (int s = 1; s &amp;lt;= sum; s++) {
+            dp[i][s] = dp[i - 1][s];
+            if (nums[i] &amp;lt;= s) {
+                dp[i][s] = dp[i][s] + dp[i - 1][s - nums[i]];
+            }
+        }
+    }
+
+    return dp[n - 1][sum];
+}
+
+int targetSum(const vector&amp;lt;int&amp;gt; &amp;amp;nums, int target) {
+    int totalSum = 0;
+    for (auto n:nums) {
+        totalSum += n;
+    }
+
+    if (totalSum &amp;lt; target || (target + totalSum) % 2 == 1) {
+        return 0;
+    }
+
+    return countSubsets(nums, (target + totalSum) / 2);
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Time Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+
+&lt;p&gt;Space Complexity : &lt;em&gt;O&lt;/em&gt;(&lt;em&gt;N * S&lt;/em&gt;)&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
