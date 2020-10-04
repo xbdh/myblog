@@ -28,7 +28,7 @@ image:
 projects: []
 ---
 
-## 1. longest common substring
+### 1. longest common substring
 
 > 求最长公共子串的长度
 
@@ -48,7 +48,7 @@ ouput:	3
 explanation: "ssp"
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int LCSRecursive(string &s1, string &s2, int s1CurrentIndex, int s2CurrentIndex, int count) {
@@ -98,7 +98,7 @@ int LCS2(string s1, string s2) {
 }
 ```
 
-### bottom-up
+#### bottom-up
 
 ```c++
 int LCSLength(string s1, string s2) {
@@ -146,7 +146,7 @@ Space Complexity : *O*(*N \* M*)
 
 ![](./1-8.png)
 
-## 2. longest common subsequence
+### 2. longest common subsequence
 
 > 求最长公共子序列
 
@@ -166,7 +166,7 @@ ouput:	3
 explanation: "ssp"
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int LCSRecursive(string &s1, string &s2, int s1CurrentIndex, int s2CurrentIndex) {
@@ -190,7 +190,7 @@ Time Complexity : *O*(*2^(M+N)* )
 
 Space Complexity : *O*(*N+M*)
 
-### top-down
+#### top-down
 
 ```c++
 int LCS(string s1, string s2) {
@@ -227,7 +227,7 @@ Time Complexity : *O*(*M \* N*)
 
 Space Complexity : *O*(*N \* M*)
 
-### bottom-up
+#### bottom-up
 
 ```c++
 int LCS3(string s1, string s2) {
@@ -276,7 +276,7 @@ Space Complexity : *O*(*N \* M*)
 
 ![](./2-8.png)
 
-##  3. minimum deletions or insertions to transform a string into another
+###  3. minimum deletions or insertions to transform a string into another
 
 > 给定字符串S1,S2,通过删除插入字符使得S1变成S2，求最小的删除插入数
 
@@ -296,7 +296,7 @@ output:	2 deletions ,1 insertions
 explanation: s1:delete(a,c),insert(c) ->s2
 ```
 
-### bottom-up
+#### bottom-up
 
 ```c++
 int LCS3(string s1, string s2) {
@@ -336,7 +336,7 @@ Time Complexity : *O*(*M \* N*)
 
 Space Complexity : *O*(*N \* M*)
 
-## 4. longest increasing subsequence
+### 4. longest increasing subsequence
 
 > 求最长递增子序列的长度
 
@@ -356,7 +356,7 @@ output:	4
 explanation:[-4, 3, 7, 15]
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int LISLengthRecursive(vector<int> &nums, int currentIndex, int previousIndex) {
@@ -385,7 +385,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### top-down
+#### top-down
 
 ```c++
 int LISLengthRecursive2(vector<int> &nums, int currentIndex, int previousIndex, vector<vector<int>> &dp) {
@@ -418,7 +418,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N^2*)
 
-### bottom-up
+#### bottom-up
 
 ![](./4-1.png)
 
@@ -456,7 +456,7 @@ Space Complexity : *O*(*N*)
 
 ![](./4-7.png)
 
-## 5. max sum increasing subsequence
+### 5. max sum increasing subsequence
 
 > 求 和最大的递增子序列
 >
@@ -479,7 +479,7 @@ output:	25
 explanation:sum[10, 15]=sum[3,7,5]=25
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int maxSumISRecursive(const vector<int> &nums, int currentIndex, int previousIndex, int sum) {
@@ -507,11 +507,11 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### top-down
+#### top-down
 
 > 三维表或哈希表
 
-### bottom-up
+#### bottom-up
 
 ![](./5-1.png)
 
@@ -547,7 +547,7 @@ Space Complexity : *O*(*N*)
 
 ![](./5-5.png)
 
-## 6. shortest common super-sequence
+### 6. shortest common super-sequence
 
 > 给定字符串S1,S2,求最短的公共超级序列的长度，使得S1和S2都是其子序列
 
@@ -567,7 +567,7 @@ output: 15
 explanation: "dynprogramming"
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int SCSLengthRecursive(const string &s1, const string &s2, int s1CurrentIndex, int s2CurrentIndex) {
@@ -597,7 +597,7 @@ Time Complexity : *O*(*2^(M+N)* )
 
 Space Complexity : *O*(*N+M*)
 
-### top-down
+#### top-down
 
 ```c++
 int SCSLengthRecursive2(const string &s1, const string &s2, int s1CurrentIndex, int s2CurrentIndex,
@@ -633,7 +633,7 @@ Time Complexity : *O*(*M \* N*)
 
 Space Complexity : *O*(*N \* M*)
 
-### bottom-up
+#### bottom-up
 
 ![](./6-1.png)
 
@@ -681,7 +681,7 @@ Space Complexity : *O*(*N \* M*)
 
 ![](./6-7.png)
 
-## 7. minimum deletions to make a sequence sorted
+### 7. minimum deletions to make a sequence sorted
 
 > 给定数字序列，删除一些数，使得剩下的增序，求最小的删除数
 >
@@ -711,7 +711,7 @@ output: 3
 explanation: 只剩下一个即可
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int LIS(vector<int> nums) {
@@ -739,7 +739,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N*)
 
-## 8. longest repeating subsequence
+### 8. longest repeating subsequence
 
 > 求最长重复子序列，此子序列出现超过两次，索引位置不重复
 
@@ -767,7 +767,7 @@ output: 2
 explanation: ff,ff,索引不重复
 ```
 
-### brute-force
+#### brute-force
 
 ```C++
 int LRSRecursive(const string &s, int i1, int i2) {
@@ -793,7 +793,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### top-down
+#### top-down
 
 ```c++
 int LRSRecursive2(const string &s, int i1, int i2, vector<vector<int>> &dp) {
@@ -824,7 +824,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N^2*)
 
-### bottom-up
+#### bottom-up
 
 ```c++
 int LRSLength3(const string &s) {
@@ -856,7 +856,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N^2*)
 
-## 9. subsequence pattern matching
+### 9. subsequence pattern matching
 
 > 给定字符串S1，模式串S2，求S1中出现S2(作为序列)的次数
 
@@ -876,7 +876,7 @@ output:4
 explanation: TOmoRrow ,TomORrow,TOmorRow ,TomOrRow,
 ````
 
-### brute-force
+#### brute-force
 
 ```c++
 int countPatternMatchRecursive(const string &s, const string &p, int sCurrentIndex, int pCurrentIndex) {
@@ -908,7 +908,7 @@ Time Complexity : *O*(*2^N* ) ,N为S的长度
 
 Space Complexity : *O*(*N*)
 
-### top-down
+#### top-down
 
 ```c++
 
@@ -943,7 +943,7 @@ int patternMatch2(const string &s, const string &p) {
 }
 ```
 
-### bottom-up
+#### bottom-up
 
 ![](./9-1.png)
 
@@ -975,7 +975,7 @@ Time Complexity : *O*(*M \* N*)
 
 Space Complexity : *O*(*N \* M*)
 
-## 10. longest bitonic subsequence
+### 10. longest bitonic subsequence
 
 > 求最长的双调子序列的长度
 >
@@ -997,7 +997,7 @@ output:	7
 explanation: [4, 5, 9, 7, 6, 3, 1]
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 //从currentIndex到end最长递减序列
@@ -1053,7 +1053,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### bottom-up
+#### bottom-up
 
 ```c++
 有误，待看
@@ -1063,7 +1063,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N*)
 
-## 11. longest alternating subsequence
+### 11. longest alternating subsequence
 
 > 求最长交替子序列的长度
 >
@@ -1093,9 +1093,9 @@ output: 4
 explanation: [1, 3, 2, 4]
 ```
 
-### 待看
+#### 待看
 
-## 12. edit distance
+### 12. edit distance
 
 > 给定字符串S1,S2,通过删除,插入,替换字符使得S1变成S2，求最小的操作数
 
@@ -1123,7 +1123,7 @@ output: 3
 explanation : replace a->p,o->q,insert r
 ```
 
-### brute-force
+#### brute-force
 
 ```c++
 int minOperationRecursive(const string &s1, const string &s2, int s1CurrentIndex, int s2CurrentIndex) {
@@ -1155,7 +1155,7 @@ Time Complexity : *O*(*3^(N+M)* )
 
 Space Complexity : *O*(*N+M*)
 
-### top-down
+#### top-down
 
 ```c++
 
@@ -1193,7 +1193,7 @@ Time Complexity : *O*(*N \* M* )
 
 Space Complexity : *O*(*N \* M* )
 
-### bottom-up
+#### bottom-up
 
 ![](./12-1.png)
 
@@ -1229,6 +1229,6 @@ Time Complexity : *O*(*N \* M* )
 
 Space Complexity : *O*(*N \* M* )
 
-## 13. strings interleaving
+### 13. strings interleaving
 
-### 待看待看
+#### 待看待看

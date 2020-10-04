@@ -39,7 +39,7 @@ projects: []
 
 https://leetcode-cn.com/problems/container-with-most-water/
 
-```c++
+```
 输入：[1,8,6,2,5,4,8,3,7]
 输出：49
 ```
@@ -75,7 +75,7 @@ https://leetcode-cn.com/problems/move-zeroes/
 
 example
 
-```c++
+```
 输入: [0,1,0,3,12]
 输出: [1,3,12,0,0]
 ```
@@ -107,19 +107,19 @@ https://leetcode-cn.com/problems/climbing-stairs/
 
 example
 
-```c++
-输入： 2
-输出： 2
-解释： 有两种方法可以爬到楼顶。
+```
+输入: 2
+输出:2
+解释:有两种方法可以爬到楼顶。
 
 1.  1 阶 + 1 阶
 2.  2 阶
 ```
 
-```c++
-输入： 3
-输出： 3
-解释： 有三种方法可以爬到楼顶。
+```
+输入:3
+输出:3
+解释:有三种方法可以爬到楼顶。
 
 1.  1 阶 + 1 阶 + 1 阶
 2.  1 阶 + 2 阶

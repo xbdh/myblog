@@ -6,12 +6,12 @@ light = true
 
 # Primary
 # 博客的标题，邮箱，微信，cv的颜色，目录颜色
-primary = "#000000"
+primary = "#ff3860"
 
 # Menu
-menu_primary = "#29afec" # 500
+menu_primary = "#29afec" # 蓝色
 menu_text = "#fff"
-menu_text_active = "#e1251b" # A100
+menu_text_active = "#e1251b" # 红色
 menu_title = "#fff"
 
 # Home sections

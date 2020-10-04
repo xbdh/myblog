@@ -68,12 +68,17 @@ ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "
   author = "authors"
 
 # [markup]
-#   [markup.tableOfContents]
-#     endLevel = 3
-#     ordered = false
-#     startLevel = 2
-
+#    [markup.tableOfContents]
+#      endLevel = 5
+#      ordered = false
+#      startLevel = 2
+# h2 开始 h5 结束，4级标题，h2 标题随主题颜色，其余可自定义
 [markup]
+  [markup.tableOfContents]
+     endLevel = 5
+     ordered = false
+     startLevel = 2
+
   [markup.highlight]
     pygmentsUseClasses=true
     anchorLineNos = false
@@ -85,6 +90,6 @@ ignoreFiles = ["\\.ipynb$", ".ipynb_checkpoints$", "\\.Rmd$", "\\.Rmarkdown$", "
     lineNos = true
     lineNumbersInTable = true
     noClasses = true
-    style = "monokai"
+    style = "github"
     tabWidth = 4
 

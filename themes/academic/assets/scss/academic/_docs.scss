@@ -221,12 +221,18 @@ ul.toc-top {
   
 }
 
-//10px每一级标题后退10px
+//10px每一级标题后退15p h3->h4 后退15px
 #TableOfContents ul ul {
   display: block;
-  padding-left: 10px;
+  padding-left: 15px;
   font-size: 0.5rem;
 }
+// //10px每一级标题后退10px
+// #TableOfContents ul ul ul {
+//   display: block;
+//   padding-left: 10px;
+//   font-size: 0.5rem;
+// }
 
 #TableOfContents li {
   display: block;
@@ -266,18 +272,19 @@ ul.toc-top {
 }
 
 //自定义
-//h2标题
-#TableOfContents  ul  li a {
-  font-size: 0.7rem;
-}
 //h3标题
-#TableOfContents  ul  li ul  a {
-    font-size: 0.6rem;
-    color:#696969;
+#TableOfContents  ul  li a {
+  color:black;
+  font-size: 0.8rem;
 }
 //h4标题
+#TableOfContents  ul  li ul  a {
+    font-size: 0.8rem;
+    color:#696969;
+}
+//h5标题
 #TableOfContents  ul li  ul   ul  a{
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   color:#a9a9a9;
 }
 // .docs-content {

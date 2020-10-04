@@ -35,7 +35,7 @@ projects: []
 
 
 
-## 1、0-1 Knapsack
+### 1、0-1 Knapsack
 
 > 给定N个物品的价值和重量，一个容量为C的背包。每个物品只能挑选一次且总容量不能超过C，求最大价值
 
@@ -49,7 +49,7 @@ output:	10
 explanations:	1+4=5,3+7=10
 ```
 
-### 暴力法
+#### 暴力法
 
 ![](./1-1.png)
 
@@ -80,7 +80,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### 自顶向下
+#### 自顶向下
 
 有重复
 
@@ -120,7 +120,7 @@ Time Complexity : *O*(*N \* C*)
 
 Space Complexity : *O*(*N \* C*)
 
-### 自底向上
+#### 自底向上
 
 ![](./1-3.png)
 
@@ -304,13 +304,13 @@ Time Complexity : *O*(*N \* C*)
 
 Space Complexity : *O*(*C*)
 
-## 2、equal subsets sum partition
+### 2、equal subsets sum partition
 
 > 给定正整数数组，是否存在一种分法将数组分为不相交的两部分，使得他们的和相等
 
 > 即求是否存在子数组使得其和为数组和的一半
 
-### 暴力法
+#### 暴力法
 
 ```c++
 bool partitionRecursive(const vector<int> &nums, int sum, int currentIndex) {
@@ -351,7 +351,7 @@ Time Complexity : *O*(2^*N*)
 
 Space Complexity : *O*(*N*)
 
-### 自顶向下
+#### 自顶向下
 
 ```c++
 bool partitionRecursive2(const vector<int> &nums, int sum, int currentIndex, vector<vector<int>> &dp) {
@@ -399,7 +399,7 @@ Time Complexity : *O*(*N \* S*) ，S为数组和
 
 Space Complexity : *O*(*N \* S*)
 
-### 自底向上
+#### 自底向上
 
 ```c++
 bool equalSubset3(const vector<int> &nums) {
@@ -501,7 +501,7 @@ vector<vector<int>> printPartition(const vector<int> &nums, const vector<vector<
 }
 ```
 
-## 3、subset sum
+### 3、subset sum
 
 > 给定正整数数组和S值，判断是否存在子数组，使得其和等于S
 
@@ -527,7 +527,7 @@ input: [1, 3, 4, 8], s=6
 output:	false
 ```
 
-### 暴力法
+#### 暴力法
 
 ```c++
 bool subsetSumRecursive(const vector<int> &nums, int sum, int currentIndex) {
@@ -564,7 +564,7 @@ Time Complexity : *O*(2^*N*)
 
 Space Complexity : *O*(*N*)
 
-### 自顶向下
+#### 自顶向下
 
 ```c++
 bool subsetSumRecursive2(const vector<int> &nums, int sum, int currentIndex, vector<vector<int>> &dp) {
@@ -608,7 +608,7 @@ Time Complexity : *O*(*N \* S*)
 
 Space Complexity : *O*(*N \* S*)
 
-### 自底向上
+#### 自底向上
 
 ![](./1-17.png)
 
@@ -662,7 +662,7 @@ Time Complexity : *O*(*N \* S*)
 
 Space Complexity : *O*(*N \* S*)
 
-## 4、minimum subset sum different
+### 4、minimum subset sum different
 
 > 给定正整数组成的数组，将其分为不重合的两个子数组，使得子数组的和 的差的绝对值最小，输出最小的差
 
@@ -690,7 +690,7 @@ output:	92
 explanation：|sum(1,3,4) - sum(100)| = 92
 ```
 
-### 暴力法
+#### 暴力法
 
 ```c++
 int minSubsetSumDifferentRecursive(const vector<int> &nums, int sum1, int sum2, int currentIndex) {
@@ -714,7 +714,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### 自顶向下
+#### 自顶向下
 
 ```c++
 int minSubsetSumDifferentRecursive2(const vector<int> &nums, int sum1, int sum2,
@@ -747,7 +747,7 @@ Time Complexity : *O*(*N \* S*)
 
 Space Complexity : *O*(*N \* S*)
 
-### 自底向上
+#### 自底向上
 
 > 子数组和等于Sum/2时，有最小值，如果不等于，求最接近sum/2的子数组。
 
@@ -811,7 +811,7 @@ Time Complexity : *O*(*N \* S*)
 
 Space Complexity : *O*(*N \* S*)
 
-## 5、count of subset sum
+### 5、count of subset sum
 
 > 给定正整数数组和S值，求满足子数组和等于S的子数组所有个数
 
@@ -831,7 +831,7 @@ output:	3
 explanation:[2,7], [1,7,1], [1,2,1,5]
 ```
 
-### 暴力法
+#### 暴力法
 
 ```c++
 int countSubsetRecursive(const vector<int> &nums, int sum, int currentIndex) {
@@ -864,7 +864,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### 自顶向下
+#### 自顶向下
 
 ```c++
 
@@ -905,7 +905,7 @@ Time Complexity : *O*(*N \* S*)
 
 Space Complexity : *O*(*N \* S*)
 
-### 自底向上
+#### 自底向上
 
 ![](./1-5-1.png)
 
@@ -957,7 +957,7 @@ Space Complexity : *O*(*N \* S*)
 
 ![](./1-5-7.png)
 
-## 6、target sum
+### 6、target sum
 
 > 给定正整数数组和值S，数组每个数前缀"+"或"-"，使得所有数的和为S，求多少种方式
 
@@ -985,7 +985,7 @@ output:	2
 explanation:+1+2+7-1=9 , -1+2+7+1=2
 ````
 
-### 自底向上
+#### 自底向上
 
 ```c++
 int countSubsets(const vector<int> &nums, int sum) {

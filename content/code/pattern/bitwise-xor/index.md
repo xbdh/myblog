@@ -28,7 +28,7 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 异或操作
 
@@ -51,7 +51,7 @@ projects: []
 
 
 
-## 2、missing number and single number
+### 2、missing number and single number
 
 >给定数组（元素为n-1个），范围（1-n），求缺失的数
 
@@ -111,7 +111,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(1)
 
-## 3、two single number
+### 3、two single number
 
 > 非空数组，有2个元素出现1次，其余出现2次，求出现1次的那2个数
 
@@ -157,7 +157,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(1)
 
-## 4、complement of base 10 number
+### 4、complement of base 10 number
 
 > 10进制的正整数，转换为二进制，按位取反后，转化为10进制
 
@@ -197,6 +197,6 @@ Time Complexity : *O*(*b*)，b:整数二进制的位数
 
 Space Complexity : *O*(1)
 
-## 5、flip matrix
+### 5、flip matrix
 
 > 没看懂

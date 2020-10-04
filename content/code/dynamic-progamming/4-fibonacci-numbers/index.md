@@ -29,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1. fibonacci numbers
+### 1. fibonacci numbers
 
 > 斐波那契数列
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int fib(int n) {
@@ -49,7 +49,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 
@@ -74,7 +74,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 int fib3(int n) {
@@ -94,7 +94,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 2. staircase
+### 2. staircase
 
 > n阶台阶，每次只允许走1步、2步或3步，求有多少种方式
 
@@ -114,7 +114,7 @@ output:	7
 explanation:{1,1,1,1},{1,2,1},{2,1,1},{1,1,2},{3,1},{1,3},{2,2}
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int staircase(int n) {
@@ -136,7 +136,7 @@ Time Complexity : *O*(*3^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int staircaseRecursive2(vector<int> &dp, int n) {
@@ -168,7 +168,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 int staircase3(int n) {
@@ -188,7 +188,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 3. number factor
+### 3. number factor
 
 > 给定n,求有多少方式使得n等于{1,3,4}的和
 
@@ -208,7 +208,7 @@ output:	6
 explanation:{1,1,1,1,1},{1,1,3},{4,1},{1,4},{1,3,1},{3,1,1}
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int fib(int n) {
@@ -232,7 +232,7 @@ Time Complexity : *O*(*3^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 
@@ -267,7 +267,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./3-1.png)
 
@@ -290,7 +290,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 4. minimum jumps to reach the end
+### 4. minimum jumps to reach the end
 
 > 给定一组整数（>=0）,每个数代表可以往右跳的最大步数，求最小跳几次到达数组最后
 >
@@ -312,7 +312,7 @@ output:	4
 explanation:0-index(1) -> 1-index(1) -> 2-index(1) -> 3-index(6)->8-index
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int countMinJumpsRecursive(const vector<int> &jumps, int currentIndex) {
@@ -347,7 +347,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int countMinJumpsRecursive2(const vector<int> &jumps, int currentIndex, vector<int> &dp) {
@@ -387,7 +387,7 @@ Time Complexity : *O*(*N^2*)
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./4-1.png)
 
@@ -417,7 +417,7 @@ Time Complexity : *O*(*N^2*)
 
 Space Complexity : *O*(*N*)
 
-## 5. minimum jumps with fee
+### 5. minimum jumps with fee
 
 > 给定N，代表n步台阶，N个元素的数组代表上某一台阶的花费，你每次可以走1,2,3步，求最小花费到达终点
 
@@ -437,7 +437,7 @@ output:	5
 explanation:0-index(2)->1-index(3)->top ,2+3=5
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int minFeeRecursive(const vector<int> &fees, int currentIndex) {
@@ -461,7 +461,7 @@ Time Complexity : *O*(*3^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int minFeeRecursive2(const vector<int> &fees, int currentIndex, vector<int> dp) {
@@ -485,7 +485,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 int minFee3(const vector<int> &fees) {
@@ -509,7 +509,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 6. house thief
+### 6. house thief
 
 > 小偷偷房子，n元数组代表n个房子的财富，小偷不能偷连续2个房子，求能偷到的最大财富
 
@@ -529,7 +529,7 @@ output:	18
 expalanation:10 + 8 = 18
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int maxWealthRecursive(const vector<int> &wealth, int currentIndex) {
@@ -552,7 +552,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int maxWealthRecursive2(const vector<int> &wealth, int currentIndex, vector<int> dp) {
@@ -580,7 +580,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 int maxWealth3(const vector<int> &wealth) {

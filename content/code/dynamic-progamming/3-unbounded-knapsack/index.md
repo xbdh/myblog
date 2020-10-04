@@ -31,7 +31,7 @@ image:
 projects: []
 ---
 
-## 1. unbounded knapsack
+### 1. unbounded knapsack
 
 > 给定N个物品的价值和重量，一个容量为C的背包。每个物品不限次数且总容量不能超过C，求最大价值
 
@@ -57,7 +57,7 @@ explanations:	50+90=140
 
 
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int knapsackRecursive(const vector<int> &weight, const vector<int> &profits, int capacity, int currentIndex) {
@@ -86,7 +86,7 @@ Time Complexity : *O*(*2^(N+C)* )
 
 Space Complexity : *O*(*N + C*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int knapsackRecursive2(const vector<int> &weight, const vector<int> &profits, int capacity, vector<vector<int>> &dp,
@@ -123,7 +123,7 @@ Time Complexity : *O*(*N + C*)
 
 Space Complexity : *O*(*N + C*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./1-1.png)
 
@@ -193,7 +193,7 @@ Space Complexity : *O*(*N + C*)
 
 ![](./1-13.png)
 
-### selected item
+#### selected item
 
 ```c++
 //有选中的项目，有具体选了几次
@@ -230,7 +230,7 @@ void printSelectElements(const vector<int> &weight, const vector<int> &profits, 
 
 ![](./1-14.png)
 
-## 2. rod cutting
+### 2. rod cutting
 
 > 给定长度为N的杆，切成小段，不同长度有不同的价格，求最大收益
 
@@ -246,7 +246,7 @@ output:	14
 explanations:2*(length=2)+1*(length=1)=14
 ```
 
-### Bottom-up
+#### Bottom-up
 
 ![](./2-1.png)
 
@@ -312,11 +312,11 @@ Space Complexity : *O*(*N + C*)
 
 ![](./2-11.png)
 
-### selected item
+#### selected item
 
 ![](./2-12.png)
 
-## 3. coin change
+### 3. coin change
 
 > 无限量不同面值的零钱和要换的钱N，求有多少种换钱的方式
 
@@ -328,7 +328,7 @@ output:	5
 explanation:{1,1,1,1,1},{1,1,1,2},{1,2,2},{1,1,3},{2,3}
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int coinChangeRecursive(const vector<int> &nums, int total, int currentIndex) {
@@ -361,7 +361,7 @@ Time Complexity : *O*(*2^(N+T)* )
 
 Space Complexity : *O*(*N + T*)
 
-### Top-down
+Top-down
 
 ```c++
 int coinChangeRecursive2(const vector<int> &nums, int total, int currentIndex, vector<vector<int>> dp) {
@@ -399,7 +399,7 @@ Time Complexity : *O*(*N \* T*)
 
 Space Complexity : *O*(*N \* T*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./3-1.png)
 
@@ -452,7 +452,7 @@ Space Complexity : *O*(*N \* T*)
 
 ![](./3-7.png)
 
-## 4. minimum coin change
+### 4. minimum coin change
 
 > 无限量不同面值的硬币和要换的总钱N，求硬币总数最小值
 
@@ -472,7 +472,7 @@ output:	4
 explanation:{2,3,3,3}
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int countCoinChangeRecursive(const vector<int> &nums, int total, int currentIndex) {
@@ -507,7 +507,7 @@ Time Complexity : *O*(*2^(N+T)* )
 
 Space Complexity : *O*(*N + T*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int countCoinChangeRecursive2(const vector<int> &nums, int total, int currentIndex, vector<vector<int>> dp) {
@@ -548,7 +548,7 @@ Time Complexity : *O*(*N \* T*)
 
 Space Complexity : *O*(*N \* T*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./4-1.png)
 
@@ -606,7 +606,7 @@ Space Complexity : *O*(*N \* T*)
 
 ![](./4-8.png)
 
-## 5. maximum ribbon cut
+### 5. maximum ribbon cut
 
 > 相当于：无限量不同面值的硬币和要换的总钱N，求硬币总数最大值
 
@@ -634,7 +634,7 @@ output:	3
 explanation: {3,3,7}
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int countCoinChangeRecursive(const vector<int> &nums, int total, int currentIndex) {
@@ -670,7 +670,7 @@ Time Complexity : *O*(*2^(N+T)* )
 
 Space Complexity : *O*(*N + T*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./5-1.png)
 

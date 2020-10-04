@@ -29,7 +29,7 @@ image:
 projects: []
 ---
 
-## 1. longest Palindromic Subsequence
+### 1. longest Palindromic Subsequence
 
 > 求最长回文子序列(不连续)的长度
 
@@ -49,7 +49,7 @@ output:	2
 explanation: "bb"
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 int longestPalindromicSubsequenceRecursive(const string &s, int startIndex, int endIndex) {
@@ -81,7 +81,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### Top-down
+#### Top-down
 
 ```c++
 int LPSRecursive2(const string &s, int startIndex, int endIndex, vector<vector<int>> dp) {
@@ -118,7 +118,7 @@ Time Complexity : *O*(*N ^ 2*)
 
 Space Complexity : *O*(*N ^ 2*)
 
-### bottom-up
+#### bottom-up
 
 ```c++
 int LPS3(string s) {
@@ -146,7 +146,7 @@ Time Complexity : *O*(*N ^ 2*)
 
 Space Complexity : *O*(*N ^ 2*)
 
-### bottom-up 优化
+#### bottom-up 优化
 
 ```c++
 int lps(string s)
@@ -203,7 +203,7 @@ Time Complexity : *O*(*N ^ 2*)
 
 Space Complexity : *O*(*N*)
 
-## 2.  longest Palindromic Substring
+### 2.  longest Palindromic Substring
 
 > 求最长回文串
 
@@ -225,7 +225,7 @@ input:	"abc"
 output:	a
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 string LPS(string s) {
@@ -259,7 +259,7 @@ Time Complexity : *O*(*N^3* )
 
 Space Complexity : *O*(*1*)
 
-### Bottom-up
+#### Bottom-up
 
 ![](./2-1.png)
 
@@ -321,7 +321,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N^2*)
 
-## 3. count of Palindromic Substring
+### 3. count of Palindromic Substring
 
 > 求最长回文串的个数
 
@@ -333,7 +333,7 @@ output:	7
 explanation :"a","b", "d","b","c","a","bdb"
 ```
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 int countLPS(string s) {
@@ -362,7 +362,7 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N^2*)
 
-## 4. minimum deletions in a string to make it a palindrome
+### 4. minimum deletions in a string to make it a palindrome
 
 > 删除字符串的一些字符，使得其成为回文字符串，求最小的删除数
 
@@ -384,7 +384,7 @@ output:	2
 explanation: remove "c","p" -> "ddd"
 ```
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 int LPS3(string s) {
@@ -418,13 +418,13 @@ Time Complexity : *O*(*N^2* )
 
 Space Complexity : *O*(*N^2*)
 
-### 相似问题
+#### 相似问题
 
 > 插入一些字符，使得字符串成为回文字符串，求最小的插入数
 
 > 同上
 
-## 5. palindromic partitioning
+### 5. palindromic partitioning
 
 > 给定字符串，分割成子串，使得子串都是回文字符串，求最小切割几刀
 
@@ -450,7 +450,7 @@ input:	"pp"
 output:	0
 ```
 
-### Brute-force
+#### Brute-force
 
 ```c++
 bool isPalindrome(string s, int start, int end) {
@@ -490,7 +490,7 @@ Time Complexity : *O*(*2^N* )
 
 Space Complexity : *O*(*N*)
 
-### Bottom-up
+#### Bottom-up
 
 ```c++
 待看
