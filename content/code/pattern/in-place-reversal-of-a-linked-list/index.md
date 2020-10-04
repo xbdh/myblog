@@ -12,6 +12,7 @@ lastmod: 2020-05-23T17:49:24+08:00
 featured: false
 draft: false
 toc: true 
+
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
@@ -28,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 解决原地逆转链表的问题
 
-## 2、reverse a linkedlist
+### 2、reverse a linkedlist
 
 > 逆转链表
 
@@ -68,7 +69,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(1)
 
-## 3、reverse a sub-list
+### 3、reverse a sub-list
 
 > 逆转链表第p个至第q个之间的元素
 
@@ -149,7 +150,7 @@ reverse(head, 1 ,n/2)
 reverse(head, 1/2 + 2 ,n)    
 ```
 
-## 4、reverse every  k-element sub-list
+### 4、reverse every  k-element sub-list
 
 > 给定链表和整数K，每次逆转K个元素
 
@@ -201,7 +202,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(1)
 
-## 5、reverse alternating k-element sub-list
+### 5、reverse alternating k-element sub-list
 
 > 给定链表和整数K，每次交替逆转K个元素，如果最后要逆转的部分小于k，也要逆转
 
@@ -257,7 +258,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(1)
 
-## 6、rotate a linkedlist
+### 6、rotate a linkedlist
 
 > 给定链表和整数K，循环将前k元素移到后面
 

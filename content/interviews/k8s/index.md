@@ -1,16 +1,17 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: "K8s"
+title: "Kubernetes"
 subtitle: ""
-summary: ""
+summary: "Kubernetes 操作"
 authors: []
-tags: []
-categories: []
+tags: ["Kubernetes"]
+categories: ["interview","Kubernetes"]
 date: 2020-10-03T20:34:44+08:00
 lastmod: 2020-10-03T20:34:44+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

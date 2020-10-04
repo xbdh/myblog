@@ -3,14 +3,15 @@
 
 title: "Data Structure"
 subtitle: ""
-summary: ""
+summary: "常见数据结构"
 authors: []
-tags: []
-categories: []
+tags: ["Data Structure"]
+categories: ["interview","Data Structure"]
 date: 2020-10-03T20:43:04+08:00
 lastmod: 2020-10-03T20:43:04+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

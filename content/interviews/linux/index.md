@@ -3,14 +3,15 @@
 
 title: "Linux"
 subtitle: ""
-summary: ""
+summary: "Linux 操作"
 authors: []
-tags: []
-categories: []
+tags: ["linux"]
+categories: ["interview","linux"]
 date: 2020-10-03T20:38:55+08:00
 lastmod: 2020-10-03T20:38:55+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

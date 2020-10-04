@@ -29,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 最大/最小/出现次数 的 第/前 K个元素，常用heap。
 
-## 2、top k numbers
+### 2、top k numbers
 
 > 给定未排序数组和K值，求前K个大的元素
 
@@ -76,7 +76,7 @@ Time Complexity : *O*(*N*  * log *K*)
 
 Space Complexity : *O*(*K*)
 
-## 3、kth smallest number
+### 3、kth smallest number
 
 > 给定未排序数组和K值，求第K个小的元素
 
@@ -151,7 +151,7 @@ Time Complexity : *O*(*N*  + *K* log *N*)
 
 Space Complexity : *O*(*N*)
 
-## 4、k closest points to the origin
+### 4、k closest points to the origin
 
 > 给定一组二位坐标点和K值，求前K个离原点最近的的点
 
@@ -213,7 +213,7 @@ Time Complexity : *O*(*N*  * log *K*)
 
 Space Complexity : *O*(*K*)
 
-## 5、connect ropes
+### 5、connect ropes
 
 > 把N段不同绳子连接成一段长绳子，使得cost最小
 
@@ -273,7 +273,7 @@ Time Complexity : *O*(*N*  * log *N*)
 
 Space Complexity : *O*(*N*)
 
-## 6、top k frequent numbers
+### 6、top k frequent numbers
 
 > 给定未排序数组和K值，求出现次数前K的数
 
@@ -329,7 +329,7 @@ Time Complexity : *O*(*N* + *N*  * log *K*)
 
 Space Complexity : *O*(*N*)
 
-## 7、frequency sort
+### 7、frequency sort
 
 > 给定字符串，按照字符出现的次数降序排列
 
@@ -383,11 +383,11 @@ Time Complexity : *O*(*N*  * log *N*)
 
 Space Complexity : *O*(*N*)
 
-## 8、kth largest number in a stream
+### 8、kth largest number in a stream
 
 > 设计一个类，求数据流中的最大值
 
-## 9、k closest numbers
+### 9、k closest numbers
 
 > 给定排序的数组，及整数K和X。求数组中K个接近X的数，将返回的数排序，X不一定在原数组中。
 
@@ -528,7 +528,7 @@ Time Complexity : *O*(*K*  + log *N*)
 
 Space Complexity : *O*(*1*)
 
-## 10、maximum distinct elements
+### 10、maximum distinct elements
 
 > 给定数组和K值，删除K个数后，求剩余的不重复的数的最大个数
 
@@ -584,7 +584,7 @@ Time Complexity : *O*( *N* * log *N* + *K*  * log *K*)
 
 Space Complexity : *O*(*N*)
 
-## 11、sum of elements
+### 11、sum of elements
 
 > 给定数组和K1、K2值，求第k1小和第k2小之间元素和
 
@@ -659,7 +659,7 @@ Time Complexity : *O*(*N*  * log *K2*)
 
 Space Complexity : *O*(*K2*)
 
-## 12、rearrange string
+### 12、rearrange string
 
 > 给定字符串，重新排列，使得相同字符不在一起
 
@@ -724,7 +724,7 @@ Time Complexity : *O*(*N*  * log *N*)
 
 Space Complexity : *O*(*N*)
 
-## 13、rearrange string k distance apart
+### 13、rearrange string k distance apart
 
 > 给定字符串和K值，重新排列字符串，使得相同字符至少相隔k个字符
 
@@ -797,7 +797,7 @@ Time Complexity : *O*(*N*  * log *N*)
 
 Space Complexity : *O*(*N*)
 
-## 14、scheduling tasks
+### 14、scheduling tasks
 
 > 任务调度，给定一组任务和K值，一个任务执行后必须间隔K 段时间，求完成调度最小总时间，当任务不能调度时用idle
 
@@ -856,6 +856,6 @@ Time Complexity : *O*(*N*  * log *N*)
 
 Space Complexity : *O*(*N*)
 
-## 15、frequency stack
+### 15、frequency stack
 
 > 设计类

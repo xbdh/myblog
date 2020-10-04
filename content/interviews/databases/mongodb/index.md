@@ -1,16 +1,17 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: "Mongodb"
+title: "MongoDB"
 subtitle: ""
-summary: ""
+summary: "MongoDB 操作"
 authors: []
-tags: []
-categories: []
+tags: ["MongoDB"]
+categories: ["interview","MongoDB"]
 date: 2020-10-03T20:33:36+08:00
 lastmod: 2020-10-03T20:33:36+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

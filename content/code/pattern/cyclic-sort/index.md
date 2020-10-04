@@ -11,6 +11,7 @@ date: 2020-05-23T17:48:24+08:00
 lastmod: 2020-05-23T17:48:24+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -28,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 > 常用来解决数组元素的值在**一定范围**内的问题
 
-## 2、cyclic sort
+### 2、cyclic sort
 
 > 给定长度为n，所有元素的值在[1,n]内，不重复。原地排序
 
@@ -80,7 +81,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 3、find the Missing number
+### 3、find the Missing number
 
 > 给定长度为n的数组，元素值的范围在[0,n], 不重复，求未包含在其中的数字
 
@@ -133,7 +134,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 4、find all missing numbers
+### 4、find all missing numbers
 
 > 给定长度为n的数组，元素值的范围在[1,n], 有重复，求所有未包含在其中的数字
 
@@ -185,7 +186,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 5、find the duplicate number
+### 5、find the duplicate number
 
 > 给定长度为n+1的数组，元素值的范围在[1,n], 只有一个元素有重复，可多次重复，求重复的数字
 
@@ -282,7 +283,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 6、find all duplicate numbers
+### 6、find all duplicate numbers
 
 > 给定长度为n的数组，元素值的范围在[1,n], 有多个有重复，求所有重复的数字，不使用额外空间
 
@@ -332,7 +333,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 7、find the corrupt pair
+### 7、find the corrupt pair
 
 > 给定长度为n的数组，元素值的范围在[1,n], 一个元素有重复且重复一次，求重复的数字和缺失的数字
 
@@ -380,7 +381,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 8、find the smallest missing positive number
+### 8、find the smallest missing positive number
 
 > 给定整数数组，元素值无范围限制，求最小缺失的正整数
 
@@ -437,7 +438,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-## 9、find the first k missing positive numbers
+### 9、find the first k missing positive numbers
 
 > 给定整数数组和K值，元素值无范围限制，求最小的前K个缺失的正整数
 

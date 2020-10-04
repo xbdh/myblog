@@ -1,16 +1,17 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: "Network"
+title: "计算机网络"
 subtitle: ""
-summary: ""
+summary: "Computer Network"
 authors: []
-tags: []
-categories: []
+tags: [“计算机网络”]
+categories: ["interview","network"]
 date: 2020-10-03T20:41:45+08:00
 lastmod: 2020-10-03T20:41:45+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

@@ -29,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 广度遍历，树的一种遍历方式，常用来解决需要一层一层遍历的问题
 
-## 2、binary tree level order Traversal
+### 2、binary tree level order Traversal
 
 > 层序遍历，每层单独放进数组，每层自顶向下，自左向右
 
@@ -92,7 +92,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 3、reverse level order traversal
+### 3、reverse level order traversal
 
 > 层序遍历，每层单独放进数组，每层自底向上，自左向右
 
@@ -136,7 +136,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 4、zigzag traversal
+### 4、zigzag traversal
 
 > 层序遍历，每层单独放进数组，每层自顶向下，自左向右和自右向左交替进行
 
@@ -187,7 +187,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 5 、level averages in a binary tree
+### 5 、level averages in a binary tree
 
 > 层序遍历，计算每一层的平均值
 
@@ -277,7 +277,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 6、minimum depth of a binary tree
+### 6、minimum depth of a binary tree
 
 > 求二叉树最小深度
 
@@ -365,7 +365,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 7、level order successor
+### 7、level order successor
 
 > 求层序遍历某一节点的后继
 
@@ -405,7 +405,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 8、connect level order siblings
+### 8、connect level order siblings
 
 > 让所有节点指向其层序遍历的后继，每一层最后一个节点指向NULL
 
@@ -460,7 +460,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 9、connect all level order siblings
+### 9、connect all level order siblings
 
 > 连接层序遍历的后继节点
 
@@ -516,7 +516,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 10、right view of a binary tree
+### 10、right view of a binary tree
 
 > 求二叉树从右侧看到的所有节点
 
@@ -608,7 +608,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 11、tree boundary
+### 11、tree boundary
 
 > 逆时针输出二叉树的所有边界节点
 

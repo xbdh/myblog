@@ -3,14 +3,15 @@
 
 title: "Redis"
 subtitle: ""
-summary: ""
+summary: "Redis 操作"
 authors: []
-tags: []
-categories: []
+tags: ["Redis"]
+categories: ["interview",Redis"]
 date: 2020-10-03T20:32:37+08:00
 lastmod: 2020-10-03T20:32:37+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

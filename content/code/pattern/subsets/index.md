@@ -29,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 解决排列和组合问题，使用广度优先算法
 
-## 2、subsets
+### 2、subsets
 
 >给定不含重复元素的集合，求其所有不同的子集
 
@@ -72,7 +72,7 @@ Time Complexity : *O*(2^*N*)
 
 Space Complexity : *O*(2^*N*)
 
-## 3、subsets with Duplicates
+### 3、subsets with Duplicates
 
 >  给定含重复元素的集合，求其所有不同的子集
 
@@ -121,7 +121,7 @@ Time Complexity : *O*(2^*N*)
 
 Space Complexity : *O*(2^*N*)
 
-## 4、permutations
+### 4、permutations
 
 > 给定不含重复元素的集合，求其所有排列
 
@@ -196,7 +196,7 @@ Time Complexity : *O*(*N* * *N !*)
 
 Space Complexity : *O*(*N* * *N !*)
 
-## 5、string permutation by changing case
+### 5、string permutation by changing case
 
 > 给定字符串，保留原序列，只改变字母的大小写，求所有排列
 
@@ -247,7 +247,7 @@ Time Complexity : *O*(*N* * 2^ *N* )
 
 Space Complexity : *O*(*N* * 2^ *N* )
 
-## 6、balanced parentheses
+### 6、balanced parentheses
 
 > 给定N，求n对（）的合理的组合
 
@@ -334,11 +334,11 @@ vector<string> generateValidParentheses2(int num) {
 }
 ```
 
-## 7、unique generalized abbreviations
+### 7、unique generalized abbreviations
 
 > 没看懂题目
 
-## 8、evaluate expression
+### 8、evaluate expression
 
 > 给定只包含0-9和+ - *的表达式，计算表达式加上括号后所有合理的运算结果
 
@@ -445,7 +445,7 @@ vector<int> diffWaysToEvaluateExpression2(const string &input) {
 }
 ```
 
-## 9、structurally unique binary search trees
+### 9、structurally unique binary search trees
 
 > 给定N，求节点值为1-n的二叉查找树
 
@@ -492,7 +492,7 @@ Time Complexity : 实际：![](./6-1.png)  估计：*O*(*N* * 2^ *N* )
 
 Space Complexity : 实际：![](./6-1.png)估计：O*( 2^ *N* )
 
-## 10、count of structurally unique binary search tree
+### 10、count of structurally unique binary search tree
 
 > 给定N，求节点值为1-n的二叉查找树的个数
 
@@ -541,3 +541,4 @@ int countTrees2(int n) {
 Time Complexity : O*(* *N* ^ 2) 
 
 Space Complexity : *O*(*N*)
+

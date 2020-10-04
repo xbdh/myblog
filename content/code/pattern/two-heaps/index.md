@@ -29,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 给定一组可以划分成两个部分的元素，要求我们求一部分的最小元素，另一部分的最大元素，用two heaps ：Min Heap和Max Heap，可以解决这类的问题，。
 
-## 2、find the median of a number stream
+### 2、find the median of a number stream
 
 > 设计一个类，能够计算数据流中的中位数，类必须包含两个函数：
 >
@@ -82,7 +82,7 @@ class MedianOfStream{
 
 
 
-## 3、sliding window median
+### 3、sliding window median
 
 > 给定数组和K值，求所有长度为k的连续子数组的中位数
 
@@ -108,7 +108,7 @@ Time Complexity : *O*(*N \* K*)
 
 Space Complexity : *O*(*K*)
 
-## 4、maximun capital
+### 4、maximun capital
 
 > 给定一组投资项目，已知项目所需投资资金，项目盈利、初始资金、投资的项目个数，求最大剩余的资金
 
@@ -191,6 +191,6 @@ Time Complexity : *O*(*N log N* + *K log K*)
 
 Space Complexity : *O*(*N*)
 
-## 5、next interval
+### 5、next interval
 
 > 没看懂

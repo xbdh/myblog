@@ -31,11 +31,11 @@ projects: []
 
 
 
-## 1、introduction
+### 1、introduction
 
 > 深度遍历，树的一种遍历方式，在遍历过程中用递归或栈记录所有父节点
 
-## 2、binary tree path sum
+### 2、binary tree path sum
 
 > 给定二叉树和数S，判断是否有从根到叶子的路径，使得此路径所有节点的和等于S
 
@@ -71,7 +71,7 @@ Time Complexity : *O*(N)
 
 Space Complexity : *O*(N)
 
-## 3、all Paths for a sum
+### 3、all Paths for a sum
 
 > 给定二叉树和数S，求所有从根到叶子的路径，路径所有节点的和等于S
 
@@ -189,7 +189,7 @@ int findMaxPath(TreeNode *root) {
 
 
 
-## 4、sum of path numbers
+### 4、sum of path numbers
 
 > 给定二叉树，节点值在 0 - 9，从根到叶子节点的代表一个整数，求所有路径之和
 
@@ -225,7 +225,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 5、path with given sequence
+### 5、path with given sequence
 
 > 给定二叉树和序列，序列代表从根到叶子节点的路径，判断序列代表的路径是否在树上
 
@@ -266,7 +266,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 6、tree diameter
+### 6、tree diameter
 
 > 给定二叉树，求其diameter(直径)：两叶子结点之间的最长路径。最长直径可能不经过根节点。
 
@@ -302,7 +302,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 7、path with max sum
+### 7、path with max sum
 
 > 给定二叉树， 求任意两节点之间路径的最大和，不必经过根节点
 

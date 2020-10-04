@@ -12,6 +12,7 @@ lastmod: 2020-05-23T17:56:50+08:00
 featured: false
 draft: false
 toc: true
+
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
@@ -28,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 解决k个有序数组的合并、最值问题。用heap。
 
-## 2、merge k sorted lists
+### 2、merge k sorted lists
 
 > 给定K组有序链表，合成一个有序链表
 
@@ -102,7 +103,7 @@ Time Complexity : *O*(*N \* log K*)
 
 Space Complexity : *O*(*K*)
 
-## 3、kth smallest number in m sorted lists
+### 3、kth smallest number in m sorted lists
 
 > 给定M个有序数组，求所有数组中第K小的元素
 
@@ -182,7 +183,7 @@ Space Complexity : *O*(*M*)
 
 > 解：同此题，要记录元素所在数组及索引
 
-## 4、kth smallest number in a sorted matrix
+### 4、kth smallest number in a sorted matrix
 
 > 给定矩阵和K值，每行每列增序，求第K小的数
 
@@ -254,7 +255,7 @@ code：
 
 
 
-## 5、smallest number range
+### 5、smallest number range
 
 > 给定m个有序数组，求长度最小的范围区间，使得区间包含每个数组至少一个元素
 
@@ -327,7 +328,7 @@ Time Complexity : *O*(*N \* log M*)
 
 Space Complexity : *O*(*M*)
 
-## 6、k pair with largest sums
+### 6、k pair with largest sums
 
 > 给定两个降序数组和k值，求和最大的K对数(每个数组各一个值，值允许重复)
 

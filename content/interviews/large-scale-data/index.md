@@ -3,14 +3,16 @@
 
 title: "Large Scale Data"
 subtitle: ""
-summary: ""
+summary: "海量数据处理"
 authors: []
-tags: []
-categories: []
+tags: ["Large Scale Data"]
+categories: ["interview","Large Scale Data"]
 date: 2020-10-03T20:40:57+08:00
 lastmod: 2020-10-03T20:40:57+08:00
 featured: false
 draft: false
+toc: true 
+
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

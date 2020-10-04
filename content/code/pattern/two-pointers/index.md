@@ -31,13 +31,13 @@ projects: []
 
 
 
-# 1、介绍
+### 1、介绍
 
 在**有序**数组或链表中查找出满足某些限定条件一组元素时，常用双指针法。
 
 
 
-# 2、pair with target sum
+### 2、pair with target sum
 
 > 给定有序数组、目标值target，在数组中找到一对值，使得其和等于目标值
 >
@@ -109,7 +109,7 @@ Time:	*O*(N)
 
 Space:	*O*(N)
 
-# 3、remove Duplicates
+### 3、remove Duplicates
 
 > 删除有序数组中重复的元素，不准使用额外的存储空间，返回删除后的新数组长度
 
@@ -175,7 +175,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(1)
 
-# 4、squaring a sorted arrary
+### 4、squaring a sorted arrary
 
 > 给定有序数组，将所有元素的平方有序输出
 
@@ -227,7 +227,7 @@ Space Complexity :	*O*(N)
 
 
 
-# 5、triplet sum to zero
+### 5、triplet sum to zero
 
 > 给定未排序的整数数组，找出所有和为0、长度为3且不重复的子数组
 
@@ -294,7 +294,7 @@ Time Complexity :	*O*(N^2)
 
 Space Complexity :	*O*(N)
 
-# 6、triplet sum close to target
+### 6、triplet sum close to target
 
 > 给定未排序数组和target值，找出长度为3的子数组，使得子数组的和尽可能接近target，返回子数组的和
 
@@ -346,7 +346,7 @@ Time Complexity :	*O*(N^2)
 
 Space Complexity :	*O*(N)
 
-# 7、triplets with smaller sum
+### 7、triplets with smaller sum
 
 > 给定未排序数组和target值，找出所有triplets，使得arr[i]+arr[j]+arr[k]< target，i,j,k不相等，返回满足条件的triplets的个数
 
@@ -452,7 +452,7 @@ Time Complexity :	*O*(N^3)
 
 Space Complexity :	*O*(N)
 
-# 8、subarrary with product less than a target
+### 8、subarrary with product less than a target
 
 > 给定只包含正整数的数组和target值，寻找所有连续子数组，使得子数组的元素的乘积小于target
 
@@ -501,7 +501,7 @@ Time Complexity :	*O*(N^3)
 
 Space Complexity :	*O*(N)
 
-# 9、dutch National flag problem
+### 9、dutch National flag problem
 
 > 给定只包含0,1,2的数组，原地排序，不准计算0,1,2的个数
 
@@ -550,7 +550,7 @@ Time Complexity :	*O*(N)
 
 Space Complexity :	*O*(N)
 
-# 10、quadruple sum to target
+### 10、quadruple sum to target
 
 > 给定未排序数组和target值，找出所有不同的quadruple（长度为4的子数组），使得其和等于target
 
@@ -617,7 +617,7 @@ Time Complexity :	*O*(N^3)
 
 Space Complexity :	*O*(N)
 
-# 11、comparing strings containing backspaces
+### 11、comparing strings containing backspaces
 
 > 给定两个包含退格键的字符串，判断他们是否相同，backspace用#表示
 
@@ -692,7 +692,7 @@ Time Complexity :	*O*(N+M)
 
 Space Complexity :	*O*(1)
 
-# 12、mininum window sort
+### 12、mininum window sort
 
 > 求最短子数组的长度，子数组满足条件：当子数组排序后，整个数组是有序的
 

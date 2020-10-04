@@ -12,6 +12,7 @@ lastmod: 2020-05-23T17:47:56+08:00
 featured: false
 draft: false
 toc: true
+
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
@@ -28,7 +29,7 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 常用来解决重叠区间问题，如求重叠的区间或合并有重叠的区间
 
@@ -36,7 +37,7 @@ projects: []
 
 ![](./1-1.png)
 
-## 2、merge interval
+### 2、merge interval
 
 > 给定一组区间，合并重叠的区间
 
@@ -102,7 +103,7 @@ bool isMerge(const vector<vector<int>> &intervals) {
 }
 ```
 
-## 3、insert interval
+### 3、insert interval
 
 > 给定一组不重叠区间（按照起始位置排序）和一个区间，合并，生成新的不重叠的区间
 
@@ -144,7 +145,7 @@ Time Complexity : *O*(*N*)
 
 Space Complexity : *O*(*N*)
 
-## 4、intervals intersection
+### 4、intervals intersection
 
 > 给定两组区间（每组不重叠，按起始位置排序），求其相交区间
 
@@ -180,7 +181,7 @@ Time Complexity : *O*(*N* + *M*)
 
 Space Complexity : *O*(*1*)
 
-## 5、conflicting appointments
+### 5、conflicting appointments
 
 > 给定一组区间代表一组会议持续时间，判断某人是否能够参加所有的会议
 
@@ -229,7 +230,7 @@ Space Complexity : *O*(*N*)
 待写
 ```
 
-## 6、minimum meeting rooms
+### 6、minimum meeting rooms
 
 >给定一组区间代表一些会议，求能举办这些会议的最小会议室
 
@@ -273,10 +274,10 @@ Time Complexity : *O*(*N* *  log *N* )
 
 Space Complexity : *O*(*N*)
 
-## 7、maximum cpu load
+### 7、maximum cpu load
 
 > 没看懂
 
-## 8、employee free time
+### 8、employee free time
 
 > 待看

@@ -12,6 +12,7 @@ lastmod: 2020-05-23T17:55:06+08:00
 featured: false
 draft: false
 toc: true
+
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
@@ -28,11 +29,11 @@ image:
 projects: []
 ---
 
-## 1、introduction
+### 1、introduction
 
 在数组，链表，矩阵中查找特定的值
 
-## 2、order-agnostic binary search
+### 2、order-agnostic binary search
 
 >  给定有序数组（不知升序，降序，有可能有重复）和Key值，判断key是否在数组中，返回其索引
 
@@ -86,7 +87,7 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 3、ceiling of a number
+### 3、ceiling of a number
 
 > 给定升序序列和key值，求ceiling of key（数组中最小的大于等于key的数），返回其索引
 
@@ -139,7 +140,7 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 4、next letter
+### 4、next letter
 
 > 给定包含小写字母的升序序列和key，寻找最小的字母使得大于key，假定序列为循环序列（当key大于等于arr[arr.size()-1]时，返回arr[0]
 
@@ -188,7 +189,7 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 5、number range
+### 5、number range
 
 > 给定升序序列和key值，求key值得范围（key出现在序列中起始结束的索引）
 
@@ -255,13 +256,13 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 6、search in a sorted infinite array
+### 6、search in a sorted infinite array
 
 > 给定未知个数的升序序列和key，判断key是否在其中
 
 > 待看
 
-## 7、minimum difference element
+### 7、minimum difference element
 
 > 给定升序序列和key，求序列中与key 的差的绝对值差距最小的数
 
@@ -315,7 +316,7 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 8、bitonic array maximum
+### 8、bitonic array maximum
 
 > 求bitonic数组中的最大值
 >
@@ -370,7 +371,7 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 9、search bitonic array
+### 9、search bitonic array
 
 > 给定bitonic数组和key值，判断key是否在其中，返回索引
 >
@@ -464,7 +465,7 @@ Time Complexity : *O*(log*N*)
 
 Space Complexity : *O*(1)
 
-## 10、search in rotated array
+### 10、search in rotated array
 
 > 给定rotated array(不含重复)和key，判断key是否在其中，返回索引
 >
@@ -568,7 +569,7 @@ Time Complexity : *O*(log*N*)，最坏： *O*(*N*)
 
 Space Complexity : *O*(1)
 
-## 11、rotation count
+### 11、rotation count
 
 > 求旋转数组(无重复)旋转了几个位置
 
