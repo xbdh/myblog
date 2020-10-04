@@ -5,8 +5,8 @@ title: "Pattern-2 Sliding Window"
 subtitle: ""
 summary: "滑动窗口"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["滑动窗口"]
+categories: ["pattern"]
 date: 2020-05-23T17:44:03+08:00
 lastmod: 2020-05-23T17:44:03+08:00
 featured: false

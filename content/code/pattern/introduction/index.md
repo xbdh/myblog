@@ -5,13 +5,13 @@ title: "Pattern-1 Introduction"
 subtitle: ""
 summary: "code interview patterns介绍"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: []
+categories: ["pattern"]
 date: 2020-05-19T17:36:41+08:00
 lastmod: 2020-05-19T17:36:41+08:00
 featured: false
 draft: false
-
+toc: true 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

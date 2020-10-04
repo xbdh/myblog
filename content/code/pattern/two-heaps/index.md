@@ -5,12 +5,13 @@ title: "Pattern-10 Two Heaps"
 subtitle: ""
 summary: "双堆"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["双堆"]
+categories: ["pattern"]
 date: 2020-05-23T17:53:19+08:00
 lastmod: 2020-05-23T17:53:19+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

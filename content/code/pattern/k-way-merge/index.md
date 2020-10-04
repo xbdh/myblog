@@ -5,13 +5,13 @@ title: "Pattern-15 K Way Merge"
 subtitle: ""
 summary: "多路归并排序"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["多路归并排序"]
+categories: ["pattern"]
 date: 2020-05-23T17:56:50+08:00
 lastmod: 2020-05-23T17:56:50+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

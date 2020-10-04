@@ -5,12 +5,13 @@ title: "pattern-11 Subsets"
 subtitle: ""
 summary: "子集"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["子集"]
+categories: ["pattern"]
 date: 2020-05-23T17:53:35+08:00
 lastmod: 2020-05-23T17:53:35+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

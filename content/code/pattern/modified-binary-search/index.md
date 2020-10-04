@@ -5,13 +5,13 @@ title: "Pattern-12 Modified Binary Search"
 subtitle: ""
 summary: "改造后的二分查找"
 authors: []
-tags: ["pattern","二分查找"]
-categories: []
+tags: ["二分查找"]
+categories: ["pattern"]
 date: 2020-05-23T17:55:06+08:00
 lastmod: 2020-05-23T17:55:06+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

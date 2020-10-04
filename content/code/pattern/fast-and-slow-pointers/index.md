@@ -5,13 +5,13 @@ title: "Pattern-4 Fast and Slow Pointers"
 subtitle: ""
 summary: "快慢指针"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["快慢指针"]
+categories: ["pattern"]
 date: 2020-05-23T17:46:20+08:00
 lastmod: 2020-05-23T17:46:20+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

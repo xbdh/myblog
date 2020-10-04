@@ -5,13 +5,13 @@ title: "Pattern-13 Bitwise Xor"
 subtitle: ""
 summary: "位运算"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["位运算"]
+categories: ["pattern"]
 date: 2020-05-23T17:55:41+08:00
 lastmod: 2020-05-23T17:55:41+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

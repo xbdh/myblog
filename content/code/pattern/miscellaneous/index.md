@@ -5,8 +5,8 @@ title: "Pattern-18 Miscellaneous"
 subtitle: ""
 summary: "杂"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: []
+categories: ["pattern"]
 date: 2020-05-24T12:30:08+08:00
 lastmod: 2020-05-24T12:30:08+08:00
 featured: false

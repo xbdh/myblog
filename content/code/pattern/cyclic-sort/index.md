@@ -5,8 +5,8 @@ title: "Pattern-6 Cyclic Sort"
 subtitle: ""
 summary: "循环排序"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["循环排序"]
+categories: ["pattern"]
 date: 2020-05-23T17:48:24+08:00
 lastmod: 2020-05-23T17:48:24+08:00
 featured: false

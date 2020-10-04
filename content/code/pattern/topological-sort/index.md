@@ -5,12 +5,13 @@ title: "Pattern-17 Topological Sort"
 subtitle: ""
 summary: "拓扑排序"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["拓扑排序"]
+categories: ["pattern"]
 date: 2020-05-23T17:59:08+08:00
 lastmod: 2020-05-23T17:59:08+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

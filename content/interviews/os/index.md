@@ -1,12 +1,12 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: "Os"
+title: "操作系统"
 subtitle: ""
-summary: ""
+summary: "OS"
 authors: []
-tags: []
-categories: []
+tags: ["OS"]
+categories: ["interview","OS"]
 date: 2020-10-03T20:25:13+08:00
 lastmod: 2020-10-03T20:25:13+08:00
 featured: false

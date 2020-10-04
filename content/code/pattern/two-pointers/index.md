@@ -5,12 +5,13 @@ title: "Pattern-3 Two Pointers"
 subtitle: ""
 summary: "双指针"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["双指针"]
+categories: ["pattern"]
 date: 2020-05-23T17:45:10+08:00
 lastmod: 2020-05-23T17:45:10+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

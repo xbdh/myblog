@@ -5,13 +5,13 @@ title: "Pattern-5 Merge Intervals"
 subtitle: ""
 summary: "区间合并"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["区间合并"]
+categories: ["pattern"]
 date: 2020-05-23T17:47:56+08:00
 lastmod: 2020-05-23T17:47:56+08:00
 featured: false
 draft: false
-
+toc: true
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.

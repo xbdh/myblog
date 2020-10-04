@@ -5,12 +5,13 @@ title: "Pattern-16 0-1 Knapsack"
 subtitle: ""
 summary: "0-1背包"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["0-1 Knapsack"]
+categories: ["pattern"]
 date: 2020-05-23T17:57:50+08:00
 lastmod: 2020-05-23T17:57:50+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.

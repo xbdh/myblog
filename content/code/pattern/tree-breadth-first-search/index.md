@@ -5,12 +5,13 @@ title: "Pattern-8 Tree Breadth First Search"
 subtitle: ""
 summary: "BFS"
 authors: []
-tags: ["pattern"]
-categories: []
+tags: ["BFS"]
+categories: ["pattern"]
 date: 2020-05-23T17:50:19+08:00
 lastmod: 2020-05-23T17:50:19+08:00
 featured: false
 draft: false
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
