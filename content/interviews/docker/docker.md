@@ -1,14 +1,14 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: "Data Structure"
+title: "Docker"
 subtitle: ""
-summary: "常见数据结构"
+summary: "Docker 操作"
 authors: []
-tags: ["Data Structure"]
-categories: ["interview","Data Structure"]
-date: 2020-10-03T20:43:04+08:00
-lastmod: 2020-10-03T20:43:04+08:00
+tags: ["Docker"]
+categories: ["interview","Docker"]
+date: 2020-10-03T20:34:17+08:00
+lastmod: 2020-10-03T20:34:17+08:00
 featured: false
 draft: false
 toc: true
@@ -28,3 +28,9 @@ image:
 #   Otherwise, set `projects = []`.
 projects: []
 ---
+
+# docker
+
+问了Docker 镜像 dockerfile的编写 
+
+我说基于⼀个极⼩的linux镜像,在其基础上进⾏⾃⼰想要的配置和命令的编

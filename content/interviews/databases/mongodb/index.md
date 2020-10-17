@@ -28,3 +28,15 @@ image:
 #   Otherwise, set `projects = []`.
 projects: []
 ---
+
+### 假设需要启动MongoDB，在linux下怎么设置只能启动⼀个？
+
+### MongoDB怎么做备份？
+
+### MongoDB怎么解决写⼊失败问题？
+
+### MongoDB有什么事务的⽀持？
+
+### MongoDB的数据结构
+
+### 数据库⽅⾯有mongodb和mysql的区别

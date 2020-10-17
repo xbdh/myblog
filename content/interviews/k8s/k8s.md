@@ -1,18 +1,17 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: "Large Scale Data"
+title: "Kubernetes"
 subtitle: ""
-summary: "海量数据处理"
+summary: "Kubernetes 操作"
 authors: []
-tags: ["Large Scale Data"]
-categories: ["interview","Large Scale Data"]
-date: 2020-10-03T20:40:57+08:00
-lastmod: 2020-10-03T20:40:57+08:00
+tags: ["Kubernetes"]
+categories: ["interview","Kubernetes"]
+date: 2020-10-03T20:34:44+08:00
+lastmod: 2020-10-03T20:34:44+08:00
 featured: false
 draft: false
-toc: true 
-
+toc: true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -29,3 +28,5 @@ image:
 #   Otherwise, set `projects = []`.
 projects: []
 ---
+
+# k8s
