@@ -3082,7 +3082,7 @@ input.btn-block[type="button"] {
 .navbar-light .navbar-brand {
   color: #fff; }
   .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-    color: #e1251b; }
+    color: #000; }
 
 .navbar-light .navbar-nav .nav-link {
   color: #fff; }
@@ -3095,7 +3095,7 @@ input.btn-block[type="button"] {
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active {
-  color: #e1251b; }
+  color: #000; }
 
 .navbar-light .navbar-toggler {
   color: #fff;
@@ -3107,9 +3107,9 @@ input.btn-block[type="button"] {
 .navbar-light .navbar-text {
   color: #fff; }
   .navbar-light .navbar-text a {
-    color: #e1251b; }
+    color: #000; }
     .navbar-light .navbar-text a:hover, .navbar-light .navbar-text a:focus {
-      color: #e1251b; }
+      color: #000; }
 
 .navbar-dark .navbar-brand {
   color: #fff; }
@@ -6986,13 +6986,13 @@ a.text-dark:hover, a.text-dark:focus {
  **************************************************/
 html {
   font-family: Source Code Pro, sans-serif;
-  font-size: 17.71px;
+  font-size: 13.86px;
   color: rgba(0, 0, 0, 0.8);
   line-height: 1.65; }
 
 @media screen and (min-width: 58em) {
   html {
-    font-size: 23px; } }
+    font-size: 18px; } }
 
 body {
   font-family: inherit;
@@ -7060,21 +7060,24 @@ h1, h2, h3, h4, h5, h6 {
   hyphens: manual; }
 
 h1 {
-  font-size: 2.25rem; }
+  font-size: 2.5rem; }
 
 h2 {
-  margin-top: 1rem;
-  font-size: 1.5rem; }
+  margin-top: 3rem;
+  font-size: 2.25rem;
+  font-weight: 700; }
 
 h3 {
   font-weight: 700;
-  margin-top: 1.5rem;
-  font-size: 1.25rem; }
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 2rem; }
 
 h4, h5, h6 {
   font-weight: 700;
   margin-top: 1rem;
-  font-size: 1rem; }
+  margin-bottom: 1rem;
+  font-size: 1.75rem; }
 
 a,
 h3.article-title a:hover {
@@ -7128,7 +7131,7 @@ pre {
   background-color: #f8f8f8;
   /* Match default highlight theme. */
   border-color: #f8f8f8;
-  font-size: 0.7rem;
+  font-size: 1rem;
   border-radius: 4px; }
 
 pre code {
@@ -7174,6 +7177,9 @@ blockquote p:last-child {
   padding-left: 1rem;
   padding-top: 0.1rem;
   width: 100%; }
+
+.universal-wrapper a {
+  color: black; }
 
 @media only screen and (min-width: 1001px) {
   .universal-wrapper {
@@ -7270,7 +7276,7 @@ footer {
   width: 100%; }
 
 footer p {
-  font-size: 0.75rem;
+  font-size: 1rem;
   text-align: center; }
 
 site-footer,
@@ -7484,9 +7490,9 @@ div.alert a {
  **************************************************/
 .navbar {
   height: 70px;
-  background: #29afec;
+  background: #0084ff;
   box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.11);
-  font-size: 17.71px;
+  font-size: 13.86px;
   position: fixed;
   top: 0;
   right: 0;
@@ -7510,13 +7516,13 @@ div.alert a {
         color: #fff; }
       .navbar .navbar-nav .nav-link.active {
         font-weight: bold !important;
-        color: #e1251b !important; }
+        color: #000 !important; }
   .navbar .dropdown-menu {
-    font-size: 17.71px; }
+    font-size: 13.86px; }
   .navbar .dropdown-item.active,
   .navbar .i18n-active {
     font-weight: bold;
-    color: #e1251b !important; }
+    color: #000 !important; }
 
 .dark .navbar {
   box-shadow: 0 0.125rem 0.25rem 0 rgba(255, 255, 255, 0.11); }
@@ -7580,7 +7586,7 @@ div.alert a {
     left: 0;
     top: 50px;
     width: 100%;
-    background-color: #29afec;
+    background-color: #0084ff;
     text-align: center !important; }
   #navbar-main .main-menu-item .nav-item {
     padding: 10px 15px !important; }
@@ -7604,12 +7610,15 @@ ul.nav-icons li.nav-item a.nav-link {
   padding: 0; }
 
 .dropdown-menu {
-  background-color: #29afec !important;
+  background-color: #0084ff !important;
   color: #fff !important; }
 
 .dropdown-item {
-  background-color: #29afec !important;
+  background-color: #0084ff !important;
   color: #fff !important; }
+
+.nav-item {
+  font-size: 20px; }
 
 /*************************************************
  *  Card component

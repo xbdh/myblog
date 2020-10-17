@@ -9,9 +9,9 @@ light = true
 primary = "#ff3860"
 
 # Menu
-menu_primary = "#29afec" # 蓝色
+menu_primary = "#0084ff" # 蓝色
 menu_text = "#fff"
-menu_text_active = "#e1251b" # 红色
+menu_text_active = "#000" # 黑色
 menu_title = "#fff"
 
 # Home sections
