@@ -1,3 +1,4 @@
+---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Redis"
@@ -26,8 +27,7 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-
-
+---
 
 ## 一、概述
 
