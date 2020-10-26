@@ -5,7 +5,7 @@
 html {
   font-family: $sta-font-body, sans-serif;
   font-size: #{$sta-font-size-small}px;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0,0,0,0.8);/*字体颜色变深，可以用0.8改为1*/
   line-height: 1.65;
 }
 @media screen and (min-width: 58em) {

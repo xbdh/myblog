@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Set Bootstrap variables */
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
@@ -6988,6 +6989,7 @@ html {
   font-family: Source Code Pro, sans-serif;
   font-size: 13.86px;
   color: rgba(0, 0, 0, 0.8);
+  /*字体颜色变深，可以用0.8改为1*/
   line-height: 1.65; }
 
 @media screen and (min-width: 58em) {
@@ -8401,7 +8403,7 @@ a.hero-cta-alt:hover {
   margin: 20px 0 10px 0; }
 
 .portrait-title h3 {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 300;
   color: rgba(0, 0, 0, 0.54);
   margin: 0px 0 10px 0; }
@@ -8431,7 +8433,7 @@ ul.network-icon {
   font-size: 2rem; }
 
 ul.ul-interests li {
-  font-size: 0.9rem; }
+  font-size: 1.2rem; }
 
 ul.ul-edu {
   list-style: none; }
@@ -8444,11 +8446,11 @@ ul.ul-edu li .description p {
   margin: 0; }
 
 ul.ul-edu li .description p.course {
-  font-size: 0.9rem; }
+  font-size: 1.2rem; }
 
 ul.ul-edu li .description p.institution {
-  font-size: 0.75rem;
-  color: rgba(0, 0, 0, 0.6); }
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.7); }
 
 /*************************************************
  * Experience
