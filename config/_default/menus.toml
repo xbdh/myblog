@@ -10,7 +10,7 @@
 
 [[main]]
   name = "GO"
-  url = "go"
+  url = "/go"
   weight = 20
 
 # [[main]]

@@ -29,6 +29,10 @@ image:
 projects: []
 ---
 
+
+
+![fuck](./icon.jpg)
+
 ### 0. error vs exception
 
 各个语言的演进历史：

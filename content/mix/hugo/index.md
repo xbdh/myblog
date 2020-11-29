@@ -35,6 +35,7 @@ projects: []
 ```go
 例子1：三个文件在同一文件夹内，index后缀默认路由
 
+// 默认会在content下建文件
 hugo new -kind=post post/post-name/index.md
 //路由：http://www.example.com/post-name/
 
@@ -66,5 +67,20 @@ hugo server
 
 ```go
 hugo new site [path/name]
+```
+
+### 4. 相对路径和绝对路径
+
+```go
+如果某文件夹内有：
+index.md  1.jpg 2.png
+
+那么 index.md 使用相对路径引用图片 路径为：![](./1.png) ![](./2.png)
+
+
+如果某文件夹内有：
+a.md  1.jpg 2.png
+那么 a.md 使用相对路径引用图片 路径为：![](../1.png) ![](../2.png) //上一级目录
+这样会导致在tyora中错误显示
 ```
 
