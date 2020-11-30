@@ -7066,14 +7066,14 @@ h1 {
 
 h2 {
   margin-top: 3rem;
-  font-size: 2.25rem;
+  font-size: 2.1rem;
   font-weight: 700; }
 
 h3 {
   font-weight: 700;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  font-size: 2rem; }
+  font-size: 1.9rem; }
 
 h4, h5, h6 {
   font-weight: 700;
@@ -7133,7 +7133,7 @@ pre {
   background-color: #f8f8f8;
   /* Match default highlight theme. */
   border-color: #f8f8f8;
-  font-size: 1rem;
+  font-size: 0.8rem;
   border-radius: 4px; }
 
 pre code {
@@ -8802,7 +8802,7 @@ ul.toc-top {
 
 #TableOfContents ul ul {
   display: block;
-  padding-left: 15px;
+  padding-left: 30px;
   font-size: 0.5rem; }
 
 #TableOfContents li {
@@ -8841,11 +8841,11 @@ ul.toc-top {
 
 #TableOfContents ul li ul a {
   font-size: 0.8rem;
-  color: #696969; }
+  color: black; }
 
 #TableOfContents ul li ul ul a {
   font-size: 0.8rem;
-  color: #a9a9a9; }
+  color: black; }
 
 article > div:nth-child(2) {
   border: 1px solid #eee; }

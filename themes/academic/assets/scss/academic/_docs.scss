@@ -224,7 +224,7 @@ ul.toc-top {
 //10px每一级标题后退15p h3->h4 后退15px
 #TableOfContents ul ul {
   display: block;
-  padding-left: 15px;
+  padding-left: 30px;
   font-size: 0.5rem;
 }
 // //10px每一级标题后退10px
@@ -280,12 +280,12 @@ ul.toc-top {
 //h4标题
 #TableOfContents  ul  li ul  a {
     font-size: 0.8rem;
-    color:#696969;
+    color:black;
 }
 //h5标题
 #TableOfContents  ul li  ul   ul  a{
   font-size: 0.8rem;
-  color:#a9a9a9;
+  color:black;
 }
 // .docs-content {
 //   padding-left: 30px;

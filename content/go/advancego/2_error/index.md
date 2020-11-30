@@ -641,7 +641,7 @@ func AuthenticateRequest(r *Request) error{
 }   
 ```
 
-##### **统计行数**
+**统计行数**
 
 ```go
 func CountLines(r io.Reader) (int, error) {
@@ -701,7 +701,7 @@ func AuthenticateRequest(r *Request) error{
 
 如果 authenticate 返回错误，则 AuthenticateRequest 会将错误返回给调用方，调用者可能也会这样做，依此类推。在程序的顶部，程序的主体将把错误打印到屏幕或日志文件中，打印出来的只是：没有这样的文件或目录。
 
-#### **`fmt.Errorf()` **
+#### fmt.Errorf()
 
 ```go
 func AuthenticateRequest(r *Request) error{
