@@ -91,7 +91,7 @@ go语言 `errror `哲学
 
 #### panic 处理
 
-常出现panic的地方就是,开了`goroutinue`，其内部出现panic，从而导致整个进程挂掉。
+常出现panic的地方就是,开了`goroutinue`，其内部出现panic，从而导致整个进程挂掉。还有http router。
 
 ```go
 package main
@@ -196,6 +196,8 @@ type error interface {
 }
 ```
 
+#### ` errors.New()`
+
 我们经常使用` errors.New()` 来返回一个 error 对象。`errors.New() `返回的是 内部` errorString` 对象的指针。
 
 ```go
@@ -219,7 +221,40 @@ func (e *errorString) Error() string {
 }
 ```
 
-值类型和指针类型
+#### `fmt.Errorf()` 
+
+也返回一个error
+
+```go
+fmt.Errorf()
+// example
+fmt.Errorf("logic wrong :%v",err)
+
+// Errorf formats according to a format specifier and returns the string as a
+// value that satisfies error.
+//
+// If the format specifier includes a %w verb with an error operand,
+// the returned error will implement an Unwrap method returning the operand. It is
+// invalid to include more than one %w verb or to supply it with an operand
+// that does not implement the error interface. The %w verb is otherwise
+// a synonym for %v.
+func Errorf(format string, a ...interface{}) error {
+	p := newPrinter()
+	p.wrapErrs = true
+	p.doPrintf(format, a)
+	s := string(p.buf)
+	var err error
+	if p.wrappedErr == nil {
+		err = errors.New(s)
+	} else {
+		err = &wrapError{s, p.wrappedErr}
+	}
+	p.free()
+	return err
+}
+```
+
+#### 值类型和指针类型
 
 ```go
 // 自定义的errorString
@@ -379,7 +414,7 @@ Sentinel errors 在两个包之间创建了依赖。
 
 > 我的建议是避免在编写的代码中使用 sentinel errors。在标准库中有一些使用它们的情况，但这不是一个您应该模仿的模式。
 
-### 3.自定义的Error
+### 3. 自定义的Error
 
 Error type 是实现了 error 接口的自定义类型。例如 MyError 类型记录了文件和行号以展示发生了什么。
 
@@ -589,7 +624,7 @@ if err==nil{
 // handle error
 ```
 
-#### 无用的error 处理
+#### 消除error处理
 
 ```go
 func AuthenticateRequest(r *Request) error{
@@ -606,35 +641,734 @@ func AuthenticateRequest(r *Request) error{
 }   
 ```
 
-**统计 io.Reader 读取内容的行数**
+##### **统计行数**
 
-![](./io1.png)
+```go
+func CountLines(r io.Reader) (int, error) {
+        var (
+                br    = bufio.NewReader(r)
+                lines int
+                err   error
+        )
+
+        for {
+                _, err = br.ReadString('\n')
+                lines++
+                if err != nil {
+                        break
+                }
+        }
+
+        if err != io.EOF {
+                return 0, err
+        }
+        return lines, nil
+ }
+```
 
 改进
 
-![](./io2.png)
+```go
+func CountLines(r io.Reader) (int, error) {
+        sc := bufio.NewScanner(r)
+        lines := 0
+
+        for sc.Scan() {
+                lines++
+        }
+
+        return lines, sc.Err()
+}
+```
 
 
 
 **WriteResponse**
 
-![](./io3.png)
+更多例子
 
-改进
+https://dave.cheney.net/2019/01/27/eliminate-error-handling-by-eliminating-errors
 
-![](./io4.png)
-
-![](./io5.png)
+### 5. errors 处理哲学
 
 
 
+```go
+func AuthenticateRequest(r *Request) error{
+    return authenticate(r.User)
+} 
+```
+
+如果 authenticate 返回错误，则 AuthenticateRequest 会将错误返回给调用方，调用者可能也会这样做，依此类推。在程序的顶部，程序的主体将把错误打印到屏幕或日志文件中，打印出来的只是：没有这样的文件或目录。
+
+#### **`fmt.Errorf()` **
+
+```go
+func AuthenticateRequest(r *Request) error{
+    err:= authenticate(r.User)
+    if err!=nil{
+        return fmt.Errorf("authenticate failed:%v", err)
+    }
+    
+    return nil
+} 
+```
+
+没有生成错误的 file:line 信息。没有导致错误的调用堆栈的堆栈跟踪。这段代码的作者将被迫进行长时间的代码分割，以发现是哪个代码路径触发了文件未找到错误。
+
+这种模式与 sentinel errors 或 type assertions 的使用不兼容，因为将错误值转换为字符串，将其与另一个字符串合并，然后将其转换回 fmt.Errorf 破坏了原始错误，导致等值判定失败。
+
+####  handle errors once
+
+常出现以下代码在错误处理中，带了两个任务: 记录日志并且再次返回错误
+
+```go
+if err!=nil{
+    log.Println("somthing wrong".err) //写入日志
+    return err  //网上抛
+}
+```
+
+**例子**：
+
+如果在 w.Write 过程中发生了一个错误，那么一行代码将被写入日志文件中，记录错误发生的文件和行，并且错误也会返回给调用者，调用者可能会记录错误并返回它，一直返回到程序的顶部。
+
+在日志文件中出现了一堆重复的日志，但是在程序的顶部，只能获得了没有任何上下文的原始错误。
+
+```go
+func Write(w io.Writer, buf []byte) error {
+        _, err := w.Write(buf)
+        if err != nil {
+                // annotated error goes to log file
+                log.Println("unable to write:", err)
+ 
+                // unannotated error returned to caller
+                return err
+        }
+        return nil
+}
+
+func WriteConfig(w io.Writer ,conf *Conf)error{
+    buf ,err :=json.Marshal(conf)
+    
+    if err!=nil{
+        log.PrintF("could not mashal config :%v",err)
+        return err
+    }
+    
+    if err:=write(w,buf); err!=nil{
+        log.Println("could not write config :%v",err)
+        return err
+    }
+    
+    return nil
+}
+```
+
+output:
+
+```go
+unable to write: io.EOF
+could not write config: io.EOF
+```
+
+**还可能产生一些意想不到的错误**
+
+```go
+
+func WriteConfig(w io.Writer ,conf *Conf)error{
+    buf ,err :=json.Marshal(conf)
+    
+    if err!=nil{
+        log.PrintF("could not mashal config :%v",err)
+        // 忘记return   要么降级，要么往上抛
+    }
+    
+    if err:=write(w,buf); err!=nil{
+        log.Println("could not write config :%v",err)
+        return err
+    }
+    
+    return nil
+}
+```
+
+Go 中的错误处理契约规定，在出现错误的情况下，不能对其他返回值的内容做出任何假设。
+
+由于 JSON 序列化失败，buf 的内容是未知的，可能它不包含任何内容，但更糟糕的是，它可能包含一个半写的 JSON 片段。
+
+由于程序员在检查并记录错误后忘记 return，损坏的缓冲区将被传递给 WriteAll，这可能会成功，因此配置文件将被错误地写入。但是，该函数返回的结果是正确的。
+
+#### 处理哲学
+
+日志记录与错误无关且对调试没有帮助的信息应被视为噪音，应予以质疑。记录的原因是因为某些东西失败了，而日志包含了答案。
+
+- 错误要被日志记录。
+- 应用程序处理错误，保证100%完整性。
+- 之后不再报告当前错误。
+
+只对`error`进行一次处理，打印日志算一次，往上抛或者直接处理也算一次，存在矛盾。
+
+`github.com/pkg/errors `这个包很好的解决了这个问题，只对错误处理了一次，既保留了日志，也能对error处理。
+
+### 6. github/pkg/errors
+
+通过使用 pkg/errors 包，您可以向错误值添加上下文，这种方式既可以由人也可以由机器检查。
+
+```go
+//     %s    print the error. If the error has a Cause it will be
+//           printed recursively.
+//     %v    see %s
+//     %+v   extended format. Each Frame of the error's StackTrace will
+//           be printed in detail. 
+
+// github/pkg/errors 中 %+v为 拓展的格式化，可以打印堆栈信息
+```
 
 
 
+```go
+package main
+
+import (
+
+	"io/ioutil"
+     "fmt"
+	"github.com/pkg/errors"  //不是基础库中的error
+	"os"
+	"path/filepath"
+)
+
+func ReadFile(path string)([]byte,error){
+	f,err :=os.Open(path)
+	if err!=nil {
+		return nil ,errors.Wrap(err,"open file failed")
+	}
+
+	defer f.Close()
+
+	buf,err:= ioutil.ReadAll(f)
+	if err!=nil{
+		return nil, errors.Wrap(err,"read file failed")
+	}
+
+	return buf ,nil
+}
+
+func ReadConfig()([]byte,error)  {
+	home:=os.Getenv("HOME")
+	config,err:=ReadFile(filepath.Join(home,".setting.json"))
+	return config,errors.WithMessage(err,"could not read config")
+}
+
+func main()  {
+	_,err:=ReadConfig()
+	if err!=nil{
+		fmt.Printf("根错误：%T %v\n",errors.Cause(err),errors.Cause(err))
+		fmt.Printf("堆栈信息: \n %+v \n",err)
+		os.Exit(1)
+	}
+}
+```
+
+output:
+
+```go
+I:\Go\GeekTime\week2>go run 9.wrap.go
+根错误：*os.PathError open .setting.json: The system cannot find the file specified.
+堆栈信息:
+ open .setting.json: The system cannot find the file specified.
+open file failed
+main.ReadFile
+        I:/Go/GeekTime/week2/9.wrap.go:15
+main.ReadConfig
+        I:/Go/GeekTime/week2/9.wrap.go:30
+main.main
+        I:/Go/GeekTime/week2/9.wrap.go:35
+runtime.main
+        H:/Go/src/runtime/proc.go:204
+runtime.goexit
+        H:/Go/src/runtime/asm_amd64.s:1374
+could not read config
+exit status 1
+
+```
+
+如果将31行 Wrap（）改成WithMessage（）
+
+```go
+I:\Go\GeekTime\week2>go run 9.wrap.go
+根错误：*os.PathError open .setting.json: The system cannot find the file specified.
+堆栈信息:
+ open .setting.json: The system cannot find the file specified.
+open file failed
+main.ReadFile
+        I:/Go/GeekTime/week2/9.wrap.go:15
+main.ReadConfig
+        I:/Go/GeekTime/week2/9.wrap.go:30
+main.main
+        I:/Go/GeekTime/week2/9.wrap.go:35
+runtime.main
+        H:/Go/src/runtime/proc.go:204
+runtime.goexit
+        H:/Go/src/runtime/asm_amd64.s:1374
+could not read config  
+main.ReadConfig   //多了以下堆栈信息
+        I:/Go/GeekTime/week2/9.wrap.go:31
+main.main
+        I:/Go/GeekTime/week2/9.wrap.go:35
+runtime.main
+        H:/Go/src/runtime/proc.go:204
+runtime.goexit
+        H:/Go/src/runtime/asm_amd64.s:1374
+exit status 1
+
+```
+
+
+
+#### **Wrap()**
+
+```go
+// Wrap returns an error annotating err with a stack trace
+// at the point Wrap is called, and the supplied message.
+// If err is nil, Wrap returns nil.
+func Wrap(err error, message string) error {
+	if err == nil {
+		return nil
+	}
+	err = &withMessage{ //包裹err，形成新的err，组成了链式结构
+		cause: err,
+		msg:   message,
+	}
+	return &withStack{ // 堆栈信息
+		err,
+		callers(),
+	}
+}
+```
+
+#### **WithMessage()、 Wrapf()、WithMessagef()**
+
+WithMessage()，WithMessagef()：只记录err，不记录堆栈信息
+
+```go
+// Wrapf returns an error annotating err with a stack trace
+// at the point Wrapf is called, and the format specifier.
+// If err is nil, Wrapf returns nil.
+func Wrapf(err error, format string, args ...interface{}) error {
+	if err == nil {
+		return nil
+	}
+	err = &withMessage{
+		cause: err,
+		msg:   fmt.Sprintf(format, args...),
+	}
+	return &withStack{
+		err,
+		callers(),
+	}
+}
+
+// WithMessage annotates err with a new message.
+// If err is nil, WithMessage returns nil.
+func WithMessage(err error, message string) error {
+	if err == nil {
+		return nil
+	}
+	return &withMessage{
+		cause: err,
+		msg:   message,
+	}
+}
+
+// WithMessagef annotates err with the format specifier.
+// If err is nil, WithMessagef returns nil.
+func WithMessagef(err error, format string, args ...interface{}) error {
+	if err == nil {
+		return nil
+	}
+	return &withMessage{
+		cause: err,
+		msg:   fmt.Sprintf(format, args...),
+	}
+}
+```
+
+#### Cause()
+
+解包，一直解到内部的err。
+
+和标准库error中的Unwrap（）相似
+
+```go
+// Cause returns the underlying cause of the error, if possible.
+// An error value has a cause if it implements the following
+// interface:
+//
+//     type causer interface {
+//            Cause() error
+//     }
+//
+// If the error does not implement Cause, the original error will
+// be returned. If the error is nil, nil will be returned without further
+// investigation.
+func Cause(err error) error {
+	type causer interface {
+		Cause() error
+	}
+
+	for err != nil {
+		cause, ok := err.(causer)
+		if !ok {
+			break
+		}
+		err = cause.Cause()
+	}
+	return err
+}
+```
+
+#### 使用
+
+- 在你自己的应用代码中，使用 errors.New 或者  errors.Errorf 返回错误。
+
+	```go
+	func parseArgs(args []string) error {
+	        if len(args) < 3 {
+	                return errors.Errorf("not enough arguments, expected at least 3, got %d", len(args))
+	        }
+	        // ...
+	}
+	```
+
+	
+
+- 如果调用其他的函数返回了error，通常简单的直接返回。
+
+	```go
+	err：=otherfunc()
+	if err != nil {
+	       return err
+	}
+	```
+
+	
+
+- 如果和其他库（标准库，公司基础库，第三方库）进行协作，考虑使用 errors.Wrap 或者 errors.Wrapf 保存堆栈信息。
+
+	```go
+	f, err := os.Open(path)//标准库
+	
+	if err != nil {
+	        return errors.Wrapf(err, "failed to open %q", path)
+	}
+	```
+
+- 直接返回错误，而不是每个错误产生的地方到处打日志。
+
+- 在程序的顶部或者是工作的 goroutine 顶部(请求入口)，使用 %+v 把堆栈详情记录。
+
+	```go
+	func main() {
+	        err := app.Run()
+	        if err != nil {
+	                fmt.Printf("FATAL: %+v\n", err)
+	                os.Exit(1)
+	        }
+	}
+	```
+
+- 使用 `errors.Cause`获取 root error，再进行和 sentinel error 判定。
+
+#### 总结
+
+- Packages that are reusable across many projects only return root error values.
+
+> 选择 wrap error 是只有 applications 可以选择应用的策略。具有最高可重用性的包只能返回根错误值。此机制与 Go 标准库中使用的相同(kit 库的 sql.ErrNoRows)。
+>
+> 也就是说，如果自己的代码供很多人作为基础库调用，不用wrap，返回根错误就行。
+
+- If the error is not going to be handled, wrap and return up the call stack.
+
+> 如果函数/方法不打算处理错误（不降级，直接返回），那么用足够的上下文 wrap errors 并将其返回到调用堆栈中。（Wrap()、WithMessage()、 Wrapf()、WithMessagef()）
+>
+>  Wrap(err error, message string)  message就是上下文信息
+>
+> 例如，额外的上下文可以是使用的输入参数或失败的查询语句。
+>
+> 确定您记录的上下文是足够多还是太多的一个好方法是检查日志并验证它们在开发期间是否为您工作。
+
+Once an error is handled, it is not allowed to be passed up the call stack any longer.
+
+> 一旦确定函数/方法将处理错误，例如打印错误、对错误进行逻辑处理。那么错误就不再是错误。
+>
+> 如果函数/方法仍然需要发出返回，则它不能返回错误值（不能往上层抛）。
+>
+> 它应该只返回nil(比如降级处理中，你返回了降级数据，然后需要 return nil)。
+
+
+
+### 7. before errors 1.13
+
+这里是指标准库
+
+函数在调用栈中添加信息向上传递错误，例如对错误发生时发生的情况的简要描述。
+
+```go
+if err!=nil{
+    return fmt.Errorf("somthing describe %v,%v",othercontext,err)
+}
+```
+
+ fmt.Errorf 会丢弃原始错误中除文本外的所有内容。
+
+因此需要定义一个包含底层错误的新错误类型，并将其保存以供代码检查。这里是 QueryError
+
+```go
+type QueryError struct {
+    Query string // 添加的信息 啥信息都可以，时间戳，文件名，地址等等
+    Err   error  // 底层error
+}
+
+func (e *QueryError) Error() string { return e.Query + ": " + e.Err.Error() }
+ 
+// 程序可以查看 QueryError 值以根据底层错误做出决策
+if e, ok := err.(*QueryError); ok && e.Err == ErrPermission {
+    // query failed because of a permission problem
+}
+```
+
+
+
+### 6. after errors 1.13
+
+go1.13为 errors 和 fmt 标准库包引入了新特性，以简化处理包含其他错误的错误。
+
+其中最重要的是: 包含另一个错误的 error 可以实现返回底层错误的 Unwrap 方法。如果 e1.Unwrap() 返回 e2，那么我们说 e1 包装 e2，您可以展开 e1 以获得 e2。
+
+我们可以为上面的 QueryError 类型指定一个 Unwrap 方法，该方法返回其包含的错误:
+
+```go
+func (e *QueryError) Unwrap() error {
+    return e.Err // 获取底层的错误，这个错误也有Unwrap() 方法
+}
+```
+
+go1.13 errors 包包含两个用于检查错误的新函数：Is 和 As。
+
+#### **errors.Is**
+
+```go
+// Similar to:
+//   if err == ErrNotFound { … }
+// 像与 sentinel error比较
+// 将err一直解包到根错误，再与ErrNotFound比较
+if errors.Is(err, ErrNotFound) {
+    // something wasn't found
+}
+```
+
+#### **errors.As**
+
+```go
+// Similar to:
+//   if e, ok := err.(*QueryError); ok { … }
+var e *QueryError
+// Note: *QueryError is the type of the error.
+
+// 判断err是否为*QueryError 类型
+// 像类型断言
+if errors.As(err, &e) {
+    // err is a *QueryError, and e is set to the error's value
+}
+```
+
+**例子**：
+
+```go
+if e, ok := err.(*QueryError); ok && e.Err == ErrPermission {
+    // query failed because of a permission problem
+}
+// 等价于
+if errors.Is(err, ErrPermission) {
+    // err, or some error that it wraps, is a permission problem
+}
+```
+
+#### errors.Unwrap
+
+解压err。如果err 实现了`interface {Unwrap() error}`接口，返回解压到根错误的错误，否则nil
+
+```go
+// Unwrap returns the result of calling the Unwrap method on err, if err's
+// type contains an Unwrap method returning error.
+// Otherwise, Unwrap returns nil.
+func Unwrap(err error) error {
+	u, ok := err.(interface {
+		Unwrap() error
+	})
+	if !ok {
+		return nil
+	}
+	return u.Unwrap()
+}
+```
+
+
+
+#### %w 谓词
+
+ fmt.Errorf（）生成的error 自动具有unwrap 方法。w%对应的变量必须是error
+
+```go
+if err != nil {
+    // Return an error which unwraps to err.
+    // 生成的error 自动具有unwrap 方法
+    return fmt.Errorf("decompress %v: %w", name, err)
+}
+```
+
+用 %w 包装错误可使用 errors.Is 以及 errors.As方法:
+
+```go
+err := fmt.Errorf("access denied: %w", ErrPermission)
+...
+if errors.Is(err, ErrPermission) ...
+```
+
+#### 自定义的IS, AS
+
+标准库：
+
+```go
+func Is(err, target error) bool {
+	if target == nil {
+		return err == target
+	}
+
+	isComparable := reflectlite.TypeOf(target).Comparable()
+	for {
+		if isComparable && err == target {
+			return true
+		}
+		if x, ok := err.(interface{ Is(error) bool }); ok && x.Is(target) {
+			return true
+		}
+		// TODO: consider supporting target.Is(err). This would allow
+		// user-definable predicates, but also may allow for coping with sloppy
+		// APIs, thereby making it easier to get away with them.
+		if err = Unwrap(err); err == nil {
+			return false
+		}
+	}
+}
+```
+
+自定义
+
+```go
+type Error struct {
+    Path string
+    User string
+}
+
+func (e *Error) Is(target error) bool {
+    t, ok := target.(*Error)
+    if !ok {
+        return false
+    }
+    return (e.Path == t.Path || t.Path == "") &&
+           (e.User == t.User || t.User == "")
+}
+
+if errors.Is(err, &Error{User: "someuser"}) {
+    // err's User field is "someuser".
+}
+```
+
+AS类似
+
+
+
+#### Whether to Wrap
+
+##### 例1
+
+```go
+// 加入些自定义的信息如name  用wrap
+var ErrNotFound = errors.New("not found")
+
+// FetchItem returns the named item.
+//
+// If no item with the name exists, FetchItem returns an error
+// wrapping ErrNotFound.
+func FetchItem(name string) (*Item, error) {
+    if itemNotFound(name) {
+        return nil, fmt.Errorf("%q: %w", name, ErrNotFound)
+    }
+    // ...
+}
+```
+
+##### 例2
+
+```go
+// 不想暴露过多底层错误信息，不用wrap
+f, err := os.Open(filename)
+if err != nil {
+    // The *os.PathError returned by os.Open is an internal detail.
+    // To avoid exposing it to the caller, repackage it as a new
+    // error with the same text. We use the %v formatting verb, since
+    // %w would permit the caller to unwrap the original *os.PathError.
+    return fmt.Errorf("%v", err)
+}
+```
+
+##### 例3
+
+```go
+var ErrPermission = errors.New("permission denied")
+
+// 返回ErrPermission
+// DoSomething returns an error wrapping ErrPermission if the user
+// does not have permission to do something.
+func DoSomething() error {
+    if !userHasPermission() {
+        
+        // 若要加入些自定义的上下文信息，不wrap会err == pkg.ErrPermission 出错
+        // If we return ErrPermission directly, callers might come
+        // to depend on the exact error value, writing code like this:
+        //
+        //     if err := pkg.DoSomething(); err == pkg.ErrPermission { … }
+        //
+        // This will cause problems if we want to add additional
+        // context to the error in the future. To avoid this, we
+        // return an error wrapping the sentinel so that users must
+        // always unwrap it:
+        //
+        //     if err := pkg.DoSomething(); errors.Is(err, pkg.ErrPermission) { ... }
+        //不建议直接返回，要wrap一下
+        //是强制让调用者使用errors.Is来处理，
+        //包装返回方法的作者就可以随意添加/更改附加的error上下文，同时不破坏调用方的判断，
+        //不包装调用方可能用==判断，这样方法作者考虑到兼容性不可随意添加error上下文
+        return fmt.Errorf("%w", ErrPermission)
+    }
+    // ...
+}
+```
+
+### 8. 结合
+
+标准库不支持堆栈信息
+
+![](./errorx.png)
 
 
 
 ### 参考链接
+
+Dave chengy 为github/pkg/errors 作者
 
 https://dave.cheney.net/2012/01/18/why-go-gets-exceptions-right
 
@@ -662,6 +1396,8 @@ https://dave.cheney.net/2016/06/12/stack-traces-and-the-errors-package
 
 https://www.ardanlabs.com/blog/2017/05/design-philosophy-on-logging.html
 
+https://dave.cheney.net/2019/01/27/eliminate-error-handling-by-eliminating-errors
+
 https://crawshaw.io/blog/xerrors
 
 https://blog.golang.org/go1.13-errors
@@ -669,3 +1405,7 @@ https://blog.golang.org/go1.13-errors
 https://medium.com/gett-engineering/error-handling-in-go-53b8a7112d04
 
 https://medium.com/gett-engineering/error-handling-in-go-1-13-5ee6d1e0a55c
+
+go2 error：
+
+https://go.googlesource.com/proposal/+/master/design/29934-error-values.md
