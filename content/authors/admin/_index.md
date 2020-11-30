@@ -22,10 +22,10 @@ organizations:
 
 # bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
-interests:
-- 并行计算
-- 云计算
-- 大数据
+# interests:
+# - 并行计算
+# - 云计算
+# - 大数据
 
 # 教育经历
 education:
@@ -73,4 +73,4 @@ user_groups:
 ---
 
 
-学习Go语言中，了解Python，C++
+<!-- 学习Go语言中，了解Python，C++ -->
