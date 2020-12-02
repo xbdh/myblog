@@ -89,7 +89,118 @@ go语言 `errror `哲学
 >
 > Error are values。
 
-#### panic 处理
+#### 区别
+
+**1) `checked exception`实质是“错误”，而 panic 是“异常”**
+
+ Java 中`checked exception`的“**有意而为之**”相反，在 Go 中，panic 则是“**不得已而为之**”，即所有引发 panic 的情形，无论是显式的（我们主动调用 panic 函数引发的），还是隐式的（Go 运行时检测到违法情况而引发的）都是我们不期望看到的。对这些引发的 panic，我们很少有“预案”应对，更多的是让程序快速崩溃掉。因此一旦发生 panic，就意味着我们的代码很大可能出现了 bug。因此，Go 中的 panic 更接近于 Java 的`RuntimeException`+`Error`，而不是`checked exception`。
+
+
+
+**2) API 调用者没有义务必须去处理 panic**
+
+前面提到过 Java 的`checked exception`是必须要被上层代码处理的，要么捕获处理，要么重新抛给更上层。但是在 Go 中，我们通常会导入大量第三方包，这些第三方包 API 中是否会引发`panic`是不知道的（目前也没有现成的工具去发现），因此上层代码，即 API 调用者根本不会去逐一了解 API 是否会引发`panic`，也没有义务去处理引发的 panic。一旦你像`checked exception`那样使用 panic 作为正常错误处理的手段在你编写的 API 中将引发的`panic`当作错误，那么你就会给你的 API 使用者带去大麻烦！
+
+
+
+**3) 未被 recover 的 panic 意味着“游戏结束”(Game Over)**
+
+如果 API 抛出`checked exception`，那么 Java 编译器将严格要求上层代码对这个`checked exception`进行处理。但一旦你在 Go API 中引发`panic`，就像上面提到的，API 的调用者并没有义务处理该 panic，因此该 panic 会就会沿着调用函数栈向下“蔓延”，直到所有函数都返回，调用该 API 的 goroutine 将携带着 panic 信息退出。但事情并没有就此打住，一旦 panic 没有被 recover，它导致的可不是一个 goroutine 的退出，而是整个 Go 程序的“游戏结束” - 崩溃退出！
+
+综上，我们看到 Go panic 不应被当做 Java 的`checked exception`用来进行正常的错误处理。使用错误 (error) 和多返回值的显式错误处理方式才是符合 Go 设计哲学的。
+
+
+
+#### panic的典型应用
+
+如果你的业务代码中没有自行调用 panic 引发异常，那么至少说明除了 Go 运行时 panic 外，你的代码对任何“**不正常**”的情况都是可以明确告知上层代码准备处理预案的(即有准备的正常错误处理逻辑)。我们要**尽可能少用 panic**，避免给上层带去它们也无法处理的情况。不过，少用不代表不用！关于如何更好地使用 panic，Go 标准库对 panic 的使用可以给我们一些启示。
+
+**充当断言角色，提示潜在 bug**
+
+使用 C 编写代码时，我们经常在一些代码执行路径上使用断言(assert 宏)来表达这段执行路径上某种条件一定为真的信心。断言为真，则程序处于正确运行状态，否则就是出现了意料之外的问题，而这个问题很可能就是一个潜在的 bug，这时我们可以借助断言信息快速定位到问题所在。
+
+Go 语言标准库没有提供 assert（虽然可以自己实现一个），我们可以使用 panic 来部分模拟断言的潜在 bug 提示的功能。在 Go 标准库中，**大多数 panic 的使用都是充当类似断言的作用的**。
+
+
+
+**用于简化错误处理控制结构**
+
+panic 的语义机制决定了它可以在函数栈间游走，直到被某函数栈上的 defer 函数中的 recover 捕获。因此在一定程度上可以用于简化错误处理的控制结构。在上一篇“优化反复出现的`if err != nil`”中，我们在介绍`check/handle`风格化这个方法时就利用了 panic 的这个**特性**，这里再回顾一下：
+
+```go
+// go-if-error-check-optimize-2.go
+func check(err error) {
+        if err != nil {
+                panic(err)
+        }
+}
+
+func CopyFile(src, dst string) (err error) {
+        var r, w *os.File
+
+        // error handler
+        defer func() {
+                if r != nil {
+                        r.Close()
+                }
+                if w != nil {
+                        w.Close()
+                }
+                if e := recover(); e != nil {
+                        if w != nil {
+                                os.Remove(dst)
+                        }
+                        err = fmt.Errorf("copy %s %s: %v", src, dst, err)
+                }
+        }()
+
+        r, err = os.Open(src)
+        check(err)
+
+        w, err = os.Create(dst)
+        check(err)
+
+        _, err = io.Copy(w, r)
+        check(err)
+
+        return nil
+}
+```
+
+在 Go 标准库中，我们也看到了这种利用 panic 辅助简化错误处理控制结构，减少`if err != nil`重复出现的例子。
+
+
+
+ **使用 recover 捕获 panic，防止 goroutine 意外退出**
+
+前面提到了 panic 的“危害”：**无论在哪个 goroutine 中发生未被 recover 的 panic，整个程序都将崩溃退出**。在有些场景下我们必须抑制这种“危害”，保证程序的健壮性。在这方面，标准库中的 http server 就是一个典型的代表：
+
+```go
+// $GOROOT/src/net/http/server.go
+
+// Serve a new connection.
+func (c *conn) serve(ctx context.Context) {
+        c.remoteAddr = c.rwc.RemoteAddr().String()
+        ctx = context.WithValue(ctx, LocalAddrContextKey, c.rwc.LocalAddr())
+        defer func() {
+                if err := recover(); err != nil && err != ErrAbortHandler {
+                        const size = 64 << 10
+                        buf := make([]byte, size)
+                        buf = buf[:runtime.Stack(buf, false)]
+                        c.server.logf("http: panic serving %v: %v\n%s", c.remoteAddr, err, buf)
+                }
+                if !c.hijacked() {
+                        c.close()
+                        c.setState(c.rwc, StateClosed)
+                }
+        }()
+... ...
+}
+```
+
+针对每个连接，http.Server 会启动一个单独的 goroutine 运行用户传入的 handler 函数。如果处理某个连接的 goroutine 引发 panic，我们需要保证 http Server 本身以及处理其他连接的 goroutine 仍然是可正常运行的。因此，标准库在每个连接对应的 goroutine 处理函数(serve)中使用 recover 来捕获该 goroutine 可能引发的 panic，使其“破坏”不会蔓延到整个程序。
+
+**课堂例子**
 
 常出现panic的地方就是,开了`goroutinue`，其内部出现panic，从而导致整个进程挂掉。还有http router。
 
@@ -184,7 +295,7 @@ main end
 
 ### 1. error 接口
 
-go语言中`error`是个接口
+go语言中`error`是个接口。
 
 ```go
 // http://golang.org/pkg/buildin/#error
@@ -196,7 +307,21 @@ type error interface {
 }
 ```
 
-#### ` errors.New()`
+
+
+在标准库中，Go 提供了构造错误值的两种基本方法：`errors.New`和`fmt.Errorf`：
+
+Go 1.13 版本之前，这两种方法实际上返回的是同一个实现了 error 接口的类型的实例，这个未导出的类型就是`errors.errorString`：
+
+```go
+err := errors.New("your first demo error")
+errWithCtx = fmt.Errorf("index %d is out of bounds", i)
+wrapErr = fmt.Errorf("wrap error: %w", err) // 仅Go 1.13及后续版本可用
+```
+
+
+
+#### errors.New()
 
 我们经常使用` errors.New()` 来返回一个 error 对象。`errors.New() `返回的是 内部` errorString` 对象的指针。
 
@@ -221,9 +346,9 @@ func (e *errorString) Error() string {
 }
 ```
 
-#### `fmt.Errorf()` 
+#### fmt.Errorf()
 
-也返回一个error
+也返回一个error。
 
 ```go
 fmt.Errorf()
@@ -253,6 +378,36 @@ func Errorf(format string, a ...interface{}) error {
 	return err
 }
 ```
+
+Go 1.13 及后续版本中，当我们在格式化字符串中使用`%w`时，`fmt.Errorf`返回的错误值的底层类型为`fmt.wrapError`：
+
+```go
+// $GOROOT/src/fmt/errors.go (go 1.13及后续版本)
+
+type wrapError struct {
+        msg string
+        err error
+}
+
+func (e *wrapError) Error() string {
+        return e.msg
+}
+
+func (e *wrapError) Unwrap() error {
+        return e.err
+}
+```
+
+和`errorString`相比，`wrapError`还实现了`Unwrap`方法，这使得被`wrapError`类型包装的错误值在**包装错误链**中被检视(inspect)到：
+
+```go
+var ErrFoo = errors.New("the underlying error")
+
+err := fmt.Errorf("wrap err: %w", ErrFoo)
+errors.Is(err, ErrFoo) // true (仅适用于Go 1.13及后续版本)
+```
+
+
 
 #### 值类型和指针类型
 
@@ -328,67 +483,244 @@ output：
 Named Type Error
 ```
 
+### 2. 自定义的Error
 
+标准库中提供的构建错误值的方法方便有余，但给错误处理者提供的错误上下文(error context)则仅限于以字符串形式呈现的信息(Error 方法返回的信息)。
 
-### 2. Sentinel Error
+在一些场景下，错误处理者需要从错误值中提取出更多信息以帮助其选择错误处理路径，我们可以自定义错误类型来满足这一需求。
 
-预定义的特定错误，我们叫为 sentinel error，这个名字来源于计算机编程中使用一个特定值来表示不可能进行进一步处理的做法。所以对于 Go，我们使用特定的值来表示错误。
+比如：标准库中的 net 包就定义了一种携带额外错误上下文的错误类型：
 
 ```go
-if err == ErrSomething {
-    
+// $GOROOT/src/net/net.go
+type OpError struct {
+        Op string
+        Net string
+        Source Addr
+        Addr Addr
+        Err error
 }
 ```
 
-如
+这样错误处理者便可以根据这个类型的错误值提供的额外上下文信息做出错误处理路径的选择，比如下面的代码：
 
 ```go
-// https://golang.org/src/bufio/bufio.go
+// $GOROOT/src/net/http/server.go
+func isCommonNetReadError(err error) bool {
+        if err == io.EOF {
+                return true
+        }
+        if neterr, ok := err.(net.Error); ok && neterr.Timeout() {
+                return true
+        }
+        if oe, ok := err.(*net.OpError); ok && oe.Op == "read" {
+                return true
+        }
+        return false
+}
+```
+
+#### 优点：
+
+- error 接口是错误值的提供者与错误值的检视者之间的契约。
+
+- error 接口的实现者负责提供错误上下文供负责错误处理的代码使用。
+
+- 这种错误上下文与 error 接口类型的分离也体现了 Go 设计哲学中“正交”的理念。
+
+#### 缺点：
+
+- 调用者要使用类型断言和类型 switch，就要让自定义的 error 变为 public。这种模型会导致和调用者产生强耦合，从而导致 API 变得脆弱。
+
+
+- 尽量避免使用 error types，虽然错误类型比 sentinel errors 更好，因为它们可以捕获关于出错的更多上下文，但是 error types 共享 error values 许多相同的问题。
+
+
+因此，我的建议是避免错误类型，或者至少避免将它们作为公共 API 的一部分。
+
+### 3. Opaque Error
+
+**不透明错误**。
+
+Go 语言中的错误处理就是根据函数/方法返回的 error 类型变量中携带的错误值信息做决策并选择后续代码执行路径的过程。
+
+这样最简单的错误策略莫过于完全不关心返回错误值携带的具体上下文信息，只要发生错误就进入唯一的错误处理执行路径，这也是 Go 语言中**最常见的错误处理策略**，80%以上的 Go 错误处理情形都可以归类到这种策略下。
+
+这就是不透明错误处理的全部功能：**只需返回错误而不假设其内容**。
+
+```go
+err := doSomething()
+if err != nil {
+	// 不关心err变量底层错误值所携带的具体上下文信息
+	// 执行简单错误处理逻辑并返回
+	... ...
+	return err
+}
+```
+
+这种策略下由于错误处理方并不关心错误值的上下文，因此，错误值的构造方(如上面的函数`doSomething`)可以直接使用 Go 标准库提供的两个基本错误值构造方法`errors.New`和`fmt.Errorf`构造错误值。这样构造出的错误值对错误处理方是不透明的，因此这种策略被称为 **“不透明错误处理策略”**。
+
+```go
+func doSomething(...) error {
+	... ...
+	return errors.New("some error occurred")
+}
+```
+
+#### 优点：
+
+- 不透明错误处理策略最大程度地减少了错误处理方与错误值构造方之间的耦合关系，它们之间唯一的耦合就是 error 接口变量所规定的“契约”。
+
+#### 缺点：
+
+- 错误处理方不能仅根据“不透明的错误值”就做出正确错误处理
+
+- 在少数情况下，这种二分错误处理方法是不够的。例如，与进程外的世界进行交互(如网络活动)，需要调用方调查错误的性质，以确定重试该操作是否合理。
+
+
+
+
+
+
+
+### 4. Sentinel Error
+
+**哨兵错误**
+
+#### 原因：
+
+当错误处理方不能仅根据“不透明的错误值”就做出错误处理路径的选取的情况下，错误处理方会尝试对返回的错误值进行检视，于是就有可能出现下面的**反模式**：
+
+```go
+data, err := b.Peek(1)
+if err != nil {
+    switch err.Error() {
+    case "bufio: negative count":
+        // ... ...
+        return
+    case "bufio: buffer full":
+        // ... ...
+        return
+    case "bufio: invalid use of UnreadByte":
+        // ... ...
+        return
+    default:
+        // ... ...
+        return
+    }
+}
+```
+
+错误处理方以不透明错误值所能提供的唯一上下文信息作为错误处理路径选择的依据，这种“反模式”会造成严重的**隐式耦合**：
+
+错误值构造方不经意间的一次错误描述字符串的改动，都会造成错误处理方处理行为的变化，并且这种通过字符串比较的方式对错误值进行检视的性能也很差。
+
+#### 解决：
+
+Go 标准库采用了定义导出的(exported)“哨兵”错误值的方式来辅助错误处理方检视(inspect)错误值并做出错误处理分支的决策：
+
+```go
+// $GOROOT/src/bufio/bufio.go
 
 // 错误信息：包名加上错误信息
 // 首字母大写，外部包可以用
 var (
-	ErrInvalidUnreadByte = errors.New("bufio: invalid use of UnreadByte")
-	ErrInvalidUnreadRune = errors.New("bufio: invalid use of UnreadRune")
-	ErrBufferFull        = errors.New("bufio: buffer full")
-	ErrNegativeCount     = errors.New("bufio: negative count")
+        ErrInvalidUnreadByte = errors.New("bufio: invalid use of UnreadByte")
+        ErrInvalidUnreadRune = errors.New("bufio: invalid use of UnreadRune")
+        ErrBufferFull        = errors.New("bufio: buffer full")
+        ErrNegativeCount     = errors.New("bufio: negative count")
 )
 
+// 我们的错误处理代码
+data, err := b.Peek(1)
+if err != nil {
+    switch err {
+    case bufio.ErrNegativeCount:
+        // ... ...
+        return
+    case bufio.ErrBufferFull:
+        // ... ...
+        return
+    case bufio.ErrInvalidUnreadByte:
+        // ... ...
+        return
+    default:
+        // ... ...
+        return
+    }
+}
 
-// https://golang.org/src/io/io.go
+或者:
 
-// ErrShortWrite means that a write accepted fewer bytes than requested
-// but failed to return an explicit error.
-var ErrShortWrite = errors.New("short write")
-
-// ErrShortBuffer means that a read required a longer buffer than was provided.
-var ErrShortBuffer = errors.New("short buffer")
-
-// EOF is the error returned by Read when no more input is available.
-// Functions should return EOF only to signal a graceful end of input.
-// If the EOF occurs unexpectedly in a structured data stream,
-// the appropriate error is either ErrUnexpectedEOF or some other error
-// giving more detail.
-var EOF = errors.New("EOF")
-
-// ErrUnexpectedEOF means that EOF was encountered in the
-// middle of reading a fixed-size block or data structure.
-var ErrUnexpectedEOF = errors.New("unexpected EOF")
-
-// ErrNoProgress is returned by some clients of an io.Reader when
-// many calls to Read have failed to return any data or error,
-// usually the sign of a broken io.Reader implementation.
-var ErrNoProgress = errors.New("multiple Read calls return no data or error")
-
+if err := doSomething(); err == bufio.ErrBufferFull {
+	// 处理缓冲区满的错误情况
+	... ...
+}
 ```
 
-使用 sentinel 值是最不灵活的错误处理策略，因为调用方必须使用 == 将结果与预先声明的值进行比较。当您想要提供更多的上下文时,比如预先声明的值发生改变，调用方也需要改变，返回一个不同的错误将破坏相等性检查。
+一般“哨兵”错误值变量以 ErrXXX 格式命名。
+
+#### 优点：
+
+- 和不透明错误策略相比，“哨兵”策略让错误处理方在有检视错误值的需求时候可以“有的放矢”了。
+
+从 Go 1.13 版本开始，标准库 errors 包提供了`Is`方法用于错误处理方对错误值进行检视。`Is`方法类似于将一个 error 类型变量与“哨兵”错误值的比较：
+
+```go
+// 类似 if err == ErrOutOfBounds{ … }
+if errors.Is(err, ErrOutOfBounds) {
+    // 越界的错误处理
+}
+```
+
+不同的是如果 error 类型变量的底层错误值是一个包装错误(wrap error)，`errors.Is`方法会沿着该包装错误所在错误链(error chain)，与链上所有被包装的错误(wrapped error)进行比较，直至找到一个匹配的错误。下面是`Is`函数应用的一个例子：
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrSentinel = errors.New("the underlying sentinel error")
+
+func main() {
+	err1 := fmt.Errorf("wrap err1: %w", ErrSentinel)
+	err2 := fmt.Errorf("wrap err2: %w", err1)
+	if errors.Is(err2, ErrSentinel) {
+		println("err is ErrSentinel")
+		return
+	}
+
+	println("err is not ErrSentinel")
+}
+```
+
+运行上述代码：
+
+```plain
+err is ErrSentinel
+```
+
+我们看到`errors.Is`函数沿着 err2 所在错误链向上找到了被包装到最深处的“哨兵”错误值`ErrSentinel`。
+
+因此，如果您使用的是 Go 1.13 及后续版本，请尽量使用`errors.Is`方法去检视某个错误值是否是某特定的“哨兵”错误值。
+
+#### 缺点：
+
+- 不过对于 API 的开发者而言，暴露“哨兵”错误值也意味着这些错误值和包的公共函数/方法一起成为了 API 的一部分。
+
+- 一旦发布出去，开发者就要对其进行很好的维护。而“哨兵”错误值也让使用这些值的错误处理方对其产生了依赖。
+
+#### 建议：
+
+使用 sentinel 值是最不灵活的错误处理策略，因为调用方必须使用 == 将结果与预先声明的值进行比较。当您想要提供更多的上下文时，比如预先声明的值发生改变，调用方也需要改变，返回一个不同的错误将破坏相等性检查。
 
 甚至是一些有意义的 `fmt.Errorf `携带一些上下文，也会破坏调用者的 == ，调用者将被迫查看 `error.Error() `方法的输出，以查看它是否与特定的字符串匹配。
 
+- 不依赖检查 error.Error 的输出。
 
-
-不依赖检查 error.Error 的输出。
 
 > 不应该依赖检测 error.Error 的输出，Error 方法存在于 error 接口主要用于方便程序员使用，但不是程序(编写测试可能会依赖这个返回)。这个输出的字符串用于记录日志、输出到 stdout 等。
 
@@ -402,8 +734,6 @@ Sentinel errors 成为你 API 公共部分。
 >
 >  比如 io.Reader。像 io.Copy 这类函数需要 reader 的实现者比如返回 io.EOF 来告诉调用者没有更多数据了，但这又不是错误。
 
-
-
 Sentinel errors 在两个包之间创建了依赖。
 
 > sentinel errors 最糟糕的问题是它们在两个包之间创建了源代码依赖关系。
@@ -414,139 +744,180 @@ Sentinel errors 在两个包之间创建了依赖。
 
 > 我的建议是避免在编写的代码中使用 sentinel errors。在标准库中有一些使用它们的情况，但这不是一个您应该模仿的模式。
 
-### 3. 自定义的Error
+###  5. 错误值类型检视策略
 
-Error type 是实现了 error 接口的自定义类型。例如 MyError 类型记录了文件和行号以展示发生了什么。
+“哨兵”错误值除了让错误处理方可以“有的放矢”的进行值比较之外，并未提供其他有效的错误上下文信息。如果错误处理方需要错误值提供更多的“错误上下文”，上面的错误处理策略和错误值构造方式将无法满足。
+
+我们需要通过自定义错误类型的构造错误值的方式来提供更多的“错误上下文”信息，并且由于错误值均通过 error 接口变量统一呈现，要得到底层错误类型携带的错误上下文信息，错误处理方需要使用 Go 提供的**类型断言机制（type assertion）或类型选择机制（type switch）**，这种错误处理我称之为**错误值类型检视策略**。我们来看一个标准库中的例子：
+
+json 包中自定义了一个`UnmarshalTypeError`的错误类型：
 
 ```go
+// $GOROOT/src/encoding/json/decode.go
+type UnmarshalTypeError struct {
+        Value  string       // description of JSON value - "bool", "array", "number -5"
+        Type   reflect.Type // type of Go value it could not be assigned to
+        Offset int64        // error occurred after reading Offset bytes
+        Struct string       // name of the struct type containing the field
+        Field  string       // the full path from root node to the field
+}
+```
+
+错误处理方可以通过错误类型检视策略获得更多错误值的错误上下文信息：
+
+```go
+// $GOROOT/src/encoding/json/decode_test.go
+// 通过类型断言机制获取
+func TestUnmarshalTypeError(t *testing.T) {
+        for _, item := range decodeTypeErrorTests {
+                err := Unmarshal([]byte(item.src), item.dest)
+                if _, ok := err.(*UnmarshalTypeError); !ok {
+                        t.Errorf("expected type error for Unmarshal(%q, type %T): got %T",
+                                item.src, item.dest, err)
+                }
+        }
+}
+
+// $GOROOT/src/encoding/json/decode.go
+// 通过类型选择机制获取
+func (d *decodeState) addErrorContext(err error) error {
+        if d.errorContext.Struct != nil || len(d.errorContext.FieldStack) > 0 {
+                switch err := err.(type) {
+                case *UnmarshalTypeError:
+                        err.Struct = d.errorContext.Struct.Name()
+                        err.Field = strings.Join(d.errorContext.FieldStack, ".")
+                        return err
+                }
+        }
+        return err
+}
+```
+
+和“哨兵”错误处理策略一样，错误值类型检视策略由于暴露了自定义的错误类型给错误处理方，因此这些错误类型也和包的公共函数/方法一起成为了 API 的一部分。一旦发布出去，开发者就要对其进行很好的维护。而它们也让借由这些类型进行检视的错误处理方对其产生了依赖。
+
+从 Go 1.13 版本开始，标准库 errors 包提供了`As`方法用于错误处理方对错误值进行检视。`As`方法类似于通过类型断言判断一个 error 类型变量是否为特定的自定义错误类型：
+
+```go
+// 类似 if e, ok := err.(*MyError); ok { … }
+var e *MyError
+if errors.As(err, &e) {
+    // 如果err类型为*MyError，变量e将被设置为对应的错误值
+}
+```
+
+不同的是如果 error 类型变量的底层错误值是一个包装错误（wrap error），`errors.As`方法会沿着该包装错误所在错误链（error chain），与链上所有被包装的错误（wrapped error）的类型进行比较，直至找到一个匹配的错误类型。下面是`As`函数应用的一个例子：
+
+```go
+go-error-handling-strategy-2.go
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type MyError struct {
-	Msg string
-	File string
-	Line int
+	e string
 }
 
-func (e *MyError) Error()string  {
-	return fmt.Sprintf("%s:%d: %s",e.File,e.Line,e.Msg)
+func (e *MyError) Error() string {
+	return e.e
 }
 
-func test()error  {
-	return &MyError{"Something happened", "server.go",42}
-}
-
-func main()  {
-	err:=test()
-
-	switch merr:=err.(type) {
-	case *MyError:
-		// call succeed ,nothing to do
-		fmt.Println("err occurred on line:",merr.Line)
-	default:
-		// unknown error
+func main() {
+	var err = &MyError{"my error type"}
+	err1 := fmt.Errorf("wrap err1: %w", err)
+	err2 := fmt.Errorf("wrap err2: %w", err1)
+	var e *MyError
+	if errors.As(err2, &e) {
+		println("err is a variable of MyError type ")
+		println(e == err)
+		return
 	}
+
+	println("err is not a variable of the MyError type ")
 }
 ```
 
-因为` MyError` 是一个 type，调用者可以使用断言转换成这个类型，来获取更多的上下文信息。 
+运行上述代码：
 
-与错误值相比，错误类型的一大改进是它们能够包装底层错误以提供更多上下文。
-
-一个不错的例子就是` os.PathError `他提供了底层执行了什么操作、那个路径出了什么问题。
-
-![](./1patherror.png)
-
-调用者要使用类型断言和类型 switch，就要让自定义的 error 变为 public。这种模型会导致和调用者产生强耦合，从而导致 API 变得脆弱。
-
-结论是尽量避免使用 error types，虽然错误类型比 sentinel errors 更好，因为它们可以捕获关于出错的更多上下文，但是 error types 共享 error values 许多相同的问题。
-
-因此，我的建议是避免错误类型，或者至少避免将它们作为公共 API 的一部分。
-
-### 4. Opaque Error
-
-不透明错误，在我看来，这是最灵活的错误处理策略，因为它要求代码和调用者之间的耦合最少。
-
-因为虽然您知道发生了错误，但您没有能力看到错误的内部。作为调用者，只知道操作的结果，您所知道的就是它起成功了还是失败了。
-
-这就是不透明错误处理的全部功能：**只需返回错误而不假设其内容**。
-
-```go
-func demo()  {
-	res,err := testfunc()
-	if err !=nil{
-        handle(err)
-	}
-	
-	handle(res)
-}
+```plain
+$go run go-error-handling-strategy-2.go 
+err is the MyError type 
+true
 ```
 
-在少数情况下，这种二分错误处理方法是不够的。例如，与进程外的世界进行交互(如网络活动)，**需要调用方调查错误的性质，以确定重试该操作是否合理**。
+我们看到`errors.As`函数沿着 err2 所在错误链向上找到了被包装到最深处的错误值，并将 err2 与其类型`*MyError`成功匹配。
 
-在这种情况下，我们可以**断言错误实现了特定的行为，而不是断言错误是特定的类型或值**。考虑这个例子：
+因此，如果您使用的是 Go 1.13 及后续版本，请尽量使用`errors.As`方法去检视某个错误值是否是某自定义错误类型的实例。
+
+### 6. 错误行为特征检视策略
+
+除了“不透明错误处理策略”，我们是否还有手段可以降低错误处理方与错误值构造方的耦合？
+
+在 Go 标准库中，我们发现了这样一种错误处理方式：将某个包中的错误类型归类，统一提取出一些公共的错误行为特征（behaviour），并将这些错误行为特征放入一个公开的接口类型中。
+
+以标准库中的`net包`为例，它将包内的所有错误类型的公共行为特征抽象并放入`net.Error`这个接口中。而错误处理方仅需依赖这个公共接口即可检视具体错误值的错误行为特征信息，并根据这些信息做出后续错误处理分支选择的决策：
 
 ```go
-// https://golang.org/src/net/net.go
-
-// An Error represents a network error.
+// $GOROOT/src/net/net.go
 type Error interface {
-    error  //接口 Error()string
-	Timeout() bool   // Is the error a timeout?
-	Temporary() bool // Is the error temporary?
+    error
+    Timeout() bool   // 是超时类(timeout)错误吗?
+    Temporary() bool // 是临时性(temporary)错误吗?
 }
+```
 
-// OpError is the error type usually returned by functions in the net
-// package. It describes the operation, network type, and address of
-// an error.
-type OpError struct {
-	Op string
-	Net string
-	Source Addr
-	Addr Addr
-	Err error
-}
+下面是 http 包使用错误行为特征检视策略进行错误处理的代码：
 
-// 实现接口
-func (e *OpError) Error() string {
-    .....
-	return s
-}
-
-// 超时接口
-type timeout interface {
-	Timeout() bool
-}
-
-func (e *OpError) Timeout() bool {
-	if ne, ok := e.Err.(*os.SyscallError); ok {
-		t, ok := ne.Err.(timeout)
-		return ok && t.Timeout()
+```go
+// $GOROOT/src/net/http/server.go
+func (srv *Server) Serve(l net.Listener) error {
+	... ...
+	for {
+		rw, e := l.Accept()
+		if e != nil {
+			select {
+			case <-srv.getDoneChan():
+				return ErrServerClosed
+			default:
+			}
+			if ne, ok := e.(net.Error); ok && ne.Temporary() {
+				// 注：这里对临时性(temporary)错误进行处理
+				... ...
+				time.Sleep(tempDelay)
+				continue
+			}
+			return e
+		}
+		...
 	}
-	t, ok := e.Err.(timeout)
-	return ok && t.Timeout()
+	... ...
 }
-// 暂时接口
+```
+
+Accept 方法实际上返回的错误类型为`*OpError`，它是 net 包中的一个自定义错误类型，它实现了错误公共特征接口`net.Error`，因此可以被错误处理方通过`net.Error`接口的方法判断其行为是否满足 Temporary 或 Timeout 特征：
+
+```go
+// $GOROOT/src/net/net.go
+type OpError struct {
+    ... ...
+    // Err is the error that occurred during the operation.
+    Err error
+}
+
 type temporary interface {
-	Temporary() bool
+    Temporary() bool
 }
 
 func (e *OpError) Temporary() bool {
-	// Treat ECONNRESET and ECONNABORTED as temporary errors when
-	// they come from calling accept. See issue 6163.
-	if e.Op == "accept" && isConnError(e.Err) {
-		return true
-	}
-
-	if ne, ok := e.Err.(*os.SyscallError); ok {
-		t, ok := ne.Err.(temporary)
-		return ok && t.Temporary()
-	}
-	t, ok := e.Err.(temporary)
-	return ok && t.Temporary()
+  if ne, ok := e.Err.(*os.SyscallError); ok {
+      t, ok := ne.Err.(temporary)
+      return ok && t.Temporary()
+  }
+  t, ok := e.Err.(temporary)
+  return ok && t.Temporary()
 }
-
 ```
 
 **一般处理逻辑**
@@ -567,19 +938,17 @@ if err != nil {
 
 **建议处理逻辑**
 
-我们可以断言错误实现了特定的行为，而不是断言错误是特定的类型或值
+**我们可以断言错误实现了特定的行为，而不是断言错误是特定的类型或值**。
 
 ```go
-type temporary interface {
-        Temporary() bool
-}
- 
 // IsTemporary returns true if err is temporary.
 func IsTemporary(err error) bool {
         te, ok := err.(temporary)
         return ok && te.Temporary()
 }
 ```
+
+
 
 我们可以将任何错误传递给`IsTemporary`函数，以此判断此错误是否是可返回的。
 
@@ -591,15 +960,16 @@ func IsTemporary(err error) bool {
 
 我们只是对其行为感兴趣。
 
-<br>
+### 7. 错误处理策略
 
-https://dave.cheney.net/2016/04/27/dont-just-check-errors-handle-them-gracefully
+- 请尽量使用“不透明错误”处理策略降低错误处理方与错误值构造方之间的耦合；
+- 如果可以通过错误值类型的特征进行错误检视，那么请尽量使用“错误行为特征检视策略”;
+- 在上述两种策略无法实施的情况下，再“哨兵”策略和“错误值类型检视”策略；
+- Go 1.13 及后续版本中，尽量用`errors.Is`和`errors.As`方法替换原先的错误检视比较语句。
 
-**待看**
+### 8. if err != nil 重复太多可以这么办
 
-### 5. Error 处理
-
-#### 缩进
+#### 正常流程代码
 
 无错误的正常流程代码，将成为一条直线，而不是缩进的代码
 
@@ -624,7 +994,240 @@ if err==nil{
 // handle error
 ```
 
-#### 消除error处理
+#### 视觉扁平化
+
+Go 提供了将触发错误处理的语句与错误处理代码放在一行的支持，比如上面的 SomeFunc 函数，我们可以将之等价重写为下面代码：
+
+```plain
+func SomeFunc() error {
+	if err := doStuff1(); err != nil { // handle error... }
+	if err := doStuff2(); err != nil { // handle error... }
+	if err := doStuff3(); err != nil { // handle error... }
+}
+```
+
+这虽然并未从本质上消除`if err != nil`代码块过多的问题，也没有降低 SomeFunc 的圈复杂度，但经过这种**视觉呈现上的优化**，多数 Gopher 会觉得代码看起来更舒服了。
+
+不过这种优化显然是有约束的，如果错误处理分支的语句不是简单的`return err`，而是复杂如下面代码中这样：
+
+```plain
+if _, err = io.Copy(w, r); err != nil {
+	return fmt.Errorf("copy %s %s: %v", src, dst, err)
+}
+```
+
+那么"扁平化"会导致代码行过长，反倒降低了视觉呈现的“优雅度”。另外如果你使用`goimports`或`gofmt`工具对代码进行自动格式化，那么这些格式化工具会自动展开上述代码，这会让你困惑不已。
+
+
+
+#### 重构
+
+我们沿着降低复杂度的方向对待优化代码进行重构，以减少`if err != nil`代码片段的重复次数。我们以上面的`CopyFile`为优化对象。 原 CopyFile 函数有 4 个重复出现的`if err != nil`代码段，这里我们将其减至 2 个。下面是一种优化方案的代码实现：
+
+```go
+// go-if-error-check-optimize-1.go
+
+func openBoth(src, dst string) (*os.File, *os.File, error) {
+	var r, w *os.File
+	var err error
+	if r, err = os.Open(src); err != nil {
+		return nil, nil, fmt.Errorf("copy %s %s: %v", src, dst, err)
+	}
+
+	if w, err = os.Create(dst); err != nil {
+		r.Close()
+		return nil, nil, fmt.Errorf("copy %s %s: %v", src, dst, err)
+	}
+	return r, w, nil
+}
+
+func CopyFile(src, dst string) error {
+	var err error
+	var r, w *os.File
+	if r, w, err = openBoth(src, dst); err != nil {
+		return err
+	}
+	defer func() {
+		r.Close()
+		w.Close()
+		if err != nil {
+			os.Remove(dst)
+		}
+	}()
+
+	if _, err = io.Copy(w, r); err != nil {
+		return fmt.Errorf("copy %s %s: %v", src, dst, err)
+	}
+	return nil
+}
+```
+
+我们看到：为了减少 CopyFile 函数中的 if 检查的重复次数，我们引入一个中间层：`openBoth`函数。我们将打开源文件和创建目的文件的工作转移到了`openBoth`函数中。这样优化下来，CopyFile 的圈复杂度下降到我们可以接受的范围内，而新增的 openBoth 函数的圈复杂度也在可接受范围内。
+
+
+
+#### check/handle 风格化
+
+上面的位于第四象限的重构之法虽然减少了`if err != nil`代码片段的重复次数，但其视觉呈现依旧欠佳。Go2 的[check/handle 技术草案](https://github.com/golang/proposal/blob/master/design/go2draft-error-handling.md)的思路给了我们一些启发，我们可利用 panic 和 recover 封装一套跳转机制，模拟实现一套 check/handle 机制，在降低复杂度的同时，也能在视觉呈现上有所改善。我们仍然以`CopyFile`为例进行优化：
+
+```go
+// go-if-error-check-optimize-2.go
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func CopyFile(src, dst string) (err error) {
+	var r, w *os.File
+
+	// error handler
+	defer func() {
+		if r != nil {
+			r.Close()
+		}
+		if w != nil {
+			w.Close()
+		}
+		if e := recover(); e != nil {
+			if w != nil {
+				os.Remove(dst)
+			}
+			err = fmt.Errorf("copy %s %s: %v", src, dst, err)
+		}
+	}()
+
+	r, err = os.Open(src)
+	check(err)
+
+	w, err = os.Create(dst)
+	check(err)
+
+	_, err = io.Copy(w, r)
+	check(err)
+
+	return nil
+}
+```
+
+看一下这段 check/handle 风格的`CopyFile`代码，无论是从业务代码(Open -> Create -> Copy)的视觉连续性来看，还是从 CopyFile 的圈复杂度来看，这次优化显然都要好于前面的优化。这也再一次证实了现实中的真正好的优化更多是上述两个方向的结合。
+
+不过这一优化方案也具有一定约束，比如：函数必须使用具名的 error 返回值、defer 性能(在 Go 1.14 版本中，与不使用 defer 的性能差异微乎其微，可忽略不计）、panic 和 recover 的性能等。尤其是 panic 和 recover 的性能要比正常函数返回的性能相差好多，下面是一个简单的性能基准对比测试：
+
+```go
+// panic_recover_performance_test.go 
+package main
+
+import (
+	"errors"
+	"testing"
+)
+
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+func FooWithoutDefer() error {
+	return errors.New("foo demo error")
+}
+
+func FooWithDefer() (err error) {
+	defer func() {
+		err = errors.New("foo demo error")
+	}()
+	return
+}
+
+func FooWithPanicAndRecover() (err error) {
+	// error handler
+	defer func() {
+		if e := recover(); e != nil {
+			err = errors.New("foowithpanic demo error")
+		}
+	}()
+
+	check(FooWithoutDefer())
+	return nil
+}
+
+func FooWithoutPanicAndRecover() error {
+	return FooWithDefer()
+}
+
+func BenchmarkFuncWithoutPanicAndRecover(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FooWithoutPanicAndRecover()
+	}
+}
+
+func BenchmarkFuncWithPanicAndRecover(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		FooWithPanicAndRecover()
+	}
+}
+```
+
+运行上述性能基准测试：
+
+```plain
+$ go test -bench . panic_recover_performance_test.go
+goos: darwin
+goarch: amd64
+BenchmarkFuncWithoutPanicAndRecover-8   	39020437	        28.8 ns/op
+BenchmarkFuncWithPanicAndRecover-8      	 4442336	       271 ns/op
+PASS
+ok  	command-line-arguments	2.639s
+```
+
+我们看到 panic 和 recover 让函数调用的性能慢了近 10 倍。因此，我们在使用这种方案优化重复代码前，需要全面了解这些约束。
+
+
+
+#### 封装：内置 error 状态
+
+在 Go 语言之父 Rob Pike 的["Errors are values"](http://blog.golang.org/errors-are-values)一文中，Rob Pike 为我们呈现了 Go 标准库中使用了避免`if err != nil`反复出现的一种代码设计思路，bufio 包的 Writer 就是使用了这个思路实现的，因此它可以可以像下面这样使用：
+
+```go
+b := bufio.NewWriter(fd)
+b.Write(p0[a:b])
+b.Write(p1[c:d])
+b.Write(p2[e:f])
+// and so on
+if b.Flush() != nil {
+        return b.Flush()
+    }
+}
+```
+
+我们看到上述代码中并没有判断三个 b.Write 的返回错误值，错误处理放在哪里了呢？我们打开一下$GOROOT/src/bufio/bufio.go，我们看到下面代码：
+
+```go
+// $GOROOT/src/bufio/bufio.go
+type Writer struct {
+    err error
+    buf []byte
+    n   int
+    wr  io.Writer
+}
+
+func (b *Writer) Write(p []byte) (nn int, err error) {
+    for len(p) > b.Available() && b.err == nil {
+        ... ...
+    }
+    if b.err != nil {
+        return nn, b.err
+    }
+    ......
+    return nn, nil
+}
+```
+
+我们可以看到，错误状态被封装在 bufio.Writer 结构的内部了，Writer 定义了一个 err 字段作为一个内部错误状态值，它与 Writer 的实例绑定在了一起，并且在每次 Write 入口判断是否为 nil。一旦不为 nil，Write 其实什么都没做就返回了。
+
+
+
+#### 例子
 
 ```go
 func AuthenticateRequest(r *Request) error{
@@ -681,15 +1284,16 @@ func CountLines(r io.Reader) (int, error) {
 }
 ```
 
+#### 总结：
+
+- Go 使用显式错误结果和显式的错误检查是 Go 语言成功的重要因素，同时也是`if err != nil`反复出现的根本原因；
+- 了解关于 Go 错误处理改善的两种观点；
+- 了解减少和消除`if err != nil`代码片段的两个优化方向：改善视觉呈现与降低复杂度；
+- 掌握错误处理代码优化的四种常见方法(位于三个不同象限中)，并根据所处场景与约束灵活使用。
 
 
-**WriteResponse**
 
-更多例子
-
-https://dave.cheney.net/2019/01/27/eliminate-error-handling-by-eliminating-errors
-
-### 5. errors 处理哲学
+### 9. errors 处理哲学
 
 
 
@@ -811,7 +1415,7 @@ Go 中的错误处理契约规定，在出现错误的情况下，不能对其�
 
 `github.com/pkg/errors `这个包很好的解决了这个问题，只对错误处理了一次，既保留了日志，也能对error处理。
 
-### 6. github/pkg/errors
+### 10. github/pkg/errors
 
 通过使用 pkg/errors 包，您可以向错误值添加上下文，这种方式既可以由人也可以由机器检查。
 
@@ -948,7 +1552,7 @@ func Wrap(err error, message string) error {
 }
 ```
 
-#### **WithMessage()、 Wrapf()、WithMessagef()**
+#### **WithMessage()**
 
 WithMessage()，WithMessagef()：只记录err，不记录堆栈信息
 
@@ -1029,87 +1633,11 @@ func Cause(err error) error {
 }
 ```
 
-#### 使用
-
-- 在你自己的应用代码中，使用 errors.New 或者  errors.Errorf 返回错误。
-
-	```go
-	func parseArgs(args []string) error {
-	        if len(args) < 3 {
-	                return errors.Errorf("not enough arguments, expected at least 3, got %d", len(args))
-	        }
-	        // ...
-	}
-	```
-
-	
-
-- 如果调用其他的函数返回了error，通常简单的直接返回。
-
-	```go
-	err：=otherfunc()
-	if err != nil {
-	       return err
-	}
-	```
-
-	
-
-- 如果和其他库（标准库，公司基础库，第三方库）进行协作，考虑使用 errors.Wrap 或者 errors.Wrapf 保存堆栈信息。
-
-	```go
-	f, err := os.Open(path)//标准库
-	
-	if err != nil {
-	        return errors.Wrapf(err, "failed to open %q", path)
-	}
-	```
-
-- 直接返回错误，而不是每个错误产生的地方到处打日志。
-
-- 在程序的顶部或者是工作的 goroutine 顶部(请求入口)，使用 %+v 把堆栈详情记录。
-
-	```go
-	func main() {
-	        err := app.Run()
-	        if err != nil {
-	                fmt.Printf("FATAL: %+v\n", err)
-	                os.Exit(1)
-	        }
-	}
-	```
-
-- 使用 `errors.Cause`获取 root error，再进行和 sentinel error 判定。
-
-#### 总结
-
-- Packages that are reusable across many projects only return root error values.
-
-> 选择 wrap error 是只有 applications 可以选择应用的策略。具有最高可重用性的包只能返回根错误值。此机制与 Go 标准库中使用的相同(kit 库的 sql.ErrNoRows)。
->
-> 也就是说，如果自己的代码供很多人作为基础库调用，不用wrap，返回根错误就行。
-
-- If the error is not going to be handled, wrap and return up the call stack.
-
-> 如果函数/方法不打算处理错误（不降级，直接返回），那么用足够的上下文 wrap errors 并将其返回到调用堆栈中。（Wrap()、WithMessage()、 Wrapf()、WithMessagef()）
->
->  Wrap(err error, message string)  message就是上下文信息
->
-> 例如，额外的上下文可以是使用的输入参数或失败的查询语句。
->
-> 确定您记录的上下文是足够多还是太多的一个好方法是检查日志并验证它们在开发期间是否为您工作。
-
-Once an error is handled, it is not allowed to be passed up the call stack any longer.
-
-> 一旦确定函数/方法将处理错误，例如打印错误、对错误进行逻辑处理。那么错误就不再是错误。
->
-> 如果函数/方法仍然需要发出返回，则它不能返回错误值（不能往上层抛）。
->
-> 它应该只返回nil(比如降级处理中，你返回了降级数据，然后需要 return nil)。
+> 
 
 
 
-### 7. before errors 1.13
+### 11. before errors 1.13
 
 这里是指标准库
 
@@ -1141,7 +1669,7 @@ if e, ok := err.(*QueryError); ok && e.Err == ErrPermission {
 
 
 
-### 6. after errors 1.13
+### 12. after errors 1.13
 
 go1.13为 errors 和 fmt 标准库包引入了新特性，以简化处理包含其他错误的错误。
 
@@ -1291,9 +1819,88 @@ AS类似
 
 
 
-#### Whether to Wrap
+### 13. 是否 Wrap总结
 
-##### 例1
+#### 使用
+
+- 在你自己的应用代码中，使用 errors.New 或者  errors.Errorf 返回错误。
+
+	```go
+	func parseArgs(args []string) error {
+	        if len(args) < 3 {
+	                return errors.Errorf("not enough arguments, expected at least 3, got %d", len(args))
+	        }
+	        // ...
+	}
+	```
+
+	
+
+- 如果调用其他的函数返回了error，通常简单的直接返回。
+
+	```go
+	err：=otherfunc()
+	if err != nil {
+	       return err
+	}
+	```
+
+	
+
+- 如果和其他库（标准库，公司基础库，第三方库）进行协作，考虑使用 errors.Wrap 或者 errors.Wrapf 保存堆栈信息。
+
+	```go
+	f, err := os.Open(path)//标准库
+	
+	if err != nil {
+	        return errors.Wrapf(err, "failed to open %q", path)
+	}
+	```
+
+- 直接返回错误，而不是每个错误产生的地方到处打日志。
+
+- 在程序的顶部或者是工作的 goroutine 顶部(请求入口)，使用 %+v 把堆栈详情记录。
+
+	```go
+	func main() {
+	        err := app.Run()
+	        if err != nil {
+	                fmt.Printf("FATAL: %+v\n", err)
+	                os.Exit(1)
+	        }
+	}
+	```
+
+- 使用 `errors.Cause`获取 root error，再进行和 sentinel error 判定。
+
+#### 总结
+
+**Packages that are reusable across many projects only return root error values.**
+
+- 选择 wrap error 是只有 applications 可以选择应用的策略。具有最高可重用性的包只能返回根错误值。此机制与 Go 标准库中使用的相同(kit 库的 sql.ErrNoRows)。
+
+
+- 如果自己的代码供很多人作为基础库调用，不用wrap，返回根错误就行。
+
+**If the error is not going to be handled, wrap and return up the call stack.**
+
+- 如果函数/方法不打算处理错误（不降级，直接返回），那么用足够的上下文 wrap errors 并将其返回到调用堆栈中。（Wrap()、WithMessage()、 Wrapf()、WithMessagef()）
+
+
+- Wrap(err error, message string)  message就是上下文信息。例如，额外的上下文可以是使用的输入参数或失败的查询语句。
+
+
+- 确定您记录的上下文是足够多还是太多的一个好方法是检查日志并验证它们在开发期间是否为您工作。
+
+**Once an error is handled, it is not allowed to be passed up the call stack any longer.**
+
+- 一旦确定函数/方法将处理错误，例如打印错误、对错误进行逻辑处理。那么错误就不再是错误。
+
+
+- 如果函数/方法仍然需要发出返回，则它不能返回错误值（不能往上层抛）。它应该只返回nil(比如降级处理中，你返回了降级数据，然后需要 return nil)。
+
+
+#### 例子
 
 ```go
 // 加入些自定义的信息如name  用wrap
@@ -1311,7 +1918,7 @@ func FetchItem(name string) (*Item, error) {
 }
 ```
 
-##### 例2
+<br>
 
 ```go
 // 不想暴露过多底层错误信息，不用wrap
@@ -1325,7 +1932,7 @@ if err != nil {
 }
 ```
 
-##### 例3
+<br>
 
 ```go
 var ErrPermission = errors.New("permission denied")
@@ -1358,7 +1965,7 @@ func DoSomething() error {
 }
 ```
 
-### 8. 结合
+### 14. 结合
 
 标准库不支持堆栈信息
 
@@ -1409,3 +2016,8 @@ https://medium.com/gett-engineering/error-handling-in-go-1-13-5ee6d1e0a55c
 go2 error：
 
 https://go.googlesource.com/proposal/+/master/design/29934-error-values.md
+
+imooc 专栏
+
+https://www.imooc.com/read/87/article/2433
+
