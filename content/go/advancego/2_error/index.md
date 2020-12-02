@@ -998,7 +998,7 @@ if err==nil{
 
 Go 提供了将触发错误处理的语句与错误处理代码放在一行的支持，比如上面的 SomeFunc 函数，我们可以将之等价重写为下面代码：
 
-```plain
+```go
 func SomeFunc() error {
 	if err := doStuff1(); err != nil { // handle error... }
 	if err := doStuff2(); err != nil { // handle error... }
@@ -1010,7 +1010,7 @@ func SomeFunc() error {
 
 不过这种优化显然是有约束的，如果错误处理分支的语句不是简单的`return err`，而是复杂如下面代码中这样：
 
-```plain
+```go
 if _, err = io.Copy(w, r); err != nil {
 	return fmt.Errorf("copy %s %s: %v", src, dst, err)
 }
@@ -1170,7 +1170,7 @@ func BenchmarkFuncWithPanicAndRecover(b *testing.B) {
 
 运行上述性能基准测试：
 
-```plain
+```go
 $ go test -bench . panic_recover_performance_test.go
 goos: darwin
 goarch: amd64
